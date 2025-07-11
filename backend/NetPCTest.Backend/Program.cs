@@ -27,6 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapControllers();
 app.UseHttpsRedirection();
 
 // Map Swagger only when we're in the development environment.
