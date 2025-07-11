@@ -53,7 +53,7 @@ public class ContactsService(AppDbContext context) : IContactsService
         return new CreateContactResult
         {
             Success = true, 
-            Message = "#contacts.creation.success",
+            Message = "contacts.creation.success",
             Id = addResult.Entity.Id,
         };
     }
@@ -80,28 +80,28 @@ public class ContactsService(AppDbContext context) : IContactsService
             return new CreateContactResult
             {
                 Success = false,
-                Message = "#contacts.creation.category.doesnt_exist",
+                Message = "contacts.creation.category.doesnt_exist",
             };
 
         if (category.CustomSubcategoryRequired && newContact.CustomSubCategory is null)
             return new CreateContactResult
             {
                 Success = false,
-                Message = "#contacts.creation.category.custom_subcategory_required",
+                Message = "contacts.creation.category.custom_subcategory_required",
             };
 
         if (!category.CustomSubcategoryRequired && !newContact.SubCategoryId.HasValue)
             return new CreateContactResult
             {
                 Success = false,
-                Message = "#contacts.creation.category.fixed_subcategory_required",
+                Message = "contacts.creation.category.fixed_subcategory_required",
             };
 
         if (!context.SubCategories.Any(c => c.Id == newContact.SubCategoryId))
             return new CreateContactResult
             {
                 Success = false,
-                Message = "#contacts.creation.subcategory.doesnt_exist",
+                Message = "contacts.creation.subcategory.doesnt_exist",
             };
 
         if (newContact.SubCategoryId.HasValue && 
@@ -109,7 +109,7 @@ public class ContactsService(AppDbContext context) : IContactsService
             return new CreateContactResult
             {
                 Success = false,
-                Message = "#contacts.creation.subcategory.doesnt_belong_to_given_category",
+                Message = "contacts.creation.subcategory.doesnt_belong_to_given_category",
             };
 
         return null;

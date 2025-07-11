@@ -1,13 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
+using NetPCTest.Backend.Dtos;
 using NetPCTest.Backend.Models;
 
 namespace NetPCTest.Backend.Services;
 
 public class LocalisationService(AppDbContext context) : ILocalisationService
 {
-    public async Task<List<LocaleKeyString>> GetLocaleKeyStrings(string locale)
+    public async Task<List<string>> GetAllLocales()
     {
-        return await context.LocaleKeyStrings.Where(l => l.Locale.Name == locale).ToListAsync(); 
+        return await context.Locales.Select(l => l.Name).ToListAsync();
+    }
+
+    public async Task<List<LocaleKeyStringDto>> GetLocaleKeyStrings(string locale)
+    {
+        return await context.LocaleKeyStrings
+            .Where(l => l.Locale.Name == locale)
+            .Select(l => new LocaleKeyStringDto{Key = l.Key, Value = l.Value}).ToListAsync(); 
     }
 }

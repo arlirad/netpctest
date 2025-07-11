@@ -8,8 +8,19 @@ namespace NetPCTest.Backend.Controllers;
 [Route("api/[controller]")]
 public class LocalisationController(ILocalisationService localisationService) : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetLocaleKeyStrings([Required] string locale)
+    [HttpGet()]
+    public async Task<IActionResult> GetLocales()
+    {
+        var locales = await localisationService.GetAllLocales();
+        
+        if (locales.Count == 0)
+            return NotFound();
+        
+        return Ok(locales);
+    }
+    
+    [HttpGet("{locale}")]
+    public async Task<IActionResult> GetLocaleKeyStrings(string locale)
     {
         var localeKeyStrings = await localisationService.GetLocaleKeyStrings(locale);
         

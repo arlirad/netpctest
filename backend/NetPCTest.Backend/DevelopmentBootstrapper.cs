@@ -8,22 +8,22 @@ public static class DevelopmentBootstrapper
 {
     public static void EnsureCategories(AppDbContext db)
     {
-        if (db.Categories.Select(c => c.Name).Any(n => n == "#category.other"))
+        if (db.Categories.Select(c => c.Name).Any(n => n == "category.other"))
             return;
         
         db.Categories.Add(new Category
         {
-            Name = "#category.other",
+            Name = "category.other",
             CustomSubcategoryRequired = true,
         });
         db.Categories.Add(new Category
         {
-            Name = "#category.work",
+            Name = "category.work",
             CustomSubcategoryRequired = false,
         });
         db.Categories.Add(new Category
         {
-            Name = "#category.personal",
+            Name = "category.personal",
             CustomSubcategoryRequired = false,
         });
         
@@ -32,28 +32,28 @@ public static class DevelopmentBootstrapper
     
     public static void EnsureSubCategories(AppDbContext db)
     {
-        if (db.SubCategories.Select(s => s.Name).Any(n => n == "#subcategory.manager"))
+        if (db.SubCategories.Select(s => s.Name).Any(n => n == "subcategory.manager"))
             return;
         
         db.SubCategories.Add(new SubCategory
         {
-            Name = "#subcategory.manager",
-            Category = db.Categories.Single(c => c.Name == "#category.work"),
+            Name = "subcategory.manager",
+            Category = db.Categories.Single(c => c.Name == "category.work"),
         });
         db.SubCategories.Add(new SubCategory
         {
-            Name = "#subcategory.employee",
-            Category = db.Categories.Single(c => c.Name == "#category.work"),
+            Name = "subcategory.employee",
+            Category = db.Categories.Single(c => c.Name == "category.work"),
         });
         db.SubCategories.Add(new SubCategory
         {
-            Name = "#subcategory.consultant",
-            Category = db.Categories.Single(c => c.Name == "#category.work"),
+            Name = "subcategory.consultant",
+            Category = db.Categories.Single(c => c.Name == "category.work"),
         });
         db.SubCategories.Add(new SubCategory
         {
-            Name = "#subcategory.client",
-            Category = db.Categories.Single(c => c.Name == "#category.work"),
+            Name = "subcategory.client",
+            Category = db.Categories.Single(c => c.Name == "category.work"),
         });
         
         db.SaveChanges();

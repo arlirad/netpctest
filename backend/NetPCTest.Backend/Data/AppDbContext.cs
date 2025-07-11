@@ -46,9 +46,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasForeignKey(l => l.LocaleId)
             .HasPrincipalKey(l => l.Id);
         
+        // Ensure that Locales have unique names.
+        builder.Entity<Locale>()
+            .HasIndex(l => l.Name)
+            .IsUnique();
+        
         // LocaleKeyString needs a key.
         builder.Entity<LocaleKeyString>()
-            .HasKey(l => l.Key);
+            .HasKey(l => new { l.Key, l.LocaleId });
         
         base.OnModelCreating(builder);
     }

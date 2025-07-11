@@ -49,11 +49,11 @@ using (var scope = app.Services.CreateScope())
 
     // Yeah, this seems a little janky, but at least it will let the people who are going to review this test it
     // properly.
-    if (app.Environment.IsDevelopment())
+    /*if (app.Environment.IsDevelopment())
     {
         DevelopmentBootstrapper.EnsureCategories(db);
         DevelopmentBootstrapper.EnsureSubCategories(db);
-    }
+    }*/
 }
 
 app.Run();
