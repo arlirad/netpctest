@@ -8,6 +8,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<SubCategory> SubCategories { get; set; }
+    public DbSet<Locale> Locales { get; set; }
+    public DbSet<LocaleKeyString> LocaleKeyStrings { get; set; }
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -36,6 +38,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .WithMany(c => c.SubCategories)
             .HasForeignKey(s => s.CategoryId)
             .HasPrincipalKey(c => c.Id);
+        
+        // Locale 1:N LocaleKeyString (represented as KeyStrings inside Locale).
+        builder.Entity<LocaleKeyString>()
+            .HasOne(l => l.Locale)
+            .WithMany(l => l.KeyStrings)
+            .HasForeignKey(l => l.LocaleId)
+            .HasPrincipalKey(l => l.Id);
+        
+        // LocaleKeyString needs a key.
+        builder.Entity<LocaleKeyString>()
+            .HasKey(l => l.Key);
         
         base.OnModelCreating(builder);
     }
