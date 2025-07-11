@@ -17,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddRouting(options => 
     options.LowercaseUrls = true);
 builder.Services.AddScoped<IContactsService, ContactsService>();
+builder.Services.AddScoped<ILocalisationService, LocalisationService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
