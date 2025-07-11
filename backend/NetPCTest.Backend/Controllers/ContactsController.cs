@@ -1,25 +1,22 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Dtos;
 using NetPCTest.Backend.Models;
+using NetPCTest.Backend.Services;
 
 namespace NetPCTest.Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ContactsController(AppDbContext context) : ControllerBase
+public class ContactsController(IContactsService contactsService) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAllContacts()
+    public async Task<IActionResult> GetContacts(int startIndex = 0, int count = 50)
     {
-        // Here we first .Select to make sure EF doesn't create a SQL query with columns that we are not going to use
-        // anyway. Then, we .Select to create the DTOs.
-        var contacts = await context.Contacts
-            .Select(c => new { c.Id, c.Name, c.Surname })
-            .Select(c => ContactBriefDto.FromIdNameSurname(c.Id, c.Name, c.Surname))
-            .ToListAsync(); 
+        var contacts = await contactsService.GetContacts(startIndex, count);
         
         return Ok(contacts);
     }
@@ -27,10 +24,10 @@ public class ContactsController(AppDbContext context) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddContact([FromBody] ContactCreationDto contactCreationDto)
     {
-        var contact = ContactCreationDto.FromDto(contactCreationDto);
+        var result = await contactsService.CreateContact(contactCreationDto);
         
-        await context.Contacts.AddAsync(contact);
-        await context.SaveChangesAsync();
+        if (!result.Success)
+            return BadRequest(result);
         
         return Ok();
     }

@@ -14,17 +14,17 @@ public static class DevelopmentBootstrapper
         db.Categories.Add(new Category
         {
             Name = "#category.other",
-            CustomSubcategoryAllowed = true,
+            CustomSubcategoryRequired = true,
         });
         db.Categories.Add(new Category
         {
             Name = "#category.work",
-            CustomSubcategoryAllowed = false,
+            CustomSubcategoryRequired = false,
         });
         db.Categories.Add(new Category
         {
             Name = "#category.personal",
-            CustomSubcategoryAllowed = false,
+            CustomSubcategoryRequired = false,
         });
         
         db.SaveChanges();

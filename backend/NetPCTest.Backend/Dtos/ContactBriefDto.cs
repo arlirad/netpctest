@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetPCTest.Backend.Dtos;
 
-// A DTO specifically for listing all contacts in a list.
+// A DTO specifically for listing contacts in a list.
 public class ContactBriefDto
 {
     public int Id { get; set; }

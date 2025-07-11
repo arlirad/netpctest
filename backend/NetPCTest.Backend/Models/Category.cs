@@ -8,7 +8,7 @@ public class Category
     public int Id { get; set; }
     [MaxLength(48)]
     public required string Name { get; set; }
-    public required bool CustomSubcategoryAllowed { get; set; }
+    public required bool CustomSubcategoryRequired { get; set; }
     
     public ICollection<Contact> Members { get; set; }
     public ICollection<SubCategory> SubCategories { get; set; }

@@ -19,21 +19,8 @@ public class ContactCreationDto
     [Required]
     public DateTime BirthDate { get; set; }
     
+    [Required]
     public int CategoryId { get; set; }
-    public int SubCategoryId { get; set; }
+    public int? SubCategoryId { get; set; }
     public string? CustomSubCategory { get; set; }
-
-    public static Contact FromDto(ContactCreationDto contactCreationDto)
-        => new() 
-        {
-            Name = contactCreationDto.Name,
-            Surname = contactCreationDto.Surname,
-            Email = contactCreationDto.Email,
-            // HashPassword = hash(contactCreationDto.Password),
-            Phone = contactCreationDto.Phone,
-            BirthDate = contactCreationDto.BirthDate,
-            CategoryId = contactCreationDto.CategoryId,
-            SubCategoryId = contactCreationDto.SubCategoryId,
-            CustomSubCategory = contactCreationDto.CustomSubCategory
-        };
 }

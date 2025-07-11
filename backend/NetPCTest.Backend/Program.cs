@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Models;
+using NetPCTest.Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddRouting(options => 
     options.LowercaseUrls = true);
+builder.Services.AddScoped<IContactsService, ContactsService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
