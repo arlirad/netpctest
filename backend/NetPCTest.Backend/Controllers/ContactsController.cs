@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
+using NetPCTest.Backend.Models;
 
 namespace NetPCTest.Backend.Controllers;
 
@@ -8,11 +10,11 @@ namespace NetPCTest.Backend.Controllers;
 [Route("api/[controller]")]
 public class ContactsController(AppDbContext context) : ControllerBase
 {
-    private readonly AppDbContext _context = context;
-
     [HttpGet]
-    public async Task<IActionResult> Test()
+    public async Task<IActionResult> GetAllContacts()
     {
-        return Ok(new {message = "Hello World!"});
+        var contacts = await context.Contacts.Select(c => new { c.Id, c.Name, c.Surname }).ToListAsync(); 
+        
+        return Ok(contacts);
     }
 }
