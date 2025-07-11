@@ -4,7 +4,9 @@
  */
 
 using Microsoft.EntityFrameworkCore;
+using NetPCTest.Backend;
 using NetPCTest.Backend.Data;
+using NetPCTest.Backend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -41,6 +43,14 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+
+    // Yeah, this seems a little janky, but at least it will let the people who are going to review this test it
+    // properly.
+    if (app.Environment.IsDevelopment())
+    {
+        DevelopmentBootstrapper.EnsureCategories(db);
+        DevelopmentBootstrapper.EnsureSubCategories(db);
+    }
 }
 
 app.Run();
