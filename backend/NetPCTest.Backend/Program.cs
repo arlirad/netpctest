@@ -1,3 +1,8 @@
+/*
+ * OpenAPI definition: /openapi/v1.json 
+ * Swagger: /swagger
+ */
+
 using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
 
@@ -8,12 +13,25 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure swagger only when we're in the development environment.
 if (app.Environment.IsDevelopment())
-    app.MapOpenApi();
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
+
+// Map Swagger only when we're in the development environment.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapSwagger();
+}
+
 app.Run();
