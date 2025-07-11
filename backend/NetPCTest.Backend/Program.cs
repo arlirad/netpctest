@@ -11,6 +11,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlite(connectionString));
+builder.Services.AddRouting(options => 
+    options.LowercaseUrls = true);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
