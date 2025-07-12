@@ -77,3 +77,8 @@ values (1, 'subcategory.manager', 'Menedżer'),
        (2, 'subcategory.consultant', 'Consultant'),
        (1, 'subcategory.client', 'Klient'),
        (2, 'subcategory.client', 'Client');
+insert into LocaleKeyStrings (LocaleId, Key, Value)
+values (1, 'ui.login', 'Logowanie'),
+       (2, 'ui.login', 'Login'),
+       (1, 'ui.contact.edit', 'Edycja kontaktu'),
+       (2, 'ui.contact.edit', 'Contact edit');

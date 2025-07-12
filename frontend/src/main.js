@@ -4,6 +4,8 @@ import get from 'axios'
 import App from './App.vue'
 import { createI18n } from 'vue-i18n'
 
+import './assets/styles/global.css'
+
 let apiRoot = 'http://localhost:5288/api';
 
 const i18n = createI18n({
