@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from 'vue';
 import HelloWorld from './components/HelloWorld.vue'
-import Modal from './components/Modal.vue'
+import LoginModal from './components/modals/LoginModal.vue'
 
 const showEdit = ref(false);
 const showLogin = ref(true);
 </script>
 
 <template>
-  <Modal :header="$t('ui.login')" :visible="showLogin" @close="showLogin = false"></Modal>
+  <LoginModal :visible="showLogin" @close="showLogin = false"></LoginModal>
   <div>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />

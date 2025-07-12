@@ -7,7 +7,8 @@ defineEmits(['close'])
     <div v-if="visible" class="modal-backdrop">
         <div class="modal layer3">
             <h2>{{ header }}</h2>
-            <button class="modal-close" @click="$emit('close')">&#10005;</button>
+            <button class="close" @click="$emit('close')">&#10005;</button>
+            <hr noshade>
             <slot></slot>
         </div>
     </div>
@@ -29,18 +30,24 @@ defineEmits(['close'])
 
 .modal {
     padding: 2rem;
+    padding-top: 0.15em;
     min-width: 300px;
     min-height: 200px;
     position: relative;
 }
 
-.modal-close {
+.close {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    font-size: 1.5rem;
+    top: 0.50rem;
+    right: 0.50rem;
+    font-size: 1.50rem;
     border: none;
     background: none;
     cursor: pointer
+}
+
+h2 {
+    margin-block-start: 0.72em;
+    margin-right: 2.00rem;
 }
 </style>

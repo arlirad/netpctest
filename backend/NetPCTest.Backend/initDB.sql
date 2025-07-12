@@ -80,5 +80,11 @@ values (1, 'subcategory.manager', 'Menedżer'),
 insert into LocaleKeyStrings (LocaleId, Key, Value)
 values (1, 'ui.login', 'Logowanie'),
        (2, 'ui.login', 'Login'),
+       (1, 'ui.login.email', 'Email'),
+       (2, 'ui.login.email', 'Email'),
+       (1, 'ui.login.password', 'Hasło'),
+       (2, 'ui.login.password', 'Password'),
+       (1, 'ui.login.submit', 'Zaloguj się'),
+       (2, 'ui.login.submit', 'Login'),
        (1, 'ui.contact.edit', 'Edycja kontaktu'),
        (2, 'ui.contact.edit', 'Contact edit');
