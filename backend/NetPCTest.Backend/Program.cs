@@ -12,6 +12,16 @@ using NetPCTest.Backend.Services;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlite(connectionString));
 builder.Services.AddRouting(options => 
@@ -26,10 +36,12 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure swagger only when we're in the development environment.
+// And allow CORS from our frontend too.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("AllowFrontend");
 }
 
 app.MapControllers();

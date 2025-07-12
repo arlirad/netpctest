@@ -12,10 +12,11 @@ public class LocalisationService(AppDbContext context) : ILocalisationService
         return await context.Locales.Select(l => l.Name).ToListAsync();
     }
 
-    public async Task<List<LocaleKeyStringDto>> GetLocaleKeyStrings(string locale)
+    public async Task<Dictionary<string, string>> GetLocaleKeyStrings(string locale)
     {
         return await context.LocaleKeyStrings
             .Where(l => l.Locale.Name == locale)
-            .Select(l => new LocaleKeyStringDto{Key = l.Key, Value = l.Value}).ToListAsync(); 
+            .Select(l => new LocaleKeyStringDto{Key = l.Key, Value = l.Value})
+            .ToDictionaryAsync(k => k.Key, v => v.Value); 
     }
 }
