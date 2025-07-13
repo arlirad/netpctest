@@ -76,6 +76,16 @@ builder.Services.AddRateLimiter(options =>
                 QueueLimit = 0,
                 Window = TimeSpan.FromSeconds(15)
             }));
+    options.AddPolicy("locale", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+            factory: partition => new FixedWindowRateLimiterOptions
+            {
+                AutoReplenishment = true,
+                PermitLimit = 5,
+                QueueLimit = 0,
+                Window = TimeSpan.FromSeconds(30)
+            }));
 
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 });
@@ -159,14 +169,6 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
-
-    // Yeah, this seems a little janky, but at least it will let the people who are going to review this test it
-    // properly.
-    /*if (app.Environment.IsDevelopment())
-    {
-        DevelopmentBootstrapper.EnsureCategories(db);
-        DevelopmentBootstrapper.EnsureSubCategories(db);
-    }*/
 }
 
 app.Run();
