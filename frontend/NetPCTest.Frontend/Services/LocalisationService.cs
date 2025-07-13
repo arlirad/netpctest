@@ -14,9 +14,8 @@ public class LocalisationService(HttpClient httpClient, IOptions<ApiOptions> api
     
     public async Task RefreshLocalesAsync()
     {
-        var request = 
-            await httpClient.GetAsync(apiOptions.Value.BaseUrl + "/localisation");
-        var locales = await request.Content.ReadFromJsonAsync<List<string>>();
+        var locales = 
+            await httpClient.GetFromJsonAsync<List<string>>("localisation");
 
         if (locales != null)
             AvailableLocales = locales;
@@ -24,9 +23,8 @@ public class LocalisationService(HttpClient httpClient, IOptions<ApiOptions> api
     
     public async Task SetLocaleAsync(string localeName)
     {
-        var request = 
-            await httpClient.GetAsync(apiOptions.Value.BaseUrl + $"/localisation/{localeName}");
-        var keyStrings = await request.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+        var keyStrings = 
+            await httpClient.GetFromJsonAsync<Dictionary<string, string>>($"localisation/{localeName}");
 
         if (keyStrings is null)
             return;

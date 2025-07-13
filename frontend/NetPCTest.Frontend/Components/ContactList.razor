@@ -1,0 +1,60 @@
+@using NetPCTest.Frontend.Dtos
+@using NetPCTest.Frontend.Services
+@inject ContactsService ContactsService
+
+@if (ContactsBrief is null)
+{
+    <h1><L Key="loading"/></h1>
+}
+else
+{
+    <p>@(RangeStart + 1) - @(RangeStart + RangeEnd) (@TotalContactCount)</p>
+    <table class="layer2">
+        <tr>
+            <th>
+                <L Key="ui.list.contact.id"/>
+            </th>
+            <th>
+                <L Key="ui.list.contact.name"/>
+            </th>
+            <th>
+                <L Key="ui.list.contact.surname"/>
+            </th>
+        </tr>
+        @foreach (var contact in ContactsBrief)
+        {
+            @* XSS need not apply, Blazor treats this as "InnerText" and not "InnerHtml". *@
+            <tr>
+                <td>@contact.Id</td><td>@contact.Name</td><td>@contact.Surname</td>
+            </tr>
+        }
+    </table>
+}
+
+@code {
+    [Parameter] 
+    public List<ContactBriefDto>? ContactsBrief { get; set; }
+    
+    private int TotalContactCount { get; set; }
+    private int RangeStart { get; set; }
+    private int RangeEnd { get; set; }
+
+    public async Task Get(int start, int end)
+    {
+        RangeStart = start;
+        RangeEnd = end;
+        TotalContactCount = await ContactsService.GetContactCount();
+        
+        var contacts = await ContactsService.GetContacts(RangeStart, RangeEnd);
+
+        if (contacts is null)
+            return;
+        
+        ContactsBrief = contacts;
+    } 
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Get(0, 50);
+    }
+}
