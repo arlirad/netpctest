@@ -71,6 +71,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 app.UseHttpsRedirection();
+app.UseExceptionHandler("/error");
 
 // Map Swagger only when we're in the development environment.
 if (app.Environment.IsDevelopment())
