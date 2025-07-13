@@ -1,11 +1,13 @@
 <div class="layer2 navbar">
-    <div class="layer3 navbar-button" @onclick="ShowLogin">Login</div>
+    <div class="layer3 navbar-button" @onclick="ClickLogin">Login</div>
 </div>
 
 @code {
+    [Parameter]
+    public EventCallback OnClickLogin { get; set; }
 
-    private async Task ShowLogin()
+    private async Task ClickLogin()
     {
-        Console.WriteLine("test");
+        await OnClickLogin.InvokeAsync();
     }
 }
