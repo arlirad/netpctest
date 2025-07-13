@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Dtos;
@@ -14,6 +15,7 @@ namespace NetPCTest.Backend.Controllers;
 [Route("api/[controller]")]
 public class ContactsController(IContactsService contactsService) : ControllerBase
 {
+    [EnableRateLimiting("list")]
     [HttpGet]
     public async Task<IActionResult> GetContacts(int startIndex = 0, int count = 50)
     {
@@ -26,7 +28,6 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     public async Task<IActionResult> GetContactDetails([Required] int id)
     {
         var contact = await contactsService.GetContact(id);
-        
         if (contact == null)
             return NotFound();
         

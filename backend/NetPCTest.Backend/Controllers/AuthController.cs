@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using NetPCTest.Backend.Dtos;
 using NetPCTest.Backend.Repositories;
@@ -17,6 +18,7 @@ namespace NetPCTest.Backend.Controllers;
 [Route("api/[controller]")]
 public class AuthController(IRepository repository, IPasswordService passwordService, IConfiguration config) : Controller
 {
+    [EnableRateLimiting("auth")]
     [Authorize]
     [HttpGet]
     public IActionResult WhoAmI()
@@ -34,6 +36,7 @@ public class AuthController(IRepository repository, IPasswordService passwordSer
         });
     }
     
+    [EnableRateLimiting("auth")]
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {

@@ -5,9 +5,11 @@
  */
 
 using System.Text;
+using System.Threading.RateLimiting;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -51,6 +53,33 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlite(connectionString));
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddPolicy("auth", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+                partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+                factory: partition => new FixedWindowRateLimiterOptions
+                {
+                    AutoReplenishment = true,
+                    PermitLimit = 10,
+                    QueueLimit = 0,
+                    Window = TimeSpan.FromMinutes(1)
+                }));
+    options.AddPolicy("list", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+            factory: partition => new FixedWindowRateLimiterOptions
+            {
+                AutoReplenishment = true,
+                PermitLimit = 10,
+                QueueLimit = 0,
+                Window = TimeSpan.FromSeconds(15)
+            }));
+
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
+
 builder.Services.AddRouting(options => 
     options.LowercaseUrls = true);
 
@@ -111,11 +140,13 @@ if (app.Environment.IsDevelopment())
     app.UseCors("AllowFrontend");
 }
 
+// Rate limiting goes here last, because we use the identity name (if possible) for partitioning.
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseExceptionHandler("/error");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 
 // Map Swagger only when we're in the development environment.
 if (app.Environment.IsDevelopment())
