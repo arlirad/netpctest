@@ -38,9 +38,9 @@ public class AuthController(IRepository repository, IPasswordService passwordSer
     
     [EnableRateLimiting("auth")]
     [HttpPost]
-    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto, CancellationToken cancellationToken)
     {
-        var contact = await repository.GetContactByEmail(loginDto.Email);
+        var contact = await repository.GetContactByEmail(loginDto.Email, cancellationToken);
         if (contact == null)
             return Unauthorized("invalid.credentials");
         

@@ -63,7 +63,7 @@ public class ContactsServiceTests
         };
 
         _repositoryMock
-            .Setup(r => r.GetContacts(1, 2))
+            .Setup(r => r.GetContacts(1, 2, CancellationToken.None))
             .ReturnsAsync(contacts);
 
         // We expect these DTOs.
@@ -88,11 +88,11 @@ public class ContactsServiceTests
             .Returns(expectedDtos);
 
         // Test the method.
-        var result = await _service.GetContacts(1, 2);
+        var result = await _service.GetContacts(1, 2, CancellationToken.None);
 
         // Assertions.
         Assert.That(result, Is.EqualTo(expectedDtos));
-        _repositoryMock.Verify(r => r.GetContacts(1, 2), Times.Once);
+        _repositoryMock.Verify(r => r.GetContacts(1, 2, CancellationToken.None), Times.Once);
         mapperMock.Verify(m => m.Map<List<ContactBriefDto>>(contacts), Times.Once);
     }
 }

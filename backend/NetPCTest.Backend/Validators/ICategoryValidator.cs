@@ -6,5 +6,5 @@ namespace NetPCTest.Backend.Validators;
 
 public interface ICategoryValidator
 {
-    Task<CategoryValidationResult> Validate(Contact newContact);
+    Task<CategoryValidationResult> Validate(Contact newContact, CancellationToken cancellationToken = default);
 }

@@ -17,17 +17,17 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
 {
     [EnableRateLimiting("list")]
     [HttpGet]
-    public async Task<IActionResult> GetContacts(int startIndex = 0, int count = 50)
+    public async Task<IActionResult> GetContacts(CancellationToken cancellationToken, int startIndex = 0, int count = 50)
     {
-        var contacts = await contactsService.GetContacts(startIndex, count);
+        var contacts = await contactsService.GetContacts(startIndex, count, cancellationToken);
         
         return Ok(contacts);
     }
     
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetContactDetails([Required] int id)
+    public async Task<IActionResult> GetContactDetails([Required] int id, CancellationToken cancellationToken)
     {
-        var contact = await contactsService.GetContact(id);
+        var contact = await contactsService.GetContact(id, cancellationToken);
         if (contact == null)
             return NotFound();
         

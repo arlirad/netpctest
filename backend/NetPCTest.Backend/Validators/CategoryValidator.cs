@@ -9,9 +9,9 @@ namespace NetPCTest.Backend.Validators;
 
 public class CategoryValidator(IRepository repository) : ICategoryValidator
 {
-    public async Task<CategoryValidationResult> Validate(Contact newContact)
+    public async Task<CategoryValidationResult> Validate(Contact newContact, CancellationToken cancellationToken)
     {
-        var category = await repository.GetCategory(newContact.CategoryId);
+        var category = await repository.GetCategory(newContact.CategoryId, cancellationToken);
 
         if (category is null)
             return new CategoryValidationResult
@@ -35,7 +35,7 @@ public class CategoryValidator(IRepository repository) : ICategoryValidator
             };
 
         if (newContact.SubCategoryId.HasValue && 
-            await repository.GetSubCategory(newContact.SubCategoryId.Value) == null)
+            await repository.GetSubCategory(newContact.SubCategoryId.Value, cancellationToken) == null)
             return new CategoryValidationResult
             {
                 Success = false,

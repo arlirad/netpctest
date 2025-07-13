@@ -17,12 +17,12 @@ public class ContactsService(
     ICategoryValidator validator
 ) : IContactsService
 {
-    public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count) 
-        => mapper.Map<List<ContactBriefDto>>(await repository.GetContacts(startIndex, count));
+    public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count, CancellationToken cancellationToken) 
+        => mapper.Map<List<ContactBriefDto>>(await repository.GetContacts(startIndex, count, cancellationToken));
 
-    public async Task<ContactDto?> GetContact(int id)
+    public async Task<ContactDto?> GetContact(int id, CancellationToken cancellationToken)
     {
-        var contact = await repository.GetContact(id);
+        var contact = await repository.GetContact(id, cancellationToken);
         
         return contact == null ? null : mapper.Map<ContactDto>(contact);
     }

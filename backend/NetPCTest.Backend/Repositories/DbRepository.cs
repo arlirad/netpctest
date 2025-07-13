@@ -8,7 +8,7 @@ namespace NetPCTest.Backend.Repositories;
 
 public class DbRepository(AppDbContext context) : IRepository
 {
-    public async Task<List<ContactBrief>> GetContacts(int startIndex, int count)
+    public async Task<List<ContactBrief>> GetContacts(int startIndex, int count, CancellationToken cancellationToken)
     {
         // Here we first .Select to make sure EF doesn't create a SQL query with columns that we are not going to use
         // anyway. Then, we .Select to create the DTOs.
@@ -23,20 +23,20 @@ public class DbRepository(AppDbContext context) : IRepository
                 Name = c.Name,
                 Surname = c.Surname,
             })
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         return contacts;
     }
 
-    public async Task<Contact?> GetContactByEmail(string email)
+    public async Task<Contact?> GetContactByEmail(string email, CancellationToken cancellationToken)
         => await context.Contacts
             .Where(c => c.Email == email)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<Contact?> GetContact(int id)
+    public async Task<Contact?> GetContact(int id, CancellationToken cancellationToken)
         => await context.Contacts
             .Where(c => c.Id == id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<int?> CreateContact(Contact contact)
     {
@@ -53,14 +53,14 @@ public class DbRepository(AppDbContext context) : IRepository
         }
     }
 
-    public async Task<Category?> GetCategory(int id)
+    public async Task<Category?> GetCategory(int id, CancellationToken cancellationToken)
         => await context.Categories
             .Include(c => c.SubCategories)
-            .FirstOrDefaultAsync(c => c.Id == id);
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     
-    public async Task<SubCategory?> GetSubCategory(int id)
+    public async Task<SubCategory?> GetSubCategory(int id, CancellationToken cancellationToken)
         => await context.SubCategories
-            .FirstOrDefaultAsync(s => s.Id == id);
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
     public async Task<bool> UpdateContact(int id, Contact contact)
     {
