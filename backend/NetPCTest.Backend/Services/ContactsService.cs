@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
@@ -7,7 +8,7 @@ using NetPCTest.Backend.Results;
 
 namespace NetPCTest.Backend.Services;
 
-public class ContactsService(AppDbContext context, IPasswordHasher<Contact> passwordHasher) : IContactsService
+public class ContactsService(AppDbContext context, IPasswordHasher<Contact> passwordHasher, IMapper mapper) : IContactsService
 {
     public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count)
     {
@@ -30,35 +31,12 @@ public class ContactsService(AppDbContext context, IPasswordHasher<Contact> pass
             .Where(c => c.Id == id)
             .FirstOrDefaultAsync();
         
-        if (contact == null)
-            return null;
-
-        return new ContactDetailsDto
-        {
-            Id = contact.Id,
-            Name = contact.Name,
-            Surname = contact.Surname,
-            Email = contact.Email,
-            Phone = contact.Phone,
-            BirthDate = contact.BirthDate,
-            CategoryId = contact.CategoryId,
-            SubCategoryId = contact.SubCategoryId,
-        };
+        return contact == null ? null : mapper.Map<ContactDetailsDto>(contact);
     }
     
     public async Task<CreateContactResult> CreateContact(ContactCreationDto contactCreationDto)
     {
-        var newContact = new Contact
-        {
-            Name = contactCreationDto.Name,
-            Surname = contactCreationDto.Surname,
-            Email = contactCreationDto.Email,
-            Phone = contactCreationDto.Phone,
-            BirthDate = contactCreationDto.BirthDate,
-            CategoryId = contactCreationDto.CategoryId,
-            SubCategoryId = contactCreationDto.SubCategoryId,
-            CustomSubCategory = contactCreationDto.CustomSubCategory,
-        };
+        var newContact = mapper.Map<Contact>(contactCreationDto);
 
         var verificationResult = await VerifyCategoryAndSubCategory(newContact, contactCreationDto);
         

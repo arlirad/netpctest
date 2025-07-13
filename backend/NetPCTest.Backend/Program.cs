@@ -3,14 +3,23 @@
  * Swagger: /swagger
  */
 
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend;
 using NetPCTest.Backend.Data;
+using NetPCTest.Backend.Mappers;
 using NetPCTest.Backend.Models;
 using NetPCTest.Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var loggerFactory = LoggerFactory.Create(builder =>
+{
+    builder
+        .AddFilter("AutoMapper", LogLevel.Debug)
+        .AddConsole();
+});
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddCors(options =>
@@ -27,9 +36,23 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddRouting(options => 
     options.LowercaseUrls = true);
+
+// Dependency Injection stuff.
 builder.Services.AddSingleton<IPasswordHasher<Contact>, PasswordHasher<Contact>>();
 builder.Services.AddScoped<IContactsService, ContactsService>();
 builder.Services.AddScoped<ILocalisationService, LocalisationService>();
+builder.Services.AddSingleton<IMapper>(provider =>
+{
+    var requiredService = provider.GetRequiredService<ILoggerFactory>();
+
+    var config = new MapperConfiguration(cfg =>
+    {
+        cfg.AddProfile(new MappingProfile());
+    }, requiredService);
+    
+    return config.CreateMapper();
+});
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
