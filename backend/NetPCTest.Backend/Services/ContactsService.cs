@@ -7,10 +7,8 @@ using NetPCTest.Backend.Results;
 
 namespace NetPCTest.Backend.Services;
 
-public class ContactsService(AppDbContext context) : IContactsService
+public class ContactsService(AppDbContext context, IPasswordHasher<Contact> passwordHasher) : IContactsService
 {
-    private readonly PasswordHasher<Contact> _passwordHasher = new PasswordHasher<Contact>();
-    
     public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count)
     {
         // Here we first .Select to make sure EF doesn't create a SQL query with columns that we are not going to use
@@ -82,12 +80,12 @@ public class ContactsService(AppDbContext context) : IContactsService
 
     public string HashPassword(Contact contact, string password)
     {
-        return _passwordHasher.HashPassword(contact, password);
+        return passwordHasher.HashPassword(contact, password);
     }
 
     public bool ComparePassword(Contact contact, string hashedPassword, string providedPlainPassword)
     {
-        var result = _passwordHasher.VerifyHashedPassword(contact, hashedPassword, providedPlainPassword);
+        var result = passwordHasher.VerifyHashedPassword(contact, hashedPassword, providedPlainPassword);
         
         return result != PasswordVerificationResult.Failed;
     }

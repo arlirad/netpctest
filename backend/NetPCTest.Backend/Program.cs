@@ -3,6 +3,7 @@
  * Swagger: /swagger
  */
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend;
 using NetPCTest.Backend.Data;
@@ -26,6 +27,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddRouting(options => 
     options.LowercaseUrls = true);
+builder.Services.AddSingleton<IPasswordHasher<Contact>, PasswordHasher<Contact>>();
 builder.Services.AddScoped<IContactsService, ContactsService>();
 builder.Services.AddScoped<ILocalisationService, LocalisationService>();
 builder.Services.AddControllers();
