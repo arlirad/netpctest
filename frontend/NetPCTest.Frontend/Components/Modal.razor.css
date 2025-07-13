@@ -22,7 +22,7 @@
 
 .close {
     position: absolute;
-    top: 0.50em;
+    top: -0.50em;
     right: 1.10em;
     font-size: 1.75em;
     border: none;
@@ -34,4 +34,25 @@
 h2 {
     margin-block-start: 0.42em;
     margin-right: 2.00rem;
+}
+
+label,
+input,
+button {
+    display: block;
+}
+
+label {
+    margin-bottom: 0.20em;
+    text-align: left;
+}
+
+input {
+    margin-bottom: 0.40em;
+    width: 100%;
+}
+
+button {
+    color: #eeeeee;
+    margin-top: 1.00em;
 }

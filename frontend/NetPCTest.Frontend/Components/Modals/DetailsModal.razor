@@ -1,0 +1,64 @@
+@using NetPCTest.Frontend.Components;
+@using NetPCTest.Frontend.Dtos
+@using NetPCTest.Frontend.Models
+
+<Modal Header="ui.contact.details" OnClose="Close" MinimumWidth="500px">
+    <label><L Key="ui.contact.details.name"/></label>
+    <p class="data">@ContactDto.Name</p>
+    <label><L Key="ui.contact.details.surname"/></label>
+    <p class="data">@ContactDto.Surname</p>
+    <label><L Key="ui.contact.details.email"/></label>
+    <p class="data">@ContactDto.Email</p>
+    <label><L Key="ui.contact.details.phone"/></label>
+    <p class="data">@ContactDto.Phone</p>
+    <label><L Key="ui.contact.details.birthdate"/></label>
+    <p class="data">@ContactDto.BirthDate</p>
+    <hr noshade/>
+    
+    <label><L Key="ui.contact.details.category"/></label>
+    <p class="data">@ContactDto.CategoryId</p>
+    
+    @if (ContactDto.SubCategoryId != null)
+    {
+        <label><L Key="ui.contact.details.subcategory"/></label>
+        <p class="data">@ContactDto.SubCategoryId</p>
+    }
+    else
+    {
+        <label><L Key="ui.contact.details.custom_subcategory"/></label>
+        <p class="data">@ContactDto.CustomSubCategory</p>
+    }
+    <hr noshade/>
+    
+    <button class="layer2" @onclick="ShowEdit"><L Key="ui.contact.details.edit"/></button>
+</Modal>
+
+@if (_showEdit)
+{
+    <EditModal OnClose="CloseEdit"></EditModal>
+}
+
+@code {
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+    [Parameter]
+    public ContactDto ContactDto { get; set; }
+    
+    private bool _showEdit = false;
+
+    private void ShowEdit()
+    {
+        _showEdit = true;
+    }
+
+    private void CloseEdit()
+    {
+        _showEdit = false;
+    }
+    
+    private async Task Close()
+    {
+        _showEdit = false;
+        await OnClose.InvokeAsync();
+    }
+}

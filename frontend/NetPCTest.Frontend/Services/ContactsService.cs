@@ -17,6 +17,14 @@ public class ContactsService(HttpClient httpClient, IOptions<ApiOptions> apiOpti
 
         return response.Count;
     }
+
+    public async Task<ContactDto> GetContact(int contactBriefId)
+    {
+        var contact = 
+            await httpClient.GetFromJsonAsync<ContactDto>($"contacts/{contactBriefId}");
+
+        return contact;
+    }
     
     public async Task<List<ContactBriefDto>?> GetContacts(int start, int count)
     {

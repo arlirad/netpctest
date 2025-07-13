@@ -7,11 +7,6 @@
     <LoginModal OnClose="CloseLogin"></LoginModal>
 }
 
-@if (_showEdit)
-{
-    
-}
-
 <NavBar OnClickLogin="ShowLogin"/>
 <main>
     <ContactList/>
@@ -19,8 +14,7 @@
 
 @code {
     private bool _showLogin = false;
-    private bool _showEdit = false;
 
-    private async Task ShowLogin() => _showLogin = true;
-    private async Task CloseLogin() => _showLogin = false;
+    private void ShowLogin() => _showLogin = true;
+    private void CloseLogin() => _showLogin = false;
 }

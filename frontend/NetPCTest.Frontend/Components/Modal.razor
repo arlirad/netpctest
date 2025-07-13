@@ -1,5 +1,5 @@
 <div class="own-modal-backdrop">
-    <div class="own-modal layer3">
+    <div class="own-modal layer3" style="min-width: @MinimumWidth;">
         <h2><L Key="@Header"/></h2>
         <button class="close" @onclick="Close">&#10005;</button>
         <hr noshade>
@@ -17,6 +17,9 @@
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] 
+    public string MinimumWidth { get; set; } = "300px";
 
     private async Task Close() => await OnClose.InvokeAsync();
 }

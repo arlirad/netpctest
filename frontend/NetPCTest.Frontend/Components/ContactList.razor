@@ -1,5 +1,6 @@
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Services
+@using NetPCTest.Frontend.Components.Modals
 @inject ContactsService ContactsService
 
 @if (ContactsBrief is null)
@@ -21,14 +22,20 @@ else
                 <L Key="ui.list.contact.surname"/>
             </th>
         </tr>
+        
         @foreach (var contact in ContactsBrief)
         {
             @* XSS need not apply, Blazor treats this as "InnerText" and not "InnerHtml". *@
-            <tr>
+            <tr @onclick="() => ShowDetails(contact)">
                 <td>@contact.Id</td><td>@contact.Name</td><td>@contact.Surname</td>
             </tr>
         }
     </table>
+}
+
+@if (_showDetails)
+{
+    <DetailsModal ContactDto="SelectedContactDto" OnClose="CloseDetails"></DetailsModal>
 }
 
 @code {
@@ -38,6 +45,9 @@ else
     private int TotalContactCount { get; set; }
     private int RangeStart { get; set; }
     private int RangeEnd { get; set; }
+    private ContactDto SelectedContactDto { get; set; }
+    
+    private bool _showDetails = false;
 
     public async Task Get(int start, int end)
     {
@@ -51,10 +61,21 @@ else
             return;
         
         ContactsBrief = contacts;
-    } 
+    }
 
     protected override async Task OnInitializedAsync()
     {
         await Get(0, 50);
     }
+
+    private async Task ShowDetails(ContactBriefDto contactBrief)
+    {
+        var contact = await ContactsService.GetContact(contactBrief.Id);
+        SelectedContactDto = contact;
+        
+        _showDetails = true;
+        StateHasChanged();
+    }
+
+    private async Task CloseDetails() => _showDetails = false;
 }

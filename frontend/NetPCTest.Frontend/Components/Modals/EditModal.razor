@@ -1,0 +1,32 @@
+@using NetPCTest.Frontend.Components;
+@using NetPCTest.Frontend.Dtos
+@using NetPCTest.Frontend.Models
+
+<Modal Header="ui.contact.edit" OnClose="Close" MinimumWidth="500px">
+    <EditForm Model="@FormData" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        
+        <label><L Key="ui.login.email"/></label>
+        <input @bind="FormData.Email" class="layer2 layer2-input" type="email" required />
+
+        <button class="layer2" type="submit"><L Key="ui.login.submit"/></button>
+    </EditForm>
+</Modal>
+
+@code {
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private ContactEditFormModel FormData { get; set; } = new ContactEditFormModel()
+    {
+        Email = "aa.aa@bb.cc",
+    };
+
+    private void HandleSubmit()
+    {
+        
+    }
+
+    private async Task Close() => await OnClose.InvokeAsync();
+}
