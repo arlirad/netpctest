@@ -1,4 +1,10 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@using Microsoft.Extensions.Options
+@using NetPCTest.Frontend.Configuration
+@using NetPCTest.Frontend.Services
+@inject LocalisationService LocalisationService
+@inject IOptions<LocaleOptions> LocaleOptions
+
+<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.Layout)"/>
         <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
@@ -10,3 +16,21 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LocalisationService.RefreshLocalesAsync();
+
+        var locales = LocalisationService.AvailableLocales;
+
+        if (!locales.Contains(LocaleOptions.Value.DefaultLocale))
+            throw new Exception("DefaultLocale is not in the available locales list.");
+
+        await LocalisationService.SetLocaleAsync(LocaleOptions.Value.DefaultLocale);
+            
+        await base.OnInitializedAsync();
+    }
+
+}

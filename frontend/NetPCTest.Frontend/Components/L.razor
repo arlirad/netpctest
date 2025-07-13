@@ -1,0 +1,19 @@
+@using NetPCTest.Frontend.Services
+@inject LocalisationService LocalisationService
+
+@LocalisationService.Translate(Key)
+
+@code {
+    [Parameter] 
+    public string Key { get; set; } = "";
+
+    protected override void OnInitialized()
+    {
+        LocalisationService.OnLocaleChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        LocalisationService.OnLocaleChanged -= StateHasChanged;
+    }
+}
