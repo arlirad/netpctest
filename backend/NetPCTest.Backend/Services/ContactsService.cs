@@ -4,40 +4,27 @@ using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Dtos;
 using NetPCTest.Backend.Models;
+using NetPCTest.Backend.Repositories;
 using NetPCTest.Backend.Results;
 using NetPCTest.Backend.Validators;
 
 namespace NetPCTest.Backend.Services;
 
 public class ContactsService(
-    AppDbContext context, 
+    IRepository repository, 
     IPasswordHasher<Contact> passwordHasher, 
     IMapper mapper,
     ICategoryValidator validator
 ) : IContactsService
 {
-    public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count)
-    {
-        // Here we first .Select to make sure EF doesn't create a SQL query with columns that we are not going to use
-        // anyway. Then, we .Select to create the DTOs.
-        var contacts = await context.Contacts
-            .Select(c => new { c.Id, c.Name, c.Surname })
-            .OrderBy(c => c.Id)
-            .Skip(startIndex)
-            .Take(count)
-            .Select(c => ContactBriefDto.FromIdNameSurname(c.Id, c.Name, c.Surname))
-            .ToListAsync();
-        
-        return contacts;
-    }
+    public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count) 
+        => mapper.Map<List<ContactBriefDto>>(await repository.GetContacts(startIndex, count));
 
-    public async Task<ContactDetailsDto?> GetContactDetails(int id)
+    public async Task<ContactDto?> GetContact(int id)
     {
-        var contact = await context.Contacts
-            .Where(c => c.Id == id)
-            .FirstOrDefaultAsync();
+        var contact = await repository.GetContact(id);
         
-        return contact == null ? null : mapper.Map<ContactDetailsDto>(contact);
+        return contact == null ? null : mapper.Map<ContactDto>(contact);
     }
     
     public async Task<CreateContactResult> CreateContact(ContactCreationDto contactCreationDto)
@@ -51,14 +38,20 @@ public class ContactsService(
         
         newContact.PasswordHash = HashPassword(newContact, contactCreationDto.Password);
         
-        var addResult = await context.Contacts.AddAsync(newContact);
-        await context.SaveChangesAsync();
+        var id = await repository.CreateContact(newContact);
+        
+        if (id is null)
+            return new CreateContactResult
+            {
+                Success = false, 
+                Message = "contacts.creation.failure"
+            };
         
         return new CreateContactResult
         {
             Success = true, 
             Message = "contacts.creation.success",
-            Id = addResult.Entity.Id,
+            Id = id.Value,
         };
     }
 

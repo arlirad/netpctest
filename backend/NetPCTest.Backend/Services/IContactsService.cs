@@ -6,9 +6,9 @@ namespace NetPCTest.Backend.Services;
 
 public interface IContactsService
 {
-    Task<List<ContactBriefDto>> GetContacts(int startIndex, int count);
+    public Task<List<ContactBriefDto>> GetContacts(int startIndex, int count);
     Task<CreateContactResult> CreateContact(ContactCreationDto contactCreationDto);
     string HashPassword(Contact contact, string password);
     bool ComparePassword(Contact contact, string hashedPassword, string providedPlainPassword);
-    Task<ContactDetailsDto?> GetContactDetails(int id);
+    Task<ContactDto?> GetContact(int id);
 }

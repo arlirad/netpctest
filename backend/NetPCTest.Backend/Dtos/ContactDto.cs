@@ -3,7 +3,7 @@ using NetPCTest.Backend.Models;
 namespace NetPCTest.Backend.Dtos;
 
 // Here we omit the password hash and things specific to relations in EF.
-public class ContactDetailsDto
+public class ContactDto
 {
     public int Id { get; set; }
     public required string Name { get; set; }

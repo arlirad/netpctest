@@ -11,6 +11,7 @@ using NetPCTest.Backend;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Mappers;
 using NetPCTest.Backend.Models;
+using NetPCTest.Backend.Repositories;
 using NetPCTest.Backend.Services;
 using NetPCTest.Backend.Validators;
 
@@ -40,6 +41,7 @@ builder.Services.AddRouting(options =>
 
 // Dependency Injection stuff.
 builder.Services.AddSingleton<IPasswordHasher<Contact>, PasswordHasher<Contact>>();
+builder.Services.AddScoped<IRepository, DbRepository>();
 builder.Services.AddScoped<ICategoryValidator, CategoryValidator>();
 builder.Services.AddScoped<IContactsService, ContactsService>();
 builder.Services.AddScoped<ILocalisationService, LocalisationService>();

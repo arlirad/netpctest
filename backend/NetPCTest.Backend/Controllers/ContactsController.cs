@@ -24,7 +24,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetContactDetails([Required] int id)
     {
-        var contact = await contactsService.GetContactDetails(id);
+        var contact = await contactsService.GetContact(id);
         
         if (contact == null)
             return NotFound();
