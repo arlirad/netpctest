@@ -1,6 +1,8 @@
 @using NetPCTest.Frontend.Components;
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Models
+@using NetPCTest.Frontend.Services
+@inject CategoryService CategoryService
 
 <Modal Header="ui.contact.details" OnClose="Close" MinimumWidth="500px">
     <label><L Key="ui.contact.details.name"/></label>
@@ -16,19 +18,18 @@
     <hr noshade/>
     
     <label><L Key="ui.contact.details.category"/></label>
-    <p class="data">@ContactDto.CategoryId</p>
+    <p class="data"><L Key="@CategoryService.GetCategory(ContactDto.CategoryId)?.Name"/></p>
     
     @if (ContactDto.SubCategoryId != null)
     {
         <label><L Key="ui.contact.details.subcategory"/></label>
-        <p class="data">@ContactDto.SubCategoryId</p>
+        <p class="data"><L Key="@CategoryService.GetSubCategory(ContactDto.SubCategoryId.Value)?.Name"/></p>
     }
     else
     {
         <label><L Key="ui.contact.details.custom_subcategory"/></label>
         <p class="data">@ContactDto.CustomSubCategory</p>
     }
-    <hr noshade/>
     
     <button class="layer2" @onclick="ShowEdit"><L Key="ui.contact.details.edit"/></button>
 </Modal>

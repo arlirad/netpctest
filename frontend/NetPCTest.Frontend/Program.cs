@@ -16,6 +16,7 @@ builder.Services.Configure<ApiOptions>(builder.Configuration.GetSection("api"));
 builder.Services.Configure<LocaleOptions>(builder.Configuration.GetSection("locale"));
 
 builder.Services.AddSingleton<ContactsService>();
+builder.Services.AddSingleton<CategoryService>();
 builder.Services.AddSingleton<LocalisationService>();
 builder.Services.AddSingleton(sp =>
     {

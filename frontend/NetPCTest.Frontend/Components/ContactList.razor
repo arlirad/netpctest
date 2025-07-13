@@ -2,6 +2,7 @@
 @using NetPCTest.Frontend.Services
 @using NetPCTest.Frontend.Components.Modals
 @inject ContactsService ContactsService
+@inject CategoryService CategoryService
 
 @if (ContactsBrief is null)
 {
@@ -72,6 +73,8 @@ else
     {
         var contact = await ContactsService.GetContact(contactBrief.Id);
         SelectedContactDto = contact;
+
+        await CategoryService.RefreshCategories();
         
         _showDetails = true;
         StateHasChanged();

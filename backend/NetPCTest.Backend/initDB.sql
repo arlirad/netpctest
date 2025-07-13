@@ -128,38 +128,38 @@ values (1, 'ui.login', 'Logowanie'),
        (2, 'ui.list.contact.surname', 'Surname');
 
 -- Sample contact data
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Ubi',
            'Kiv',
            'ubi.kiv@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           548174073,
-           '2001-07-13 00:00:00',
-           0,
-           3
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Onva',
-           'Irod',
-           'onva.irod@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           990920573,
+           379294294,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Onva',
+           'Irod',
+           'onva.irod@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           808506671,
+           '2001-07-13 00:00:00',
+           2,
+           4
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Torli',
            'Narvia',
            'torli.narvia@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           544160417,
+           518369885,
            '2001-07-13 00:00:00',
-           2,
-           1
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -167,10 +167,10 @@ values (
            'Apan',
            'ostar.apan@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           448166582,
+           439845936,
            '2001-07-13 00:00:00',
-           0,
-           4
+           2,
+           2
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -178,7 +178,7 @@ values (
            'Emupit',
            'uhia.emupit@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           366585133,
+           579800890,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -189,43 +189,43 @@ values (
            'Kalia',
            'harleter.kalia@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           500887762,
+           303158828,
            '2001-07-13 00:00:00',
            2,
-           3
+           1
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Itul',
            'Eter',
            'itul.eter@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           730654643,
-           '2001-07-13 00:00:00',
-           0,
-           3
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Eketri',
-           'Tivrel',
-           'eketri.tivrel@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           365603511,
+           567264691,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Eketri',
+           'Tivrel',
+           'eketri.tivrel@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           569613673,
+           '2001-07-13 00:00:00',
+           2,
+           1
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Nuvdi',
            'Montal',
            'nuvdi.montal@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           730210460,
+           160543382,
            '2001-07-13 00:00:00',
-           2,
-           4
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -233,10 +233,10 @@ values (
            'Med',
            'sev.med@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           659402245,
+           980686425,
            '2001-07-13 00:00:00',
-           0,
-           1
+           2,
+           4
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -244,7 +244,7 @@ values (
            'Gin',
            'nusi.gin@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           802103915,
+           778643908,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -255,43 +255,43 @@ values (
            'Orvi',
            'distun.orvi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           818668767,
+           938592570,
            '2001-07-13 00:00:00',
            2,
-           3
+           4
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Ati',
            'Ater',
            'ati.ater@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           970897760,
-           '2001-07-13 00:00:00',
-           0,
-           4
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Ola',
-           'Udur',
-           'ola.udur@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           127854084,
+           351029598,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Ola',
+           'Udur',
+           'ola.udur@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           843379211,
+           '2001-07-13 00:00:00',
+           2,
+           4
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Lesapa',
            'Tar',
            'lesapa.tar@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           208694741,
+           918333184,
            '2001-07-13 00:00:00',
-           2,
-           4
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -299,10 +299,10 @@ values (
            'Ret',
            'otenvi.ret@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           360835977,
+           587988467,
            '2001-07-13 00:00:00',
-           0,
-           1
+           2,
+           3
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -310,7 +310,7 @@ values (
            'Nustun',
            'savra.nustun@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           922237473,
+           385004690,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -321,43 +321,43 @@ values (
            'Ovdi',
            'ivra.ovdi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           232058044,
+           619171601,
            '2001-07-13 00:00:00',
            2,
-           2
+           3
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Dav',
            'Uvrupa',
            'dav.uvrupa@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           146332560,
-           '2001-07-13 00:00:00',
-           0,
-           1
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Etrud',
-           'Goba',
-           'etrud.goba@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           634808869,
+           293923524,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Etrud',
+           'Goba',
+           'etrud.goba@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           802817090,
+           '2001-07-13 00:00:00',
+           2,
+           1
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Onvet',
            'Pestud',
            'onvet.pestud@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           841438326,
+           705789552,
            '2001-07-13 00:00:00',
-           2,
-           2
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -365,10 +365,10 @@ values (
            'Ental',
            'kopa.ental@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           596094862,
+           513983346,
            '2001-07-13 00:00:00',
-           0,
-           3
+           2,
+           4
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -376,7 +376,7 @@ values (
            'Arvi',
            'niva.arvi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           621436422,
+           298379167,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -387,43 +387,43 @@ values (
            'Pihorud',
            'verla.pihorud@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           224743424,
+           803957899,
            '2001-07-13 00:00:00',
            2,
-           1
+           2
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Agevrel',
            'Oki',
            'agevrel.oki@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           581287410,
-           '2001-07-13 00:00:00',
-           0,
-           2
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Ega',
-           'Hev',
-           'ega.hev@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           307888216,
+           245211636,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Ega',
+           'Hev',
+           'ega.hev@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           771069188,
+           '2001-07-13 00:00:00',
+           2,
+           3
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Mugia',
            'Usoki',
            'mugia.usoki@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           699712354,
+           825055327,
            '2001-07-13 00:00:00',
-           2,
-           1
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -431,10 +431,10 @@ values (
            'Lutri',
            'oriba.lutri@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           817938026,
+           508082409,
            '2001-07-13 00:00:00',
-           0,
-           3
+           2,
+           2
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -442,7 +442,7 @@ values (
            'Lenved',
            'uki.lenved@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           733290221,
+           625002961,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -453,43 +453,43 @@ values (
            'Dir',
            'led.dir@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           310146523,
+           132614882,
            '2001-07-13 00:00:00',
            2,
            4
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Povdir',
            'Luti',
            'povdir.luti@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           397768890,
-           '2001-07-13 00:00:00',
-           0,
-           2
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Vun',
-           'Onvi',
-           'vun.onvi@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           438534371,
+           806928058,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Vun',
+           'Onvi',
+           'vun.onvi@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           542407000,
+           '2001-07-13 00:00:00',
+           2,
+           3
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Nit',
            'Pet',
            'nit.pet@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           272285724,
+           258075356,
            '2001-07-13 00:00:00',
-           2,
-           1
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -497,10 +497,10 @@ values (
            'Mastekonvi',
            'rugi.mastekonvi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           936269670,
+           242671967,
            '2001-07-13 00:00:00',
-           0,
-           4
+           2,
+           3
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -508,7 +508,7 @@ values (
            'Asti',
            'usutra.asti@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           388530551,
+           947845766,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -519,43 +519,43 @@ values (
            'Lovden',
            'imarvud.lovden@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           117322238,
+           314634254,
            '2001-07-13 00:00:00',
            2,
-           4
+           3
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Etrapar',
            'Nirul',
            'etrapar.nirul@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           914391391,
-           '2001-07-13 00:00:00',
-           0,
-           3
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Pil',
-           'Ruhovdi',
-           'pil.ruhovdi@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           189782867,
+           247127532,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Pil',
+           'Ruhovdi',
+           'pil.ruhovdi@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           959797101,
+           '2001-07-13 00:00:00',
+           2,
+           1
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Ilet',
            'Evrad',
            'ilet.evrad@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           188554296,
+           727089682,
            '2001-07-13 00:00:00',
-           2,
-           3
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -563,10 +563,10 @@ values (
            'Mabar',
            'hubi.mabar@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           965776942,
+           985544025,
            '2001-07-13 00:00:00',
-           0,
-           1
+           2,
+           2
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -574,7 +574,7 @@ values (
            'Ril',
            'girla.ril@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           623758158,
+           425465148,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -585,43 +585,43 @@ values (
            'Atapi',
            'ner.atapi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           813660925,
+           591705974,
            '2001-07-13 00:00:00',
            2,
-           1
+           4
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Lugia',
            'Anvet',
            'lugia.anvet@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           649484564,
-           '2001-07-13 00:00:00',
-           0,
-           3
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Ovra',
-           'Hestun',
-           'ovra.hestun@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           469307570,
+           759114371,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Ovra',
+           'Hestun',
+           'ovra.hestun@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           491853793,
+           '2001-07-13 00:00:00',
+           2,
+           2
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Gasiv',
            'Ivrut',
            'gasiv.ivrut@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           544341340,
+           578190874,
            '2001-07-13 00:00:00',
-           2,
-           2
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -629,10 +629,10 @@ values (
            'Usad',
            'uber.usad@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           558237437,
+           445195954,
            '2001-07-13 00:00:00',
-           0,
-           2
+           2,
+           1
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -640,7 +640,7 @@ values (
            'Hir',
            'utal.hir@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           882467931,
+           332369066,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -651,43 +651,43 @@ values (
            'Anter',
            'ika.anter@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           651021031,
+           765422850,
            '2001-07-13 00:00:00',
            2,
-           1
+           3
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Loda',
            'Mor',
            'loda.mor@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           117111069,
-           '2001-07-13 00:00:00',
-           0,
-           1
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Nerlod',
-           'Anekir',
-           'nerlod.anekir@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           782291861,
+           548682908,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Nerlod',
+           'Anekir',
+           'nerlod.anekir@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           993571873,
+           '2001-07-13 00:00:00',
+           2,
+           4
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Usa',
            'Savdi',
            'usa.savdi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           628980734,
+           788638519,
            '2001-07-13 00:00:00',
-           2,
-           2
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -695,10 +695,10 @@ values (
            'Uketreka',
            'dakia.uketreka@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           632813292,
+           908961530,
            '2001-07-13 00:00:00',
-           0,
-           4
+           2,
+           1
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -706,7 +706,7 @@ values (
            'Orvi',
            'upol.orvi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           558250752,
+           419603287,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -717,43 +717,43 @@ values (
            'Nel',
            'put.nel@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           894653437,
+           445734664,
            '2001-07-13 00:00:00',
            2,
-           4
+           1
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Unti',
            'Giv',
            'unti.giv@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           987135142,
-           '2001-07-13 00:00:00',
-           0,
-           3
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Rul',
-           'Moki',
-           'rul.moki@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           955153508,
+           482425758,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Rul',
+           'Moki',
+           'rul.moki@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           217164454,
+           '2001-07-13 00:00:00',
+           2,
+           2
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Silenut',
            'Uhi',
            'silenut.uhi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           368271375,
+           420648176,
            '2001-07-13 00:00:00',
-           2,
-           3
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -761,9 +761,9 @@ values (
            'Elada',
            'orvabar.elada@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           901711482,
+           200184881,
            '2001-07-13 00:00:00',
-           0,
+           2,
            4
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
@@ -772,7 +772,7 @@ values (
            'Unil',
            'ohit.unil@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           641514671,
+           736051299,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -783,43 +783,43 @@ values (
            'Ihar',
            'segia.ihar@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           532821652,
+           534436984,
            '2001-07-13 00:00:00',
            2,
-           1
+           3
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Erviha',
            'Okin',
            'erviha.okin@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           870850309,
-           '2001-07-13 00:00:00',
-           0,
-           2
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Ivren',
-           'Hovrubil',
-           'ivren.hovrubil@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           245122772,
+           853281028,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Ivren',
+           'Hovrubil',
+           'ivren.hovrubil@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           360075312,
+           '2001-07-13 00:00:00',
+           2,
+           3
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Envapa',
            'Gur',
            'envapa.gur@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           506775313,
+           870026850,
            '2001-07-13 00:00:00',
-           2,
-           2
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -827,10 +827,10 @@ values (
            'Supiha',
            'tovdin.supiha@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           574581965,
+           462831823,
            '2001-07-13 00:00:00',
-           0,
-           2
+           2,
+           1
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
@@ -838,7 +838,7 @@ values (
            'Onar',
            'epi.onar@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           852372289,
+           966147174,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -849,43 +849,43 @@ values (
            'Gapa',
            'ohia.gapa@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           438445198,
+           904031723,
            '2001-07-13 00:00:00',
            2,
-           1
+           2
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Nuvi',
            'Verlagot',
            'nuvi.verlagot@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           127256823,
-           '2001-07-13 00:00:00',
-           0,
-           4
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Maved',
-           'Tasia',
-           'maved.tasia@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           914904663,
+           916452590,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Maved',
+           'Tasia',
+           'maved.tasia@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           599361934,
+           '2001-07-13 00:00:00',
+           2,
+           2
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Hegola',
            'Nuhi',
            'hegola.nuhi@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           634169303,
+           453472746,
            '2001-07-13 00:00:00',
-           2,
-           3
+           1,
+           'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
@@ -893,9 +893,9 @@ values (
            'Intad',
            'guna.intad@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           211832474,
+           135188885,
            '2001-07-13 00:00:00',
-           0,
+           2,
            1
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
@@ -904,7 +904,7 @@ values (
            'Eki',
            'gev.eki@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           903712967,
+           336713734,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
@@ -915,41 +915,41 @@ values (
            'Ken',
            'tukirvia.ken@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           945730404,
+           609381943,
            '2001-07-13 00:00:00',
            2,
            2
        );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
 values (
            'Uvduri',
            'Dan',
            'uvduri.dan@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           249326076,
-           '2001-07-13 00:00:00',
-           0,
-           2
-       );
-insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
-values (
-           'Muginver',
-           'Otrehi',
-           'muginver.otrehi@test.edu',
-           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           392012765,
+           856419352,
            '2001-07-13 00:00:00',
            1,
            'Lorem ipsum dolor sit amet.'
        );
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, SubCategoryId)
 values (
+           'Muginver',
+           'Otrehi',
+           'muginver.otrehi@test.edu',
+           'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+           719204616,
+           '2001-07-13 00:00:00',
+           2,
+           1
+       );
+insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)
+values (
            'Revdesi',
            'Urveha',
            'revdesi.urveha@test.edu',
            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
-           364372021,
+           898316659,
            '2001-07-13 00:00:00',
-           2,
-           4
+           1,
+           'Lorem ipsum dolor sit amet.'
        );

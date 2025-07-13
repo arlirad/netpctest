@@ -21,4 +21,4 @@ def printStatement(name, surname, category):
 
 
 for i in range(0, int(len(names) / 2), 2):
-    printStatement(names[i + 0], names[i + 1], int((i / 2) % 3))
+    printStatement(names[i + 0], names[i + 1], 1 + int((i / 2) % 2))
