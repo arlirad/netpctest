@@ -86,6 +86,16 @@ builder.Services.AddRateLimiter(options =>
                 QueueLimit = 0,
                 Window = TimeSpan.FromSeconds(30)
             }));
+    options.AddPolicy("categories", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+            factory: partition => new FixedWindowRateLimiterOptions
+            {
+                AutoReplenishment = true,
+                PermitLimit = 15,
+                QueueLimit = 0,
+                Window = TimeSpan.FromSeconds(15)
+            }));
 
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 });
@@ -99,6 +109,7 @@ builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IRepository, DbRepository>();
 builder.Services.AddScoped<ICategoryValidator, CategoryValidator>();
 builder.Services.AddScoped<IContactsService, ContactsService>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<ILocalisationService, LocalisationService>();
 builder.Services.AddSingleton<IMapper>(provider =>
 {

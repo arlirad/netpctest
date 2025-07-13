@@ -12,5 +12,7 @@ public class MappingProfile : Profile
         CreateMap<Contact, ContactDto>();
         CreateMap<ContactCreationDto, Contact>();
         CreateMap<ContactBrief, ContactBriefDto>();
+        CreateMap<Category, CategoryDto>();
+        CreateMap<SubCategory, SubCategoryDto>();
     }
 }

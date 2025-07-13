@@ -65,6 +65,14 @@ public class DbRepository(AppDbContext context) : IRepository
         await context.SubCategories
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
+    public async Task<int> GetCategoryCount(CancellationToken cancellationToken) =>
+        await context.Categories.CountAsync(cancellationToken);
+    
+    public async Task<List<Category>> GetCategories(CancellationToken cancellationToken) =>
+        await context.Categories
+            .Include(c => c.SubCategories)
+            .ToListAsync(cancellationToken);
+
     public async Task<bool> UpdateContact(int id, Contact contact)
     {
         try

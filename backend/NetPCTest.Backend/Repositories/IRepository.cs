@@ -12,5 +12,8 @@ public interface IRepository
     Task<int?> CreateContact(Contact contact);
     Task<Category?> GetCategory(int id, CancellationToken cancellationToken);
     Task<SubCategory?> GetSubCategory(int id, CancellationToken cancellationToken);
+    Task<int> GetCategoryCount(CancellationToken cancellationToken);
+    // Beware all ye who dare use this method. It returns the SubCategories too (under each Category).
+    Task<List<Category>> GetCategories(CancellationToken cancellationToken);
     Task<bool> UpdateContact(int contactId, Contact contact);
 }
