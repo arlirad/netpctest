@@ -14,6 +14,10 @@ using NetPCTest.Backend.Services;
 
 namespace NetPCTest.Backend.Controllers;
 
+/*
+ * Controller responsible for authenticating users (using the Contacts database).
+ * Has rate limiting on everything in order to avoid brute-force attacks.
+ */
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController(IRepository repository, IPasswordService passwordService, IConfiguration config) : Controller

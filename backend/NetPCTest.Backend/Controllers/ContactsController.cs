@@ -11,6 +11,10 @@ using NetPCTest.Backend.Services;
 
 namespace NetPCTest.Backend.Controllers;
 
+/*
+ * Controller responsible for the CRUD part of the application.
+ * Has a rate limiter GetContacts to avoid (D)DOS attacks.
+ */
 [ApiController]
 [Route("api/[controller]")]
 public class ContactsController(IContactsService contactsService) : ControllerBase

@@ -4,6 +4,9 @@ using NetPCTest.Backend.Services;
 
 namespace NetPCTest.Backend.Controllers;
 
+/*
+ * Controller responsible for providing localisation dictionaries to the frontend.
+ */
 [ApiController]
 [Route("api/[controller]")]
 public class LocalisationController(ILocalisationService localisationService) : ControllerBase
