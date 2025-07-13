@@ -7,10 +7,7 @@ namespace NetPCTest.Frontend.Services;
 public class LocalisationService(HttpClient httpClient, IOptions<ApiOptions> apiOptions)
 {
     public List<string> AvailableLocales { get; private set; } = [];
-    
-    private readonly HttpClient _httpClient = httpClient;
-    private readonly IOptions<ApiOptions> _apiOptions = apiOptions;
-    
+
     private Locale _currentLocale = new Locale("_", new Dictionary<string, string>());
 
     public Action? OnLocaleChanged { get; set; }
@@ -18,7 +15,7 @@ public class LocalisationService(HttpClient httpClient, IOptions<ApiOptions> api
     public async Task RefreshLocalesAsync()
     {
         var request = 
-            await _httpClient.GetAsync(_apiOptions.Value.BaseUrl + "/localisation");
+            await httpClient.GetAsync(apiOptions.Value.BaseUrl + "/localisation");
         var locales = await request.Content.ReadFromJsonAsync<List<string>>();
 
         if (locales != null)
@@ -28,7 +25,7 @@ public class LocalisationService(HttpClient httpClient, IOptions<ApiOptions> api
     public async Task SetLocaleAsync(string localeName)
     {
         var request = 
-            await _httpClient.GetAsync(_apiOptions.Value.BaseUrl + $"/localisation/{localeName}");
+            await httpClient.GetAsync(apiOptions.Value.BaseUrl + $"/localisation/{localeName}");
         var keyStrings = await request.Content.ReadFromJsonAsync<Dictionary<string, string>>();
 
         if (keyStrings is null)
