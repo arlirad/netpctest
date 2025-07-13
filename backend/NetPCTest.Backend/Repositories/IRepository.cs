@@ -5,6 +5,7 @@ namespace NetPCTest.Backend.Repositories;
 // We don't use CancellationTokens when it comes to modifying data in order to avoid half-written weirdness.
 public interface IRepository
 {
+    Task<int> GetContactCount(CancellationToken cancellationToken);
     Task<List<ContactBrief>> GetContacts(int startIndex, int count, CancellationToken cancellationToken);
     Task<Contact?> GetContact(int id, CancellationToken cancellationToken);
     Task<Contact?> GetContactByEmail(string email, CancellationToken cancellationToken);

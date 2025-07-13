@@ -19,6 +19,14 @@ namespace NetPCTest.Backend.Controllers;
 [Route("api/[controller]")]
 public class ContactsController(IContactsService contactsService) : ControllerBase
 {
+    [HttpGet("count")]
+    public async Task<IActionResult> GetContactCount(CancellationToken cancellationToken)
+    {
+        var count = await contactsService.GetContactCount(cancellationToken);
+        
+        return Ok(new { Count = count });
+    }
+    
     [EnableRateLimiting("list")]
     [HttpGet]
     public async Task<IActionResult> GetContacts(CancellationToken cancellationToken, int startIndex = 0, int count = 50)

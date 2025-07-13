@@ -17,8 +17,11 @@ public class ContactsService(
     ICategoryValidator validator
 ) : IContactsService
 {
-    public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count, CancellationToken cancellationToken) 
-        => mapper.Map<List<ContactBriefDto>>(await repository.GetContacts(startIndex, count, cancellationToken));
+    public Task<int> GetContactCount(CancellationToken cancellationToken) =>
+        repository.GetContactCount(cancellationToken);
+    
+    public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count, CancellationToken cancellationToken) => 
+        mapper.Map<List<ContactBriefDto>>(await repository.GetContacts(startIndex, count, cancellationToken));
 
     public async Task<ContactDto?> GetContact(int id, CancellationToken cancellationToken)
     {

@@ -10,12 +10,4 @@ public class ContactBriefDto
     public required string Name { get; set; }
     [Required]
     public required string Surname { get; set; }
-
-    public static ContactBriefDto FromIdNameSurname(int id, string name, string surname) 
-        => new() 
-        {
-            Id = id,
-            Name = name,
-            Surname = surname
-        };
 }
