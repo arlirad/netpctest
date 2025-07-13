@@ -5,10 +5,16 @@ using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Dtos;
 using NetPCTest.Backend.Models;
 using NetPCTest.Backend.Results;
+using NetPCTest.Backend.Validators;
 
 namespace NetPCTest.Backend.Services;
 
-public class ContactsService(AppDbContext context, IPasswordHasher<Contact> passwordHasher, IMapper mapper) : IContactsService
+public class ContactsService(
+    AppDbContext context, 
+    IPasswordHasher<Contact> passwordHasher, 
+    IMapper mapper,
+    ICategoryValidator validator
+) : IContactsService
 {
     public async Task<List<ContactBriefDto>> GetContacts(int startIndex, int count)
     {
@@ -38,7 +44,7 @@ public class ContactsService(AppDbContext context, IPasswordHasher<Contact> pass
     {
         var newContact = mapper.Map<Contact>(contactCreationDto);
 
-        var verificationResult = await VerifyCategoryAndSubCategory(newContact, contactCreationDto);
+        var verificationResult = await validator.Validate(newContact, contactCreationDto);
         
         if (verificationResult is not null)
             return verificationResult;
@@ -66,51 +72,5 @@ public class ContactsService(AppDbContext context, IPasswordHasher<Contact> pass
         var result = passwordHasher.VerifyHashedPassword(contact, hashedPassword, providedPlainPassword);
         
         return result != PasswordVerificationResult.Failed;
-    }
-
-    private async Task<CreateContactResult?> VerifyCategoryAndSubCategory(Contact newContact, ContactCreationDto contactCreationDto)
-    {
-        var category = await context.Categories
-            .Include(c => c.SubCategories)
-            .FirstOrDefaultAsync(c => c.Id == newContact.CategoryId);
-
-        if (category is null)
-            return new CreateContactResult
-            {
-                Success = false,
-                Message = "contacts.creation.category.doesnt_exist",
-            };
-
-        if (category.CustomSubcategoryRequired && newContact.CustomSubCategory is null)
-            return new CreateContactResult
-            {
-                Success = false,
-                Message = "contacts.creation.category.custom_subcategory_required",
-            };
-
-        if (!category.CustomSubcategoryRequired && !newContact.SubCategoryId.HasValue)
-            return new CreateContactResult
-            {
-                Success = false,
-                Message = "contacts.creation.category.fixed_subcategory_required",
-            };
-
-        if (newContact.SubCategoryId.HasValue && 
-            !await context.SubCategories.AnyAsync(c => c.Id == newContact.SubCategoryId))
-            return new CreateContactResult
-            {
-                Success = false,
-                Message = "contacts.creation.subcategory.doesnt_exist",
-            };
-
-        if (newContact.SubCategoryId.HasValue && 
-            category.SubCategories.All(c => c.Id != newContact.SubCategoryId.Value))
-            return new CreateContactResult
-            {
-                Success = false,
-                Message = "contacts.creation.subcategory.doesnt_belong_to_given_category",
-            };
-
-        return null;
     }
 }

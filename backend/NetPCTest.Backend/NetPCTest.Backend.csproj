@@ -21,4 +21,10 @@
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Dtos\ContactCreationDto.Validator.cs">
+        <DependentUpon>ContactCreationDto.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>
