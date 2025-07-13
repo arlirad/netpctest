@@ -13,6 +13,6 @@ public class ContactDetailsDto
     public required DateTime BirthDate { get; set; }
     
     public required int CategoryId { get; set; }
-    public required int SubCategoryId { get; set; }
+    public int? SubCategoryId { get; set; }
     public string? CustomSubCategory { get; set; }
 }

@@ -25,6 +25,28 @@ public class ContactsService(AppDbContext context) : IContactsService
         
         return contacts;
     }
+
+    public async Task<ContactDetailsDto?> GetContactDetails(int id)
+    {
+        var contact = await context.Contacts
+            .Where(c => c.Id == id)
+            .FirstOrDefaultAsync();
+        
+        if (contact == null)
+            return null;
+
+        return new ContactDetailsDto
+        {
+            Id = contact.Id,
+            Name = contact.Name,
+            Surname = contact.Surname,
+            Email = contact.Email,
+            Phone = contact.Phone,
+            BirthDate = contact.BirthDate,
+            CategoryId = contact.CategoryId,
+            SubCategoryId = contact.SubCategoryId,
+        };
+    }
     
     public async Task<CreateContactResult> CreateContact(ContactCreationDto contactCreationDto)
     {

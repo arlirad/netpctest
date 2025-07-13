@@ -20,6 +20,17 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
         
         return Ok(contacts);
     }
+    
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetContactDetails([Required] int id)
+    {
+        var contact = await contactsService.GetContactDetails(id);
+        
+        if (contact == null)
+            return NotFound();
+        
+        return Ok(contact);
+    }
 
     [HttpPost]
     public async Task<IActionResult> AddContact([FromBody] ContactCreationDto contactCreationDto)
@@ -29,6 +40,6 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
         if (!result.Success)
             return BadRequest(result);
         
-        return Ok();
+        return CreatedAtAction(nameof(GetContactDetails), new { id = result.Id }, result);
     }
 }

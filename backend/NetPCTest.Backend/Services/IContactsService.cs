@@ -10,4 +10,5 @@ public interface IContactsService
     Task<CreateContactResult> CreateContact(ContactCreationDto contactCreationDto);
     string HashPassword(Contact contact, string password);
     bool ComparePassword(Contact contact, string hashedPassword, string providedPlainPassword);
+    Task<ContactDetailsDto?> GetContactDetails(int id);
 }
