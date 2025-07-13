@@ -12,7 +12,7 @@ namespace NetPCTest.Backend.Services;
 
 public class ContactsService(
     IRepository repository, 
-    IPasswordHasher<Contact> passwordHasher, 
+    IPasswordService passwordService,
     IMapper mapper,
     ICategoryValidator validator
 ) : IContactsService
@@ -40,7 +40,7 @@ public class ContactsService(
                 Message = verificationResult.Message,
             };
         
-        newContact.PasswordHash = HashPassword(newContact, contactCreationDto.Password);
+        newContact.PasswordHash = passwordService.HashPassword(newContact, contactCreationDto.Password);
         
         var id = await repository.CreateContact(newContact);
         
@@ -57,17 +57,5 @@ public class ContactsService(
             Message = "contacts.creation.success",
             Id = id.Value,
         };
-    }
-
-    public string HashPassword(Contact contact, string password)
-    {
-        return passwordHasher.HashPassword(contact, password);
-    }
-
-    public bool ComparePassword(Contact contact, string hashedPassword, string providedPlainPassword)
-    {
-        var result = passwordHasher.VerifyHashedPassword(contact, hashedPassword, providedPlainPassword);
-        
-        return result != PasswordVerificationResult.Failed;
     }
 }

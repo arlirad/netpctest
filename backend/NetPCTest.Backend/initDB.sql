@@ -72,7 +72,20 @@ values ('subcategory.manager', 2),
        ('subcategory.employee', 2),
        ('subcategory.consultant', 2),
        ('subcategory.client', 2);
-    
+
+-- Base user to get our foot in when testing
+insert into Contacts (Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory) 
+    values (
+            'Giga', 
+            'Tester', 
+            'tester@test.edu',
+            'AQAAAAIAAYagAAAAEPtC1GERtNvFfYrf//meeDL0O1UNzqU/rWQKLlFDaLs64N9AK00eO7wMvFagimxk+w==',
+            112,
+            '2001-07-13 00:00:00',
+            1,
+            'Fajny tester.'        
+        );
+
 -- Localisation
 insert into Locales (Name) values ('pl');
 insert into Locales (Name) values ('en');

@@ -1,12 +1,17 @@
 /*
  * OpenAPI definition: /openapi/v1.json 
  * Swagger: /swagger
+ * AutoMapper is downgraded to 12.0.1 due to it getting sold off and requiring a commercial license for bigger projects.
  */
 
+using System.Text;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using NetPCTest.Backend;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Mappers;
@@ -16,12 +21,6 @@ using NetPCTest.Backend.Services;
 using NetPCTest.Backend.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
-var loggerFactory = LoggerFactory.Create(builder =>
-{
-    builder
-        .AddFilter("AutoMapper", LogLevel.Debug)
-        .AddConsole();
-});
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddCors(options =>
@@ -33,6 +32,22 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Secret"] ?? throw new NullReferenceException());
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"] ?? throw new NullReferenceException(),
+            ValidAudience = builder.Configuration["Jwt:Audience"] ?? throw new NullReferenceException(),
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ClockSkew = TimeSpan.Zero,
+        };
+    });
+builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlite(connectionString));
@@ -41,18 +56,17 @@ builder.Services.AddRouting(options =>
 
 // Dependency Injection stuff.
 builder.Services.AddSingleton<IPasswordHasher<Contact>, PasswordHasher<Contact>>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IRepository, DbRepository>();
 builder.Services.AddScoped<ICategoryValidator, CategoryValidator>();
 builder.Services.AddScoped<IContactsService, ContactsService>();
 builder.Services.AddScoped<ILocalisationService, LocalisationService>();
 builder.Services.AddSingleton<IMapper>(provider =>
 {
-    var requiredService = provider.GetRequiredService<ILoggerFactory>();
-
     var config = new MapperConfiguration(cfg =>
     {
         cfg.AddProfile(new MappingProfile());
-    }, requiredService);
+    });
     
     return config.CreateMapper();
 });
@@ -60,7 +74,31 @@ builder.Services.AddSingleton<IMapper>(provider =>
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"});
+
+    var jwtSecurityScheme = new OpenApiSecurityScheme
+    {
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme.",
+        Reference = new OpenApiReference
+        {
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme,
+        }
+    };
+    
+    options.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {jwtSecurityScheme, Array.Empty<string>()},
+    });
+});
 
 var app = builder.Build();
 
@@ -76,6 +114,8 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 app.UseHttpsRedirection();
 app.UseExceptionHandler("/error");
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Map Swagger only when we're in the development environment.
 if (app.Environment.IsDevelopment())

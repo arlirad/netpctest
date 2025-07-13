@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
         return Ok(contact);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddContact([FromBody] ContactCreationDto contactCreationDto)
     {

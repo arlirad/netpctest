@@ -28,6 +28,11 @@ public class DbRepository(AppDbContext context) : IRepository
         return contacts;
     }
 
+    public async Task<Contact?> GetContactByEmail(string email)
+        => await context.Contacts
+            .Where(c => c.Email == email)
+            .FirstOrDefaultAsync();
+
     public async Task<Contact?> GetContact(int id)
         => await context.Contacts
             .Where(c => c.Id == id)
@@ -56,4 +61,32 @@ public class DbRepository(AppDbContext context) : IRepository
     public async Task<SubCategory?> GetSubCategory(int id)
         => await context.SubCategories
             .FirstOrDefaultAsync(s => s.Id == id);
+
+    public async Task<bool> UpdateContact(int id, Contact contact)
+    {
+        try
+        {
+            var baseContact = await context.Contacts.FindAsync(id);
+            if (baseContact == null)
+                return false;
+
+            baseContact.Id = contact.Id;
+            baseContact.Name = contact.Name;
+            baseContact.Surname = contact.Surname;
+            baseContact.Email = contact.Email;
+            baseContact.PasswordHash = contact.PasswordHash;
+            baseContact.Phone = contact.Phone;
+            baseContact.BirthDate = contact.BirthDate;
+            baseContact.CategoryId = contact.CategoryId;
+            baseContact.CustomSubCategory = contact.CustomSubCategory;
+
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

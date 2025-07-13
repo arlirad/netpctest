@@ -14,6 +14,7 @@ public class ContactsServiceTests
 {
     private Mock<IRepository> _repositoryMock = null!;
     private IPasswordHasher<Contact> _passwordHasher = null!;
+    private PasswordService _passwordService = null!;
     private IMapper _mapper = null!;
     private ICategoryValidator _validator = null!;
     private ContactsService _service = null!;
@@ -23,12 +24,13 @@ public class ContactsServiceTests
     {
         _repositoryMock = new Mock<IRepository>();
         _passwordHasher = new PasswordHasher<Contact>();
+        _passwordService = new PasswordService(_passwordHasher);
         
         var mapperMock = new Mock<IMapper>();
         _mapper = mapperMock.Object;
         
         _validator = Mock.Of<ICategoryValidator>();
-        _service = new ContactsService(_repositoryMock.Object, _passwordHasher, _mapper, _validator);
+        _service = new ContactsService(_repositoryMock.Object, _passwordService, _mapper, _validator);
     }
 
     [Test]
