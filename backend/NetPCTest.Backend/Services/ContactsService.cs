@@ -31,10 +31,14 @@ public class ContactsService(
     {
         var newContact = mapper.Map<Contact>(contactCreationDto);
 
-        var verificationResult = await validator.Validate(newContact, contactCreationDto);
+        var verificationResult = await validator.Validate(newContact);
         
-        if (verificationResult is not null)
-            return verificationResult;
+        if (!verificationResult.Success)
+            return new CreateContactResult()
+            {
+                Success = false,
+                Message = verificationResult.Message,
+            };
         
         newContact.PasswordHash = HashPassword(newContact, contactCreationDto.Password);
         

@@ -47,4 +47,13 @@ public class DbRepository(AppDbContext context) : IRepository
             return null;
         }
     }
+
+    public async Task<Category?> GetCategory(int id)
+        => await context.Categories
+            .Include(c => c.SubCategories)
+            .FirstOrDefaultAsync(c => c.Id == id);
+    
+    public async Task<SubCategory?> GetSubCategory(int id)
+        => await context.SubCategories
+            .FirstOrDefaultAsync(s => s.Id == id);
 }
