@@ -4,42 +4,61 @@ drop table if exists 'Contacts';
 drop table if exists 'LocaleKeyStrings';
 drop table if exists 'Locales';
 
-CREATE TABLE 'Categories' (
-    'Id' INTEGER NOT NULL CONSTRAINT 'PK_Categories' PRIMARY KEY AUTOINCREMENT,
-    'Name' TEXT NOT NULL,
-    'CustomSubcategoryRequired' INTEGER NOT NULL
+BEGIN TRANSACTION;
+CREATE TABLE "Categories" (
+                              "Id" INTEGER NOT NULL CONSTRAINT "PK_Categories" PRIMARY KEY AUTOINCREMENT,
+                              "Name" TEXT NOT NULL,
+                              "CustomSubcategoryRequired" INTEGER NOT NULL
 );
-CREATE TABLE 'SubCategories' (
-    'Id' INTEGER NOT NULL CONSTRAINT 'PK_SubCategories' PRIMARY KEY AUTOINCREMENT,
-    'Name' TEXT NOT NULL,
-    'CategoryId' INTEGER NOT NULL,
-    CONSTRAINT 'FK_SubCategories_Categories_CategoryId' FOREIGN KEY ('CategoryId') REFERENCES 'Categories' ('Id') ON DELETE CASCADE
+
+CREATE TABLE "Locales" (
+                           "Id" INTEGER NOT NULL CONSTRAINT "PK_Locales" PRIMARY KEY AUTOINCREMENT,
+                           "Name" TEXT NOT NULL
 );
-CREATE TABLE 'Contacts' (
-    'Id' INTEGER NOT NULL CONSTRAINT 'PK_Contacts' PRIMARY KEY AUTOINCREMENT,
-    'Name' TEXT NOT NULL,
-    'Surname' TEXT NOT NULL,
-    'Email' TEXT NOT NULL,
-    'PasswordHash' TEXT NOT NULL,
-    'Phone' TEXT NOT NULL,
-    'BirthDate' TEXT NOT NULL,
-    'CategoryId' INTEGER NOT NULL,
-    'SubCategoryId' INTEGER NULL,
-    'CustomSubCategory' TEXT NULL,
-    CONSTRAINT 'FK_Contacts_Categories_CategoryId' FOREIGN KEY ('CategoryId') REFERENCES 'Categories' ('Id') ON DELETE CASCADE,
-    CONSTRAINT 'FK_Contacts_SubCategories_SubCategoryId' FOREIGN KEY ('SubCategoryId') REFERENCES 'SubCategories' ('Id')
+
+CREATE TABLE "SubCategories" (
+                                 "Id" INTEGER NOT NULL CONSTRAINT "PK_SubCategories" PRIMARY KEY AUTOINCREMENT,
+                                 "Name" TEXT NOT NULL,
+                                 "CategoryId" INTEGER NOT NULL,
+                                 CONSTRAINT "FK_SubCategories_Categories_CategoryId" FOREIGN KEY ("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE
 );
-CREATE TABLE 'LocaleKeyStrings' (
-    'Key' TEXT NOT NULL,
-    'LocaleId' INTEGER NOT NULL,
-    'Value' TEXT NOT NULL,
-    CONSTRAINT 'PK_LocaleKeyStrings' PRIMARY KEY ('Key', 'LocaleId'),
-    CONSTRAINT 'FK_LocaleKeyStrings_Locales_LocaleId' FOREIGN KEY ('LocaleId') REFERENCES 'Locales' ('Id') ON DELETE CASCADE
+
+CREATE TABLE "LocaleKeyStrings" (
+                                    "Key" TEXT NOT NULL,
+                                    "LocaleId" INTEGER NOT NULL,
+                                    "Value" TEXT NOT NULL,
+                                    CONSTRAINT "PK_LocaleKeyStrings" PRIMARY KEY ("Key", "LocaleId"),
+                                    CONSTRAINT "FK_LocaleKeyStrings_Locales_LocaleId" FOREIGN KEY ("LocaleId") REFERENCES "Locales" ("Id") ON DELETE CASCADE
 );
-CREATE TABLE Locales (
-    'Id' INTEGER NOT NULL CONSTRAINT 'PK_Locales' PRIMARY KEY AUTOINCREMENT,
-    'Name' TEXT NOT NULL
+
+CREATE TABLE "Contacts" (
+                            "Id" INTEGER NOT NULL CONSTRAINT "PK_Contacts" PRIMARY KEY AUTOINCREMENT,
+                            "Name" TEXT NOT NULL,
+                            "Surname" TEXT NOT NULL,
+                            "Email" TEXT NOT NULL,
+                            "PasswordHash" TEXT NOT NULL,
+                            "Phone" TEXT NOT NULL,
+                            "BirthDate" TEXT NOT NULL,
+                            "CategoryId" INTEGER NOT NULL,
+                            "SubCategoryId" INTEGER NULL,
+                            "CustomSubCategory" TEXT NULL,
+                            CONSTRAINT "FK_Contacts_Categories_CategoryId" FOREIGN KEY ("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE,
+                            CONSTRAINT "FK_Contacts_SubCategories_SubCategoryId" FOREIGN KEY ("SubCategoryId") REFERENCES "SubCategories" ("Id")
 );
+
+CREATE INDEX "IX_Contacts_CategoryId" ON "Contacts" ("CategoryId");
+
+CREATE UNIQUE INDEX "IX_Contacts_Email" ON "Contacts" ("Email");
+
+CREATE INDEX "IX_Contacts_SubCategoryId" ON "Contacts" ("SubCategoryId");
+
+CREATE INDEX "IX_LocaleKeyStrings_LocaleId" ON "LocaleKeyStrings" ("LocaleId");
+
+CREATE UNIQUE INDEX "IX_Locales_Name" ON "Locales" ("Name");
+
+CREATE INDEX "IX_SubCategories_CategoryId" ON "SubCategories" ("CategoryId");
+
+COMMIT;
 
 -- Base categories
 insert into 'Categories' (Name, CustomSubcategoryRequired) 

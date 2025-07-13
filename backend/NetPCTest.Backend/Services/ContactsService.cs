@@ -119,7 +119,8 @@ public class ContactsService(AppDbContext context) : IContactsService
                 Message = "contacts.creation.category.fixed_subcategory_required",
             };
 
-        if (!context.SubCategories.Any(c => c.Id == newContact.SubCategoryId))
+        if (newContact.SubCategoryId.HasValue && 
+            !await context.SubCategories.AnyAsync(c => c.Id == newContact.SubCategoryId))
             return new CreateContactResult
             {
                 Success = false,
