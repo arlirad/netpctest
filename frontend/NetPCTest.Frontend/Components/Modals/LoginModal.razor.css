@@ -1,0 +1,20 @@
+label,
+input,
+button {
+    display: block;
+}
+
+label {
+    margin-bottom: 0.20em;
+    text-align: left;
+}
+
+input {
+    margin-bottom: 0.40em;
+    width: 100%;
+}
+
+button {
+    color: #eeeeee;
+    margin-top: 1.00em;
+}

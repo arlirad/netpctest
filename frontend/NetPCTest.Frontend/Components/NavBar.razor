@@ -6,8 +6,5 @@
     [Parameter]
     public EventCallback OnClickLogin { get; set; }
 
-    private async Task ClickLogin()
-    {
-        await OnClickLogin.InvokeAsync();
-    }
+    private async Task ClickLogin() => await OnClickLogin.InvokeAsync();
 }

@@ -1,0 +1,18 @@
+<Modal Header="ui.login" OnClose="Close">
+    <form>
+        <label>ui.login.email</label>
+        <input class="layer2 layer2-input" type="email" required />
+
+        <label>ui.login.password</label>
+        <input class="layer2 layer2-input" type="password" required />
+
+        <button class="layer2" type="submit">ui.login.submit</button>
+    </form>
+</Modal>
+
+@code {
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private async Task Close() => await OnClose.InvokeAsync();
+}

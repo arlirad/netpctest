@@ -1,16 +1,26 @@
 ﻿@page "/"
+@using NetPCTest.Frontend.Components
+@using NetPCTest.Frontend.Components.Modals
 
-@code {
+@if (_showLogin)
+{
+    <LoginModal OnClose="CloseLogin"></LoginModal>
+}
 
+@if (_showEdit)
+{
     
-    private async Task ShowLogin()
-    {
-        Console.WriteLine("test inside home");
-    }
-
 }
 
 <NavBar OnClickLogin="ShowLogin"/>
 <main>
     <h1>test</h1>
 </main>
+
+@code {
+    private bool _showLogin = false;
+    private bool _showEdit = false;
+
+    private async Task ShowLogin() => _showLogin = true;
+    private async Task CloseLogin() => _showLogin = false;
+}

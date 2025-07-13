@@ -1,0 +1,22 @@
+<div class="own-modal-backdrop">
+    <div class="own-modal layer3">
+        <h2>@Header</h2>
+        <button class="close" @onclick="Close">&#10005;</button>
+        <hr noshade>
+        
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter] 
+    public required string Header { get; set; }
+    
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private async Task Close() => await OnClose.InvokeAsync();
+}

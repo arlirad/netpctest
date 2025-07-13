@@ -1,0 +1,37 @@
+.own-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0.00, 0.00, 0.00, 0.50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.own-modal {
+    padding: 2rem;
+    padding-top: 0.15em;
+    min-width: 300px;
+    min-height: 200px;
+    position: relative;
+    color: #eeeeee;
+}
+
+.close {
+    position: absolute;
+    top: 0.50em;
+    right: 1.10em;
+    font-size: 1.75em;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #eeeeee;
+}
+
+h2 {
+    margin-block-start: 0.42em;
+    margin-right: 2.00rem;
+}
