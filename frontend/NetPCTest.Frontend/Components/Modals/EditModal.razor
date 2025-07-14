@@ -1,3 +1,4 @@
+@using AutoMapper
 @using NetPCTest.Frontend.Components;
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Models
@@ -6,6 +7,7 @@
 @inject ContactsService ContactsService
 @inject CategoryService CategoryService
 @inject ContactFormValidator ContactFormValidator
+@inject IMapper Mapper
 
 <Modal Header="ui.contact.edit" OnClose="Close" MinimumWidth="500px">
     <EditForm Model="@FormData" OnValidSubmit="HandleSubmit">
@@ -103,14 +105,7 @@
         if (ContactDto is null)
             throw new ArgumentNullException(nameof(ContactDto));
 
-        FormData.Name = ContactDto.Name;
-        FormData.Surname = ContactDto.Surname;
-        FormData.Email = ContactDto.Email;
-        FormData.Phone = ContactDto.Phone;
-        FormData.BirthDate = ContactDto.BirthDate;
-        FormData.CategoryId = ContactDto.CategoryId;
-        FormData.SubCategoryId = ContactDto.SubCategoryId ?? 0;
-        FormData.CustomSubCategory = ContactDto.CustomSubCategory;
+        Mapper.Map(ContactDto, FormData);
     }
 
     private async Task HandleSubmit()
@@ -133,17 +128,13 @@
         int? subCategoryId = category?.SubCategories.Count > 0 ? FormData.SubCategoryId : null;
         var customSubCategory = (category?.CustomSubcategoryRequired ?? false) ? FormData.CustomSubCategory : null;
         
-        var newData = new ContactUpdateDto()
-        {
-            Name = FormData.Name,
-            Surname = FormData.Surname,
-            Email = FormData.Email,
-            Phone = FormData.Phone,
-            BirthDate = FormData.BirthDate,
-            CategoryId = FormData.CategoryId,
-            SubCategoryId = subCategoryId,
-            CustomSubCategory = customSubCategory,
-        };
+        var newData = Mapper.Map<ContactUpdateDto>(FormData);
+
+        if (newData is null)
+            return;
+
+        newData.SubCategoryId = subCategoryId;
+        newData.CustomSubCategory = customSubCategory;
         
         var result = await ContactsService.UpdateContact(ContactDto.Id, newData);
         if (!result)

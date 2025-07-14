@@ -1,3 +1,4 @@
+using AutoMapper;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Options;
 using NetPCTest.Frontend;
 using NetPCTest.Frontend.Configuration;
 using NetPCTest.Frontend.Handlers;
+using NetPCTest.Frontend.Mappers;
 using NetPCTest.Frontend.Providers;
 using NetPCTest.Frontend.Services;
 using NetPCTest.Frontend.Validators;
@@ -27,6 +29,15 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ContactsService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<LocalisationService>();
+builder.Services.AddSingleton<IMapper>(provider =>
+{
+    var config = new MapperConfiguration(cfg =>
+    {
+        cfg.AddProfile(new MappingProfile());
+    });
+    
+    return config.CreateMapper();
+});
 builder.Services.AddScoped<ContactFormValidator>();
 builder.Services.AddBlazoredLocalStorage();
 
