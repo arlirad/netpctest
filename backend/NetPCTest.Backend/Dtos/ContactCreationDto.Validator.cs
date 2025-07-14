@@ -9,12 +9,6 @@ public partial class ContactCreationDto : IValidatableObject
     {
         var results = new List<ValidationResult>();
         
-        if (!SubCategoryId.HasValue && string.IsNullOrWhiteSpace(CustomSubCategory))
-            results.Add(new ValidationResult("ui.error.subcategory_or_custom_subcategory_required", 
-            [
-                nameof(SubCategoryId), nameof(CustomSubCategory)
-            ]));
-        
         if (SubCategoryId.HasValue && !string.IsNullOrWhiteSpace(CustomSubCategory))
             results.Add(new ValidationResult("ui.error.subcategory_or_custom_subcategory_both_not_permitted", 
             [
