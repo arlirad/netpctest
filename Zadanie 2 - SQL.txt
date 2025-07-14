@@ -1,0 +1,62 @@
+A.
+select
+    G1.Firstname, G1.Surname,
+    count(*) as GrandDaughters
+from Person G1
+join Person G2 on G2.FatherId = G1.Id or G2.Motherid = G1.Id
+join Person G3 on G3.FatherId = G2.Id or G3.Motherid = G2.Id
+where G3.IsFemale = true
+group by G1.Id, G1.Firstname, G1.Surname
+order by GrandDaughters desc
+limit 1;
+
+B.
+select
+    IsEmploymentContract,
+    avg(Workers) as AverageWorkersPerCompany,
+    avg(AverageSalary) as AverageSalaryPerCompany
+from (
+    select CompanyId,
+             IsEmploymentContract,
+             count(distinct PersonId) as Workers,
+             avg(Salary)              as AverageSalary
+    from Employment
+    group by CompanyId, IsEmploymentContract
+)
+as CompanyStats
+GROUP BY IsEmploymentContract;
+
+C.
+-- Niestety za trzymanie Salary osobno trzeba zapłacić swoje.
+with FamilyMembers as (
+    select
+        MU.HusbandId as FamilyId,
+        P.Id as PersonId
+    from MaritalUnion MU
+    join Person P on P.Id == MU.HusbandId or P.Id == MU.WifeId
+    union
+    select
+        MU.HusbandId as FamilyId,
+        P.Id as PersonId
+    from MaritalUnion MU
+    join Person C on C.FatherId = MU.HusbandId or C.MotherId = MU.WifeId
+    join person P on P.Id = C.Id
+),
+Salaries as (
+    select
+        PersonId,
+        sum(Salary) as TotalSalary
+    from Employment
+    group by PersonId
+)
+select
+    FamilyMembers.FamilyId,
+    coalesce(sum(S.TotalSalary), 0) as FamilyIncome,
+    min(P2.Firstname) as FamilyFirstname,
+    min(P2.Surname) as FamilyLastname
+from FamilyMembers
+left join Salaries S on S.PersonId = FamilyMembers.PersonId
+join Person P2 on P2.Id = FamilyMembers.PersonId
+group by FamilyMembers.FamilyId
+order by FamilyIncome asc
+limit 1;
