@@ -1,0 +1,21 @@
+@using NetPCTest.Frontend.Components;
+
+<Modal Header="ui.contact.delete" OnClose="Close" MinimumWidth="300px">
+    <button class="layer2" type="submit" @onclick="Delete"><L Key="ui.contact.delete.yes"/></button>
+    <button class="layer2" type="submit" @onclick="Close"><L Key="ui.contact.delete.no"/></button>
+</Modal>
+
+@code {
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+    [Parameter]
+    public EventCallback OnDelete { get; set; }
+
+    private async Task Close() => await OnClose.InvokeAsync();
+    private async Task Delete()
+    {
+        await OnDelete.InvokeAsync();
+        await OnClose.InvokeAsync();
+    }
+
+}

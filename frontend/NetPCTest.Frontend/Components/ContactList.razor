@@ -64,6 +64,11 @@ else
         ContactsBrief = contacts;
     }
 
+    public async Task Refresh()
+    {
+        await Get(RangeStart, RangeEnd);
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await Get(0, 50);

@@ -11,7 +11,7 @@ public class ContactEditFormModel
     public DateTime BirthDate { get; set; }
 
     public int CategoryId { get; set; } = 1;
-    public int? SubCategoryId { get; set; }
+    public int SubCategoryId { get; set; }
     public string? CustomSubCategory { get; set; }
     
     // PasswordChange is responsible for showing/hiding the password change part of the contact edit form.

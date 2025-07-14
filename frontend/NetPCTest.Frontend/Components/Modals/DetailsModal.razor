@@ -2,6 +2,7 @@
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Models
 @using NetPCTest.Frontend.Services
+@inject ContactsService ContactsService
 @inject CategoryService CategoryService
 
 <Modal Header="ui.contact.details" OnClose="Close" MinimumWidth="500px">
@@ -31,12 +32,18 @@
         <p class="data">@ContactDto.CustomSubCategory</p>
     }
     
+    <button class="layer2" @onclick="ShowDeletion"><L Key="ui.contact.details.delete"/></button>
     <button class="layer2" @onclick="ShowEdit"><L Key="ui.contact.details.edit"/></button>
 </Modal>
 
 @if (_showEdit)
 {
     <EditModal ContactDto="ContactDto" OnClose="CloseEdit"></EditModal>
+}
+
+@if (_showDeletion)
+{
+    <DeleteModal OnDelete="Delete" OnClose="CloseDeletion"></DeleteModal>
 }
 
 @code {
@@ -46,20 +53,31 @@
     public ContactDto ContactDto { get; set; }
     
     private bool _showEdit = false;
+    private bool _showDeletion = false;
 
-    private void ShowEdit()
-    {
-        _showEdit = true;
-    }
+    private void ShowEdit() => _showEdit = true;
+    private void CloseEdit() => _showEdit = false;
 
-    private void CloseEdit()
+    private void ShowDeletion() => _showDeletion = true;
+    private void CloseDeletion() => _showDeletion = false;
+    
+    private async Task Delete()
     {
+        var success = await ContactsService.DeleteContact(ContactDto.Id);
+        if (!success)
+            return;
+        
         _showEdit = false;
+        _showDeletion = false;
+        
+        await OnClose.InvokeAsync();
     }
     
     private async Task Close()
     {
         _showEdit = false;
+        _showDeletion = false;
+        
         await OnClose.InvokeAsync();
     }
 }

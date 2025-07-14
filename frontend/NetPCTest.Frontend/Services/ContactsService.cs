@@ -33,4 +33,12 @@ public class ContactsService(HttpClient httpClient, IOptions<ApiOptions> apiOpti
 
         return contacts;
     }
+
+    public async Task<bool> DeleteContact(int id)
+    {
+        var response = 
+            await httpClient.DeleteAsync($"contacts/{id}");
+
+        return response.IsSuccessStatusCode;
+    }
 }
