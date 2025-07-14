@@ -1,11 +1,21 @@
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Models
 @using NetPCTest.Frontend.Services
+@using NetPCTest.Frontend.Validators
 @inject ContactsService ContactsService
 @inject CategoryService CategoryService
+@inject ContactFormValidator ContactFormValidator
 
 <Modal Header="ui.contact.create" OnClose="Close" MinimumWidth="500px">
     <EditForm Model="@FormData" OnValidSubmit="HandleSubmit">
+        @if (_validationErrors is not null)
+        {
+            foreach (var error in _validationErrors)
+            {
+                <p class="validation-error"><L Key="@error.Message"/></p>
+            }
+        } 
+        
         <label><L Key="ui.contact.details.name"/></label>
         <InputText @bind-Value="FormData.Name" class="layer2 layer2-input" required/>
         <label><L Key="ui.contact.details.surname"/></label>
@@ -32,7 +42,7 @@
             if (category is null)
                 throw new NullReferenceException();
         }
-        
+
         @if (!category.CustomSubcategoryRequired)
         {
             if (category.SubCategories.Count > 0 &&
@@ -65,7 +75,7 @@
         <InputText @bind-Value="FormData.Password" class="layer2 layer2-input" type="password"/>
         <label><L Key="ui.contact.edit.password.confirm"/></label>
         <InputText @bind-Value="FormData.ConfirmPassword" class="layer2 layer2-input" type="password"/>
-        
+
         <button class="layer2" type="submit"><L Key="ui.contact.create.submit"/></button>
     </EditForm>
 </Modal>
@@ -77,6 +87,7 @@
     public EventCallback OnCreated { get; set; }
 
     private ContactEditFormModel FormData { get; set; } = new();
+    private List<ValidationError>? _validationErrors;
     
     protected override void OnInitialized()
     {
@@ -86,6 +97,16 @@
 
     private async Task HandleSubmit()
     {
+        var validationErrors = ContactFormValidator.Validate(FormData, true);
+
+        if (validationErrors.Any())
+        {
+            _validationErrors = validationErrors;
+            return;
+        }
+
+        _validationErrors?.Clear();
+        
         var category = CategoryService.GetCategory(FormData.CategoryId);
         // C# forced my hand to use an explicit type here.
         int? subCategoryId = category?.SubCategories.Count > 0 ? FormData.SubCategoryId : null;

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using NetPCTest.Backend.Validators;
 
 namespace NetPCTest.Backend.Dtos;
 
@@ -13,7 +14,7 @@ public partial class ContactCreationDto
     [EmailAddress]
     public required string Email { get; set; }
     [Required]
-    [MinLength(8)]
+    [StrongPassword]
     public required string Password { get; set; }
     [Compare("Password")]
     public required string ConfirmPassword { get; set; }

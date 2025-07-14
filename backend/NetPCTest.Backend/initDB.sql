@@ -177,7 +177,7 @@ values (1, 'ui.login', 'Logowanie'),
        (1, 'ui.list.page.previous', 'Poprzednia strona'),
        (2, 'ui.list.page.previous', 'Previous page'),
        (1, 'ui.list.page.next', 'Następna strona'),
-       (2, 'ui.list.page.next', 'Next page')
+       (2, 'ui.list.page.next', 'Next pageSt')
 ;
 
 -- Sample contact data

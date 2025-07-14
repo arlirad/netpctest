@@ -8,6 +8,7 @@ using NetPCTest.Frontend.Configuration;
 using NetPCTest.Frontend.Handlers;
 using NetPCTest.Frontend.Providers;
 using NetPCTest.Frontend.Services;
+using NetPCTest.Frontend.Validators;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -26,6 +27,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ContactsService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<LocalisationService>();
+builder.Services.AddScoped<ContactFormValidator>();
 builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddHttpClient("AuthorizedClient", (sp, client) =>
