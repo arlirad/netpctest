@@ -52,6 +52,9 @@ public class ContactsService(
             UpdateContactResult.Invalid;
     }
 
+    public async Task<bool> DeleteContact(int id) => 
+        await repository.DeleteContact(id);
+
     public async Task<CreateContactResult> CreateContact(ContactCreationDto contactCreationDto)
     {
         var newContact = mapper.Map<Contact>(contactCreationDto);

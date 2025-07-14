@@ -47,6 +47,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
         return Ok(contact);
     }
     
+    [Authorize]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateContactDetails([Required] int id, [FromBody] ContactUpdateDto contactUpdateDto)
     {
@@ -59,6 +60,15 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
             UpdateContactResult.Success => Ok(),
             _ => BadRequest()
         };
+    }
+    
+    [Authorize]
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteContact([Required] int id)
+    {
+        var result = await contactsService.DeleteContact(id);
+
+        return result ?  Ok() : BadRequest();
     }
 
     [Authorize]

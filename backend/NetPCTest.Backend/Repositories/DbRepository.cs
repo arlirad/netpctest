@@ -100,4 +100,23 @@ public class DbRepository(AppDbContext context) : IRepository
 
         return true;
     }
+
+    public async Task<bool> DeleteContact(int id)
+    {
+        try
+        {
+            var contact = await context.Contacts.FindAsync(id);
+            if (contact == null)
+                return false;
+
+            context.Remove(contact);
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
