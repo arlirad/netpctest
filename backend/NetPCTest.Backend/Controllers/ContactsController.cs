@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Dtos;
 using NetPCTest.Backend.Models;
+using NetPCTest.Backend.Results;
 using NetPCTest.Backend.Services;
 
 namespace NetPCTest.Backend.Controllers;
@@ -44,6 +45,20 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
             return NotFound();
         
         return Ok(contact);
+    }
+    
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateContactDetails([Required] int id, [FromBody] ContactUpdateDto contactUpdateDto)
+    {
+        var result = await contactsService.UpdateContact(id, contactUpdateDto);
+
+        return result switch
+        {
+            UpdateContactResult.Invalid => BadRequest(),
+            UpdateContactResult.NotFound => NotFound(),
+            UpdateContactResult.Success => Ok(),
+            _ => BadRequest()
+        };
     }
 
     [Authorize]

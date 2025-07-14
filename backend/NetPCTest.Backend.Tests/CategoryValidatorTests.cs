@@ -43,6 +43,14 @@ public class CategoryValidatorTests
             Name = "test.category3",
             CustomSubcategoryRequired = false,
         };
+            
+        // Category 4 allows for no custom subcategories, but it won't have any subcategories either.
+        var category4 = new Category()
+        {
+            Id = 4,
+            Name = "test.category4",
+            CustomSubcategoryRequired = false,
+        };
         
         // SubCategory 1 and SubCategory 2 will belong to Category 1.
         var subCategory1 = new SubCategory()
@@ -71,7 +79,9 @@ public class CategoryValidatorTests
         };
         
         category1.SubCategories = new List<SubCategory>(){subCategory1, subCategory2};
+        category2.SubCategories = new List<SubCategory>(){};
         category3.SubCategories = new List<SubCategory>(){subCategory3};
+        category4.SubCategories = new List<SubCategory>(){};
         
         // Contact 3 - Has a CustomSubCategory, but belongs to Category 1, which doesn't allow it.
         var contact3 = new Contact()
@@ -109,7 +119,7 @@ public class CategoryValidatorTests
             SubCategoryId = 1,
         };
         
-        // Contact 5 - Has a SubCategoryId of 3, and belongs to Category 1, but SubCategory 3 does not
+        // Contact 6 - Has a SubCategoryId of 3, and belongs to Category 1, but SubCategory 3 does not
         // belong to Category 1.
         var contact6 = new Contact()
         {
@@ -122,6 +132,31 @@ public class CategoryValidatorTests
             SubCategoryId = 3,
         };
         
+        // Contact 7 - Belongs to Category 4, which does not allow custom subcategories, but does not have any fixed
+        // ones either.
+        var contact7 = new Contact()
+        {
+            Name = "b",
+            Surname = "c",
+            Email = "c@d.pl",
+            BirthDate = new DateTime(1990, 1, 1),
+            Phone = "1234567890",
+            CategoryId = 4,
+        };
+        
+        // Contact 8 - Belongs to Category 4, which does not allow custom subcategories, but the contact has a
+        // CustomSubCategory.
+        var contact8 = new Contact()
+        {
+            Name = "b",
+            Surname = "c",
+            Email = "c@d.pl",
+            BirthDate = new DateTime(1990, 1, 1),
+            Phone = "1234567890",
+            CategoryId = 4,
+            CustomSubCategory = "aaaa",
+        };
+        
         // Here we set up our mock.
         _repositoryMock
             .Setup(r => r.GetCategory(1, CancellationToken.None))
@@ -132,6 +167,9 @@ public class CategoryValidatorTests
         _repositoryMock
             .Setup(r => r.GetCategory(3, CancellationToken.None))
             .ReturnsAsync(category3);
+        _repositoryMock
+            .Setup(r => r.GetCategory(4, CancellationToken.None))
+            .ReturnsAsync(category4);
         _repositoryMock
             .Setup(r => r.GetSubCategory(1, CancellationToken.None))
             .ReturnsAsync(subCategory1);
@@ -147,5 +185,7 @@ public class CategoryValidatorTests
         Assert.That((await _validator.Validate(contact4)).Success, Is.True);
         Assert.That((await _validator.Validate(contact5)).Success, Is.True);
         Assert.That((await _validator.Validate(contact6)).Success, Is.False);
+        Assert.That((await _validator.Validate(contact7)).Success, Is.True);
+        Assert.That((await _validator.Validate(contact8)).Success, Is.False);
     }
 }

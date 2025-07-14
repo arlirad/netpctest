@@ -27,11 +27,20 @@ public class CategoryValidator(IRepository repository) : ICategoryValidator
                 Message = "contacts.creation.category.custom_subcategory_required",
             };
 
-        if (!category.CustomSubcategoryRequired && !newContact.SubCategoryId.HasValue)
+        if (category is { CustomSubcategoryRequired: false, SubCategories.Count: > 0 } 
+            && !newContact.SubCategoryId.HasValue)
             return new CategoryValidationResult
             {
                 Success = false,
                 Message = "contacts.creation.category.fixed_subcategory_required",
+            };
+
+        if (category is { CustomSubcategoryRequired: false, SubCategories.Count: 0 } 
+            && !string.IsNullOrEmpty(newContact.CustomSubCategory))
+            return new CategoryValidationResult
+            {
+                Success = false,
+                Message = "contacts.creation.category.custom_subcategory_not_allowed",
             };
 
         if (newContact.SubCategoryId.HasValue && 

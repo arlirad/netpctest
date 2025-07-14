@@ -29,7 +29,29 @@ public class ContactsService(
         
         return contact == null ? null : mapper.Map<ContactDto>(contact);
     }
-    
+
+    public async Task<UpdateContactResult> UpdateContact(int id, ContactUpdateDto newData)
+    {
+        var contact = await repository.GetContact(id, CancellationToken.None);
+        if (contact is null)
+            return UpdateContactResult.NotFound;
+
+        if (newData.Email != contact.Email && 
+            await repository.GetContactByEmail(newData.Email, CancellationToken.None) is not null)
+            return UpdateContactResult.Invalid;
+        
+        mapper.Map(newData, contact);
+
+        var validationResult = await validator.Validate(contact);
+        
+        if (!validationResult.Success)
+            return UpdateContactResult.Invalid;
+        
+        return await repository.UpdateContact(id, contact) ? 
+            UpdateContactResult.Success : 
+            UpdateContactResult.Invalid;
+    }
+
     public async Task<CreateContactResult> CreateContact(ContactCreationDto contactCreationDto)
     {
         var newContact = mapper.Map<Contact>(contactCreationDto);
