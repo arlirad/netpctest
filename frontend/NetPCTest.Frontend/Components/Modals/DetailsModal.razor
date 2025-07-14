@@ -7,34 +7,34 @@
 @inject CategoryService CategoryService
 
 <Modal Header="ui.contact.details" OnClose="Close" MinimumWidth="500px">
-    @if (_contactDto is not null)
+    @if (_viewedContactDto is not null)
     {
         <label><L Key="ui.contact.details.name"/></label>
-        <p class="data">@_contactDto.Name</p>
+        <p class="data">@_viewedContactDto.Name</p>
         <label><L Key="ui.contact.details.surname"/></label>
-        <p class="data">@_contactDto.Surname</p>
+        <p class="data">@_viewedContactDto.Surname</p>
         <label><L Key="ui.contact.details.email"/></label>
-        <p class="data">@_contactDto.Email</p>
+        <p class="data">@_viewedContactDto.Email</p>
         <label><L Key="ui.contact.details.phone"/></label>
-        <p class="data">@_contactDto.Phone</p>
+        <p class="data">@_viewedContactDto.Phone</p>
         <label><L Key="ui.contact.details.birthdate"/></label>
-        <p class="data">@_contactDto.BirthDate</p>
+        <p class="data">@_viewedContactDto.BirthDate</p>
         <hr noshade/>
 
-        var category = CategoryService.GetCategory(_contactDto.CategoryId);
+        var category = CategoryService.GetCategory(_viewedContactDto.CategoryId);
         
         <label><L Key="ui.contact.details.category"/></label>
         <p class="data"><L Key="@category?.Name"/></p>
 
-        @if (_contactDto.SubCategoryId != null)
+        @if (_viewedContactDto.SubCategoryId != null)
         {
             <label><L Key="ui.contact.details.subcategory"/></label>
-            <p class="data"><L Key="@CategoryService.GetSubCategory(_contactDto.SubCategoryId.Value)?.Name"/></p>
+            <p class="data"><L Key="@CategoryService.GetSubCategory(_viewedContactDto.SubCategoryId.Value)?.Name"/></p>
         }
         else if (category is not null && category.CustomSubcategoryRequired)
         {
             <label><L Key="ui.contact.details.custom_subcategory"/></label>
-            <p class="data">@_contactDto.CustomSubCategory</p>
+            <p class="data">@_viewedContactDto.CustomSubCategory</p>
         }
 
         @if (_isAuthenticated)
@@ -51,7 +51,7 @@
 
 @if (_showEdit)
 {
-    <EditModal ContactDto="_contactDto" OnEdited="Edited" OnClose="CloseEdit"></EditModal>
+    <EditModal ContactDto="_viewedContactDto" OnEdited="Edited" OnClose="CloseEdit"></EditModal>
 }
 
 @if (_showDeletion)
@@ -69,8 +69,8 @@
     [Parameter]
     public int ContactId { get; set; }
 
+    private ContactDto? _viewedContactDto;
     private bool _isAuthenticated;
-    private ContactDto? _contactDto;
     private bool _showEdit = false;
     private bool _showDeletion = false;
 
@@ -79,6 +79,26 @@
 
     private void ShowDeletion() => _showDeletion = true;
     private void CloseDeletion() => _showDeletion = false;
+    
+    // We can't access logging in when we have this open anyway, so this should be fine.
+    protected override async Task OnInitializedAsync()
+    {
+        _isAuthenticated = await AuthService.IsLoggedIn();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var contact = await ContactsService.GetContact(ContactId);
+        if (contact == null)
+        {
+            await base.OnParametersSetAsync();
+            return;
+        }
+
+        _viewedContactDto = contact;
+        
+        await base.OnParametersSetAsync();
+    }
     
     private async Task Delete()
     {
@@ -100,37 +120,9 @@
         
         await OnClose.InvokeAsync();
     }
-    
-    // We can't access logging in when we have this open anyway, so this should be fine.
-    protected override async Task OnInitializedAsync()
-    {
-        _isAuthenticated = await AuthService.IsLoggedIn();
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (ContactId == 0)
-        {
-            await base.OnParametersSetAsync();
-            return;
-        }
-            
-        
-        var contact = await ContactsService.GetContact(ContactId);
-        if (contact == null)
-        {
-            await base.OnParametersSetAsync();
-            return;
-        }
-
-        _contactDto = contact;
-        
-        await base.OnParametersSetAsync();
-    }
 
     private async Task Edited()
     {
         await OnEdited.InvokeAsync();
     }
-
 }

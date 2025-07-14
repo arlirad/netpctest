@@ -1,6 +1,4 @@
 using System.Net.Http.Json;
-using Microsoft.Extensions.Options;
-using NetPCTest.Frontend.Configuration;
 using NetPCTest.Frontend.Dtos;
 
 namespace NetPCTest.Frontend.Services;

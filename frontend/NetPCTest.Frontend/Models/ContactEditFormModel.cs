@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace NetPCTest.Frontend.Models;
 
 public class ContactEditFormModel

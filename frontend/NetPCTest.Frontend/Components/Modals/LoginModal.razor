@@ -21,7 +21,7 @@
     [Parameter]
     public EventCallback OnLoggedIn { get; set; }
 
-    private readonly LoginModel _formData = new LoginModel
+    private readonly LoginModel _formData = new()
     {
         Email = string.Empty,
         Password = string.Empty,

@@ -1,5 +1,5 @@
 /*
- * OpenAPI definition: /openapi/v1.json 
+ * OpenAPI definition: /openapi/v1.json
  * Swagger: /swagger
  * AutoMapper is downgraded to 12.0.1 due to it getting sold off and requiring a commercial license for bigger projects.
  */
@@ -9,12 +9,9 @@ using System.Threading.RateLimiting;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using NetPCTest.Backend;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Mappers;
 using NetPCTest.Backend.Models;

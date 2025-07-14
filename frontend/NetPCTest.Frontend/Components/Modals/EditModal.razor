@@ -87,6 +87,21 @@
 
     private ContactEditFormModel FormData { get; set; } = new();
 
+    protected override void OnParametersSet()
+    {
+        if (ContactDto is null)
+            throw new ArgumentNullException(nameof(ContactDto));
+
+        FormData.Name = ContactDto.Name;
+        FormData.Surname = ContactDto.Surname;
+        FormData.Email = ContactDto.Email;
+        FormData.Phone = ContactDto.Phone;
+        FormData.BirthDate = ContactDto.BirthDate;
+        FormData.CategoryId = ContactDto.CategoryId;
+        FormData.SubCategoryId = ContactDto.SubCategoryId ?? 0;
+        FormData.CustomSubCategory = ContactDto.CustomSubCategory;
+    }
+
     private async Task HandleSubmit()
     {
         if (ContactDto is null)
@@ -137,21 +152,6 @@
             return false;
 
         return true;
-    }
-
-    protected override void OnParametersSet()
-    {
-        if (ContactDto is null)
-            throw new ArgumentNullException(nameof(ContactDto));
-
-        FormData.Name = ContactDto.Name;
-        FormData.Surname = ContactDto.Surname;
-        FormData.Email = ContactDto.Email;
-        FormData.Phone = ContactDto.Phone;
-        FormData.BirthDate = ContactDto.BirthDate;
-        FormData.CategoryId = ContactDto.CategoryId;
-        FormData.SubCategoryId = ContactDto.SubCategoryId ?? 0;
-        FormData.CustomSubCategory = ContactDto.CustomSubCategory;
     }
 
     private async Task Close() => await OnClose.InvokeAsync();

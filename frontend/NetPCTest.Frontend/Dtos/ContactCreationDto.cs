@@ -1,9 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace NetPCTest.Frontend.Dtos;
 
 // Here we omit the ID, since that is AUTOINCREMENT in SQL. We also omit things specific to relations in EF.
-public partial class ContactCreationDto
+public class ContactCreationDto
 {
     public required string Name { get; set; }
     public required string Surname { get; set; }

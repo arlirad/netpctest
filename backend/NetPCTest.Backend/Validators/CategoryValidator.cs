@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using NetPCTest.Backend.Data;
-using NetPCTest.Backend.Dtos;
 using NetPCTest.Backend.Models;
 using NetPCTest.Backend.Repositories;
 using NetPCTest.Backend.Results;

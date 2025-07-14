@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using NetPCTest.Backend.Models;
 
 namespace NetPCTest.Backend.Dtos;
 

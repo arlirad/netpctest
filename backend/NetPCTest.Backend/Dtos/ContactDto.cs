@@ -1,5 +1,3 @@
-using NetPCTest.Backend.Models;
-
 namespace NetPCTest.Backend.Dtos;
 
 // Here we omit the password hash and things specific to relations in EF.

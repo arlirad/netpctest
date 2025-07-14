@@ -1,6 +1,5 @@
-@using Microsoft.AspNetCore.Components.Authorization
-@using NetPCTest.Frontend.Services
 @using NetPCTest.Frontend.Components.Modals
+@using NetPCTest.Frontend.Services
 @inject IAuthService AuthService
 
 <div class="layer2 navbar">
@@ -34,6 +33,11 @@
     private void ClickLogin() => ShowLogin = true;
     private void CloseLogin() => ShowLogin = false;
 
+    public void Dispose()
+    {
+        AuthService.AuthStateChangedAsync -= AuthServiceOnAuthStateChangedAsync;
+    }
+
     private async Task LoggedIn()
     {
         AuthenticatedEmail = await AuthService.GetEmail();
@@ -58,11 +62,6 @@
         
         AuthenticatedEmail = await AuthService.GetEmail();
         IsAuthenticated = await AuthService.IsLoggedIn();
-    }
-
-    public void Dispose()
-    {
-        AuthService.AuthStateChangedAsync -= AuthServiceOnAuthStateChangedAsync;
     }
 
     private async Task AuthServiceOnAuthStateChangedAsync()

@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-
 namespace NetPCTest.Backend.Dtos;
 
 public class CategoryDto

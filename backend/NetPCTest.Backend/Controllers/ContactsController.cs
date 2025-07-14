@@ -1,12 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.EntityFrameworkCore;
-using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Dtos;
-using NetPCTest.Backend.Models;
 using NetPCTest.Backend.Results;
 using NetPCTest.Backend.Services;
 

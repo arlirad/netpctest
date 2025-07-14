@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NetPCTest.Backend.Data;
 using NetPCTest.Backend.Dtos;
-using NetPCTest.Backend.Models;
 
 namespace NetPCTest.Backend.Services;
 

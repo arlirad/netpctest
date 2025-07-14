@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace NetPCTest.Frontend.Dtos;
 
 // A DTO specifically for listing contacts in a list.

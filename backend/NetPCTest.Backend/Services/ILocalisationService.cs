@@ -1,6 +1,3 @@
-using NetPCTest.Backend.Dtos;
-using NetPCTest.Backend.Models;
-
 namespace NetPCTest.Backend.Services;
 
 public interface ILocalisationService
