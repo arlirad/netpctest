@@ -59,6 +59,7 @@ public class CategoryValidatorTests
             Name = "test.subcategory1",
             CategoryId = 1,
             Category = category1,
+            Members = new List<Contact>(),
         };
         
         var subCategory2 = new SubCategory()
@@ -67,6 +68,7 @@ public class CategoryValidatorTests
             Name = "test.subcategory2",
             CategoryId = 1,
             Category = category1,
+            Members = new List<Contact>(),
         };
         
         // Whilst SubCategory 3 will belong to Category 3.
@@ -76,6 +78,7 @@ public class CategoryValidatorTests
             Name = "test.subcategory3",
             CategoryId = 3,
             Category = category3,
+            Members = new List<Contact>(),
         };
         
         category1.SubCategories = new List<SubCategory>(){subCategory1, subCategory2};

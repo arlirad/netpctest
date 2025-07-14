@@ -18,7 +18,7 @@
         <label><L Key="ui.contact.details.birthdate"/></label>
         <InputDate @bind-Value="FormData.BirthDate" class="layer2 layer2-input" required/>
         <hr noshade/>
-        
+
         <label><L Key="ui.contact.details.category"/></label>
         <InputSelect @bind-Value="FormData.CategoryId" class="layer2 layer2-input">
             @foreach (var category in CategoryService.GetCategories())
@@ -26,16 +26,17 @@
                 <option value="@category.Id"><L Key="@category.Name"/></option>
             }
         </InputSelect>
-        
+
         @{
             var category = CategoryService.GetCategory(FormData.CategoryId);
             // Hey, at this point if we get a null category we have bigger problems anyway.
             if (category is null)
                 throw new NullReferenceException();
         }
+        
         @if (!category.CustomSubcategoryRequired)
         {
-            if (category.SubCategories.Count > 0 && 
+            if (category.SubCategories.Count > 0 &&
                 category.SubCategories.All(s => s.Id != FormData.SubCategoryId))
                 FormData.SubCategoryId = category.SubCategories.First().Id;
 
@@ -60,12 +61,12 @@
             <InputText @bind-Value="FormData.CustomSubCategory" class="layer2 layer2-input" required/>
         }
         <hr noshade/>
-        
+
         <label><L Key="ui.contact.edit.password"/></label>
         <InputText @bind-Value="FormData.Password" class="layer2 layer2-input" type="password"/>
         <label><L Key="ui.contact.edit.password.confirm"/></label>
         <InputText @bind-Value="FormData.ConfirmPassword" class="layer2 layer2-input" type="password"/>
-
+        
         <button class="layer2" type="submit"><L Key="ui.contact.create.submit"/></button>
     </EditForm>
 </Modal>
@@ -78,9 +79,10 @@
 
     private ContactEditFormModel FormData { get; set; } = new();
     
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         FormData.CategoryId = CategoryService.GetCategories().First().Id;
+        base.OnInitialized();
     }
 
     private async Task HandleSubmit()

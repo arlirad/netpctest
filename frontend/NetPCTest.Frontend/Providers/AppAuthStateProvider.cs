@@ -43,7 +43,7 @@ public class AppAuthStateProvider(ILocalStorageService localStorage) : Authentic
         if (keyValuePairs is null)
             throw new NullReferenceException();
         
-        return keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString()));
+        return keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString() ?? string.Empty));
     }
 
     private static string PadBase64(string base64) =>

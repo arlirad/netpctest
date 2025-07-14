@@ -31,7 +31,7 @@
             <label><L Key="ui.contact.details.subcategory"/></label>
             <p class="data"><L Key="@CategoryService.GetSubCategory(_contactDto.SubCategoryId.Value)?.Name"/></p>
         }
-        else if (category.CustomSubcategoryRequired)
+        else if (category is not null && category.CustomSubcategoryRequired)
         {
             <label><L Key="ui.contact.details.custom_subcategory"/></label>
             <p class="data">@_contactDto.CustomSubCategory</p>

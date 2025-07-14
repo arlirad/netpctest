@@ -4,13 +4,12 @@ using NetPCTest.Frontend.Configuration;
 
 namespace NetPCTest.Frontend.Services;
 
-public class LocalisationService(HttpClient httpClient, IOptions<ApiOptions> apiOptions)
+public class LocalisationService(HttpClient httpClient)
 {
     public List<string> AvailableLocales { get; private set; } = [];
+    public Action? OnLocaleChanged { get; set; }
 
     private Locale _currentLocale = new Locale("_", new Dictionary<string, string>());
-
-    public Action? OnLocaleChanged { get; set; }
     
     public async Task RefreshLocalesAsync()
     {

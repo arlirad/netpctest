@@ -86,6 +86,11 @@ else
         await Get(RangeStart, RangeEnd);
     }
 
+    public void Dispose()
+    {
+        AuthService.AuthStateChangedAsync -= AuthServiceOnAuthStateChangedAsync;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         AuthService.AuthStateChangedAsync += AuthServiceOnAuthStateChangedAsync;
@@ -96,21 +101,15 @@ else
         await Get(0, 50);
     }
 
-    private async Task ShowDetails(ContactBriefDto contactBrief)
+    private void ShowDetails(ContactBriefDto contactBrief)
     {
         SelectedContactId = contactBrief.Id;
         _showDetails = true;
     }
 
-    private async Task ShowCreation()
-    {
-        _showCreation = true;
-    }
+    private void ShowCreation() => _showCreation = true;
 
-    private async Task Edited()
-    {
-        await Refresh();
-    }
+    private async Task Edited() => await Refresh();
 
     private async Task Deleted()
     {
@@ -118,18 +117,10 @@ else
         await Refresh();
     }
 
-    private async Task Created()
-    {
-        await Refresh();
-    }
+    private async Task Created() => await Refresh();
 
-    private async Task CloseDetails() => _showDetails = false;
-    private async Task CloseCreation() => _showCreation = false;
-
-    public void Dispose()
-    {
-        AuthService.AuthStateChangedAsync -= AuthServiceOnAuthStateChangedAsync;
-    }
+    private void CloseDetails() => _showDetails = false;
+    private void CloseCreation() => _showCreation = false;
 
     private async Task AuthServiceOnAuthStateChangedAsync()
     {

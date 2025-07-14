@@ -5,7 +5,7 @@ using NetPCTest.Frontend.Dtos;
 
 namespace NetPCTest.Frontend.Services;
 
-public class ContactsService(HttpClient httpClient, IOptions<ApiOptions> apiOptions)
+public class ContactsService(HttpClient httpClient)
 {
     public async Task<int> GetContactCount()
     {

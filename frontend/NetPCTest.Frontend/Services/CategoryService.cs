@@ -18,17 +18,8 @@ public class CategoryService(HttpClient httpClient)
         {
             _categories = categories;
             _subCategories = [];
-
-            foreach (var category in _categories)
-            {
-                foreach (var subCategory in category.SubCategories)
-                {
-                    if (_subCategories.FirstOrDefault(s => s.Id == subCategory.Id) is not null)
-                        continue;
-                    
-                    _subCategories.Add(subCategory);
-                }
-            }
+            
+            _categories.ForEach(c => _subCategories.AddRange(c.SubCategories));
         }
     }
 
