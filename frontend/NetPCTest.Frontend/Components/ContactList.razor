@@ -36,7 +36,7 @@ else
 
 @if (_showDetails)
 {
-    <DetailsModal ContactDto="SelectedContactDto" OnDelete="Deleted" OnClose="CloseDetails"></DetailsModal>
+    <DetailsModal ContactId="SelectedContactId" OnDeleted="Deleted" OnEdited="Edited" OnClose="CloseDetails"></DetailsModal>
 }
 
 @code {
@@ -46,7 +46,7 @@ else
     private int TotalContactCount { get; set; }
     private int RangeStart { get; set; }
     private int RangeEnd { get; set; }
-    private ContactDto SelectedContactDto { get; set; }
+    private int SelectedContactId { get; set; }
     
     private bool _showDetails = false;
 
@@ -62,6 +62,7 @@ else
             return;
         
         ContactsBrief = contacts;
+        StateHasChanged();
     }
 
     public async Task Refresh()
@@ -76,18 +77,21 @@ else
 
     private async Task ShowDetails(ContactBriefDto contactBrief)
     {
-        var contact = await ContactsService.GetContact(contactBrief.Id);
-        SelectedContactDto = contact;
-
         await CategoryService.RefreshCategories();
         
+        SelectedContactId = contactBrief.Id;
         _showDetails = true;
+    }
+
+    private async Task Edited()
+    {
+        await Refresh();
     }
 
     private async Task Deleted()
     {
+        SelectedContactId = 0;
         await Refresh();
-        StateHasChanged();
     }
 
     private async Task CloseDetails() => _showDetails = false;

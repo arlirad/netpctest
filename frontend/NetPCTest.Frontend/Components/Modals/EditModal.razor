@@ -2,6 +2,7 @@
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Models
 @using NetPCTest.Frontend.Services
+@inject ContactsService ContactsService
 @inject CategoryService CategoryService
 
 <Modal Header="ui.contact.edit" OnClose="Close" MinimumWidth="500px">
@@ -34,9 +35,8 @@
         }
         @if (!category.CustomSubcategoryRequired)
         {
-            if (category.SubCategories.Count == 0)
-                FormData.SubCategoryId = 0;
-            else if (category.SubCategories.All(s => s.Id != FormData.SubCategoryId))
+            if (category.SubCategories.Count > 0 && 
+                category.SubCategories.All(s => s.Id != FormData.SubCategoryId))
                 FormData.SubCategoryId = category.SubCategories.First().Id;
 
             if (category.SubCategories.Count > 0)
@@ -80,13 +80,37 @@
     [Parameter]
     public EventCallback OnClose { get; set; }
     [Parameter]
+    public EventCallback OnEdited { get; set; }
+    [Parameter]
     public ContactDto ContactDto { get; set; }
 
     private ContactEditFormModel FormData { get; set; } = new();
 
     private async Task HandleSubmit()
     {
+        var category = CategoryService.GetCategory(FormData.CategoryId);
+        // C# forced my hand to use an explicit type here.
+        int? subCategoryId = category?.SubCategories.Count > 0 ? FormData.SubCategoryId : null;
+        var customSubCategory = category?.SubCategories.Count == 0 ? FormData.CustomSubCategory : null;
         
+        var newData = new ContactUpdateDto()
+        {
+            Name = FormData.Name,
+            Surname = FormData.Surname,
+            Email = FormData.Email,
+            Phone = FormData.Phone,
+            BirthDate = FormData.BirthDate,
+            CategoryId = FormData.CategoryId,
+            SubCategoryId = subCategoryId,
+            CustomSubCategory = customSubCategory,
+        };
+        
+        var result = await ContactsService.UpdateContact(ContactDto.Id, newData);
+        if (!result)
+            return;
+
+        await OnEdited.InvokeAsync();
+        await Close();
     }
 
     protected override void OnParametersSet()

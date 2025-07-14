@@ -18,10 +18,10 @@ public class ContactsService(HttpClient httpClient, IOptions<ApiOptions> apiOpti
         return response.Count;
     }
 
-    public async Task<ContactDto> GetContact(int contactBriefId)
+    public async Task<ContactDto?> GetContact(int id)
     {
         var contact = 
-            await httpClient.GetFromJsonAsync<ContactDto>($"contacts/{contactBriefId}");
+            await httpClient.GetFromJsonAsync<ContactDto>($"contacts/{id}");
 
         return contact;
     }
@@ -32,6 +32,14 @@ public class ContactsService(HttpClient httpClient, IOptions<ApiOptions> apiOpti
             await httpClient.GetFromJsonAsync<List<ContactBriefDto>>($"contacts?startIndex={start}&count={count}");
 
         return contacts;
+    }
+
+    public async Task<bool> UpdateContact(int id, ContactUpdateDto newData)
+    {
+        var result = 
+            await httpClient.PutAsJsonAsync($"contacts/{id}", newData);
+
+        return result.IsSuccessStatusCode;
     }
 
     public async Task<bool> DeleteContact(int id)
