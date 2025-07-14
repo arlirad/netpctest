@@ -63,6 +63,16 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     }
     
     [Authorize]
+    [HttpPut("{id:int}/password")]
+    public async Task<IActionResult> UpdateContactPassword([Required] int id, 
+        [FromBody] ContactPasswordChangeDto contactPasswordChangeDto)
+    {
+        var result = await contactsService.SetContactPassword(id, contactPasswordChangeDto);
+
+        return result ? Ok() : BadRequest();
+    }
+    
+    [Authorize]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteContact([Required] int id)
     {

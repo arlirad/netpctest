@@ -11,5 +11,6 @@ public interface IContactsService
     Task<CreateContactResult> CreateContact(ContactCreationDto contactCreationDto);
     Task<ContactDto?> GetContact(int id, CancellationToken cancellationToken);
     Task<UpdateContactResult> UpdateContact(int id, ContactUpdateDto newData);
+    Task<bool> SetContactPassword(int id, ContactPasswordChangeDto newPassword);
     Task<bool> DeleteContact(int id);
 }

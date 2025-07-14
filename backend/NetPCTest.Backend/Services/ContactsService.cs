@@ -52,6 +52,20 @@ public class ContactsService(
             UpdateContactResult.Invalid;
     }
 
+    public async Task<bool> SetContactPassword(int id, ContactPasswordChangeDto newData)
+    {
+        if (newData.Password != newData.ConfirmPassword)
+            return false;
+        
+        var contact = await repository.GetContact(id, CancellationToken.None);
+        if (contact is null)
+            return false;
+        
+        contact.PasswordHash = passwordService.HashPassword(contact, newData.Password);
+
+        return await repository.UpdateContact(id, contact);
+    }
+
     public async Task<bool> DeleteContact(int id) => 
         await repository.DeleteContact(id);
 
