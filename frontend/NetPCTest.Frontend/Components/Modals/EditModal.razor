@@ -34,16 +34,25 @@
         }
         @if (!category.CustomSubcategoryRequired)
         {
-            if (category.SubCategories.All(s => s.Id != FormData.SubCategoryId))
+            if (category.SubCategories.Count == 0)
+                FormData.SubCategoryId = 0;
+            else if (category.SubCategories.All(s => s.Id != FormData.SubCategoryId))
                 FormData.SubCategoryId = category.SubCategories.First().Id;
-            
-            <label><L Key="ui.contact.details.subcategory"/></label>
-            <InputSelect @bind-Value="FormData.SubCategoryId" class="layer2 layer2-input">
-                @foreach (var subCategory in category.SubCategories)
-                {
-                    <option value="@subCategory.Id"><L Key="@subCategory.Name"/></option>
-                }
-            </InputSelect>
+
+            if (category.SubCategories.Count > 0)
+            {
+                <label>
+                    <L Key="ui.contact.details.subcategory"/>
+                </label>
+                <InputSelect @bind-Value="FormData.SubCategoryId" class="layer2 layer2-input">
+                    @foreach (var subCategory in category.SubCategories)
+                    {
+                        <option value="@subCategory.Id">
+                            <L Key="@subCategory.Name"/>
+                        </option>
+                    }
+                </InputSelect>
+            }
         }
         else
         {
