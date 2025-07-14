@@ -9,6 +9,6 @@ public class Category
     public required string Name { get; set; }
     public required bool CustomSubcategoryRequired { get; set; }
     
-    public ICollection<Contact> Members { get; set; }
-    public ICollection<SubCategory> SubCategories { get; set; }
+    public required ICollection<Contact> Members { get; set; }
+    public required ICollection<SubCategory> SubCategories { get; set; }
 }

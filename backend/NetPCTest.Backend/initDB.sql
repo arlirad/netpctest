@@ -171,7 +171,14 @@ values (1, 'ui.login', 'Logowanie'),
        (1, 'ui.contact.create', 'Utwórz kontakt'),
        (2, 'ui.contact.create', 'Create contact'),
        (1, 'ui.contact.create.submit', 'Utwórz'),
-       (2, 'ui.contact.create.submit', 'Create');
+       (2, 'ui.contact.create.submit', 'Create'),
+       (1, 'ui.list.contact.create_login_required', 'Do tworzenia kontaktów wymagane jest zalogowanie się.'),
+       (2, 'ui.list.contact.create_login_required', 'You need to be logged in in order to create contacts.'),
+       (1, 'ui.list.page.previous', 'Poprzednia strona'),
+       (2, 'ui.list.page.previous', 'Previous page'),
+       (1, 'ui.list.page.next', 'Następna strona'),
+       (2, 'ui.list.page.next', 'Next page')
+;
 
 -- Sample contact data
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)

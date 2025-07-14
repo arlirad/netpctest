@@ -17,14 +17,14 @@ public class Contact
     // Max length: https://joshthecoder.com/2020/04/28/max-data-types-in-aspnet-core-identity-schema.html
     // However, we will round it up to 96.
     [MaxLength(96)]
-    public /*required*/ string PasswordHash { get; set; }
+    public required string PasswordHash { get; set; }
     // Max length: https://en.wikipedia.org/wiki/E.164, but we will round it up to 16.
     [MaxLength(16)]
     public required string Phone { get; set; }
     public required DateTime BirthDate { get; set; }
     
     public int CategoryId { get; set; }
-    public Category Category { get; set; }
+    public required Category Category { get; set; }
     public int? SubCategoryId { get; set; }
     public SubCategory? SubCategory { get; set; }
     [MaxLength(48)]

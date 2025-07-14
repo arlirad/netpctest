@@ -26,6 +26,8 @@ public class CategoryValidatorTests
             Id = 1,
             Name = "test.category1",
             CustomSubcategoryRequired = false,
+            SubCategories = new List<SubCategory>(),
+            Members = new List<Contact>(),
         };
             
         // Category 2 requires custom subcategories.
@@ -34,6 +36,8 @@ public class CategoryValidatorTests
             Id = 2,
             Name = "test.category2",
             CustomSubcategoryRequired = true,
+            SubCategories = new List<SubCategory>(),
+            Members = new List<Contact>(),
         };
             
         // Category 3 allows for no custom subcategories.
@@ -42,6 +46,8 @@ public class CategoryValidatorTests
             Id = 3,
             Name = "test.category3",
             CustomSubcategoryRequired = false,
+            SubCategories = new List<SubCategory>(),
+            Members = new List<Contact>(),
         };
             
         // Category 4 allows for no custom subcategories, but it won't have any subcategories either.
@@ -50,6 +56,8 @@ public class CategoryValidatorTests
             Id = 4,
             Name = "test.category4",
             CustomSubcategoryRequired = false,
+            SubCategories = new List<SubCategory>(),
+            Members = new List<Contact>(),
         };
         
         // SubCategory 1 and SubCategory 2 will belong to Category 1.
@@ -96,6 +104,8 @@ public class CategoryValidatorTests
             Phone = "1234567890",
             CategoryId = 1,
             CustomSubCategory = "Lorem ipsum dolor sit amet",
+            PasswordHash = "asdf",
+            Category = category1,
         };
         
         // Contact 4 - Has a CustomSubCategory, and belongs to Category 2, which does allow it.
@@ -108,6 +118,8 @@ public class CategoryValidatorTests
             Phone = "1234567890",
             CategoryId = 2,
             CustomSubCategory = "Lorem ipsum dolor sit amet",
+            PasswordHash = "asdf",
+            Category = category2,
         };
         
         // Contact 5 - Has a SubCategoryId of 1, and belongs to Category 1, which does allow it.
@@ -120,6 +132,8 @@ public class CategoryValidatorTests
             Phone = "1234567890",
             CategoryId = 1,
             SubCategoryId = 1,
+            PasswordHash = "asdf",
+            Category = category1,
         };
         
         // Contact 6 - Has a SubCategoryId of 3, and belongs to Category 1, but SubCategory 3 does not
@@ -133,6 +147,8 @@ public class CategoryValidatorTests
             Phone = "1234567890",
             CategoryId = 1,
             SubCategoryId = 3,
+            PasswordHash = "asdf",
+            Category = category1,
         };
         
         // Contact 7 - Belongs to Category 4, which does not allow custom subcategories, but does not have any fixed
@@ -145,6 +161,8 @@ public class CategoryValidatorTests
             BirthDate = new DateTime(1990, 1, 1),
             Phone = "1234567890",
             CategoryId = 4,
+            PasswordHash = "asdf",
+            Category = category4,
         };
         
         // Contact 8 - Belongs to Category 4, which does not allow custom subcategories, but the contact has a
@@ -158,6 +176,8 @@ public class CategoryValidatorTests
             Phone = "1234567890",
             CategoryId = 4,
             CustomSubCategory = "aaaa",
+            PasswordHash = "asdf",
+            Category = category4,
         };
         
         // Here we set up our mock.

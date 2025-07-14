@@ -6,5 +6,5 @@ public class CategoryDto
     public required string Name { get; set; }
     public required bool CustomSubcategoryRequired { get; set; }
     
-    public List<SubCategoryDto> SubCategories { get; set; }
+    public required List<SubCategoryDto> SubCategories { get; set; }
 }

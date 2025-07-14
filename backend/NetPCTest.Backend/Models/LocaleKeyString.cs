@@ -9,6 +9,6 @@ public class LocaleKeyString
     [MaxLength(1024)]
     public required string Value { get; set; }
     
-    public int LocaleId { get; set; }
-    public Locale Locale { get; set; }
+    public required int LocaleId { get; set; }
+    public required Locale Locale { get; set; }
 }

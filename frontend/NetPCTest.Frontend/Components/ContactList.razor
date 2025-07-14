@@ -11,14 +11,26 @@
 }
 else
 {
-    <p>@(RangeStart + 1) - @(RangeStart + RangeEnd) (@TotalContactCount)</p>
+    <p>@(RangeStart + 1) - @(RangeStart + PageSize) (@TotalContactCount)</p>
 
     if (IsAuthenticated)
     {
         <button class="layer2" type="submit" @onclick="ShowCreation">
             <L Key="ui.list.contact.create"/>
         </button>
+        <br/>
     }
+    else
+    {
+        <p><L Key="ui.list.contact.create_login_required"/></p>
+    }
+    
+    <button class="layer2" type="submit" @onclick="PreviousPage">
+        <L Key="ui.list.page.previous"/>
+    </button>
+    <button class="layer2" type="submit" @onclick="NextPage">
+        <L Key="ui.list.page.next"/>
+    </button>
 
     <table class="layer2">
         <tr>
@@ -43,9 +55,9 @@ else
     </table>
 }
 
-@if (_showDetails)
+@if (_showDetails && SelectedContactId.HasValue)
 {
-    <DetailsModal ContactId="SelectedContactId" OnDeleted="Deleted" OnEdited="Edited" OnClose="CloseDetails"></DetailsModal>
+    <DetailsModal ContactId="SelectedContactId.Value" OnDeleted="Deleted" OnEdited="Edited" OnClose="CloseDetails"></DetailsModal>
 }
 
 @if (_showCreation)
@@ -57,22 +69,22 @@ else
     [Parameter] 
     public List<ContactBriefDto>? ContactsBrief { get; set; }
     
+    private const int PageSize = 50;
+    
     private int TotalContactCount { get; set; }
     private int RangeStart { get; set; }
-    private int RangeEnd { get; set; }
-    private int SelectedContactId { get; set; }
+    private int? SelectedContactId { get; set; }
     private bool IsAuthenticated { get; set; }
     
     private bool _showCreation = false;
     private bool _showDetails = false;
 
-    public async Task Get(int start, int end)
+    public async Task Get(int start)
     {
         RangeStart = start;
-        RangeEnd = end;
         TotalContactCount = await ContactsService.GetContactCount();
         
-        var contacts = await ContactsService.GetContacts(RangeStart, RangeEnd);
+        var contacts = await ContactsService.GetContacts(RangeStart, PageSize);
 
         if (contacts is null)
             return;
@@ -83,7 +95,7 @@ else
 
     public async Task Refresh()
     {
-        await Get(RangeStart, RangeEnd);
+        await Get(RangeStart);
     }
 
     public void Dispose()
@@ -98,7 +110,7 @@ else
         IsAuthenticated = await AuthService.IsLoggedIn();
         
         await CategoryService.RefreshCategories();
-        await Get(0, 50);
+        await Get(0);
     }
 
     private void ShowDetails(ContactBriefDto contactBrief)
@@ -113,7 +125,7 @@ else
 
     private async Task Deleted()
     {
-        SelectedContactId = 0;
+        SelectedContactId = null;
         await Refresh();
     }
 
@@ -126,5 +138,25 @@ else
     {
         IsAuthenticated = await AuthService.IsLoggedIn();
         StateHasChanged();
+    }
+
+    private async Task PreviousPage()
+    {
+        if (RangeStart == 0)
+            return;
+
+        RangeStart -= PageSize;
+        
+        await Refresh();
+    }
+
+    private async Task NextPage()
+    {
+        if (RangeStart + PageSize >= TotalContactCount)
+            return;
+
+        RangeStart += PageSize;
+
+        await Refresh();
     }
 }
