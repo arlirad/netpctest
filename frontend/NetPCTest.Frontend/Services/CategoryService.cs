@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Net.Http.Json;
 using NetPCTest.Frontend.Dtos;
 
@@ -34,4 +35,6 @@ public class CategoryService(HttpClient httpClient)
     public CategoryDto? GetCategory(int id) => _categories.FirstOrDefault(c => c.Id == id);
 
     public SubCategoryDto? GetSubCategory(int id)  => _subCategories.FirstOrDefault(s => s.Id == id);
+
+    public IReadOnlyList<CategoryDto> GetCategories() => _categories;
 }

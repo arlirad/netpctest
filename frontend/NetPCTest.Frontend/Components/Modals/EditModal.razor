@@ -1,31 +1,98 @@
 @using NetPCTest.Frontend.Components;
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Models
+@using NetPCTest.Frontend.Services
+@inject CategoryService CategoryService
 
 <Modal Header="ui.contact.edit" OnClose="Close" MinimumWidth="500px">
     <EditForm Model="@FormData" OnValidSubmit="HandleSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+        <label><L Key="ui.contact.details.name"/></label>
+        <InputText @bind-Value="FormData.Name" class="layer2 layer2-input" required/>
+        <label><L Key="ui.contact.details.surname"/></label>
+        <InputText @bind-Value="FormData.Surname" class="layer2 layer2-input" required/>
+        <label><L Key="ui.contact.details.email"/></label>
+        <InputText @bind-Value="FormData.Email" class="layer2 layer2-input" type="email" required/>
+        <label><L Key="ui.contact.details.phone"/></label>
+        <InputText @bind-Value="FormData.Phone" class="layer2 layer2-input" required/>
+        <label><L Key="ui.contact.details.birthdate"/></label>
+        <InputDate @bind-Value="FormData.BirthDate" class="layer2 layer2-input" required/>
+        <hr noshade/>
         
-        <label><L Key="ui.login.email"/></label>
-        <input @bind="FormData.Email" class="layer2 layer2-input" type="email" required />
+        <label><L Key="ui.contact.details.category"/></label>
+        <InputSelect @bind-Value="FormData.CategoryId" class="layer2 layer2-input">
+            @foreach (var category in CategoryService.GetCategories())
+            {
+                <option value="@category.Id"><L Key="@category.Name"/></option>
+            }
+        </InputSelect>
+        
+        @{
+            var category = CategoryService.GetCategory(FormData.CategoryId);
+            // Hey, at this point if we get a null category we have bigger problems anyway.
+            if (category is null)
+                throw new NullReferenceException();
+        }
+        @if (category.SubCategories.Count > 0)
+        {
+            if (category.SubCategories.Any(s => s.Id == FormData.SubCategoryId))
+                FormData.SubCategoryId = category.SubCategories.FirstOrDefault()?.Id;
+            
+            <label><L Key="ui.contact.details.subcategory"/></label>
+            <InputSelect @bind-Value="FormData.SubCategoryId" class="layer2 layer2-input">
+                @foreach (var subCategory in category.SubCategories)
+                {
+                    <option value="@subCategory.Id"><L Key="@subCategory.Name"/></option>
+                }
+            </InputSelect>
+        }
+        else
+        {
+            <label><L Key="ui.contact.details.custom_subcategory"/></label>
+            <InputText @bind-Value="FormData.CustomSubCategory" class="layer2 layer2-input" required/>
+        }
+        <hr noshade/>
+        
+        <label><L Key="ui.contact.edit.password.change"/></label>
+        <InputCheckbox @bind-Value="FormData.PasswordChange" type="checkbox"/>
 
-        <button class="layer2" type="submit"><L Key="ui.login.submit"/></button>
+        @if (FormData.PasswordChange)
+        {
+            <label><L Key="ui.contact.edit.password"/></label>
+            <InputText @bind-Value="FormData.Password" class="layer2 layer2-input"/>
+            <label><L Key="ui.contact.edit.password.confirm"/></label>
+            <InputText @bind-Value="FormData.ConfirmPassword" class="layer2 layer2-input"/>
+        }
+
+        <button class="layer2" type="submit"><L Key="ui.contact.edit.submit"/></button>
     </EditForm>
 </Modal>
 
 @code {
     [Parameter]
     public EventCallback OnClose { get; set; }
+    [Parameter]
+    public ContactDto ContactDto { get; set; }
 
-    private ContactEditFormModel FormData { get; set; } = new ContactEditFormModel()
-    {
-        Email = "aa.aa@bb.cc",
-    };
+    private ContactEditFormModel FormData { get; set; } = new();
 
-    private void HandleSubmit()
+    private async Task HandleSubmit()
     {
         
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (ContactDto is null)
+            throw new ArgumentNullException(nameof(ContactDto));
+
+        FormData.Name = ContactDto.Name;
+        FormData.Surname = ContactDto.Surname;
+        FormData.Email = ContactDto.Email;
+        FormData.Phone = ContactDto.Phone;
+        FormData.BirthDate = ContactDto.BirthDate;
+        FormData.CategoryId = ContactDto.CategoryId;
+        FormData.SubCategoryId = ContactDto.SubCategoryId;
+        FormData.CustomSubCategory = ContactDto.CustomSubCategory;
     }
 
     private async Task Close() => await OnClose.InvokeAsync();
