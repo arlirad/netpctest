@@ -1,4 +1,4 @@
-A.
+-- A.
 select
     G1.Firstname, G1.Surname,
     count(*) as GrandDaughters
@@ -10,7 +10,7 @@ group by G1.Id, G1.Firstname, G1.Surname
 order by GrandDaughters desc
 limit 1;
 
-B.
+-- B.
 select
     IsEmploymentContract,
     avg(Workers) as AverageWorkersPerCompany,
@@ -26,7 +26,7 @@ from (
 as CompanyStats
 GROUP BY IsEmploymentContract;
 
-C.
+-- C.
 -- Niestety za trzymanie Salary osobno trzeba zapłacić swoje.
 with FamilyMembers as (
     select
