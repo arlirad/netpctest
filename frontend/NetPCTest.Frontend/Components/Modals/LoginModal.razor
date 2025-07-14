@@ -1,20 +1,41 @@
 @using NetPCTest.Frontend.Components;
+@using NetPCTest.Frontend.Models
+@using NetPCTest.Frontend.Services
+@inject IAuthService AuthService
 
 <Modal Header="ui.login" OnClose="Close" MinimumWidth="300px">
-    <form>
+    <EditForm Model="@_formData" OnValidSubmit="HandleSubmit">
         <label><L Key="ui.login.email"/></label>
-        <input class="layer2 layer2-input" type="email" required />
+        <InputText @bind-Value="_formData.Email" class="layer2 layer2-input" type="email" required />
 
         <label><L Key="ui.login.password"/></label>
-        <input class="layer2 layer2-input" type="password" required />
+        <InputText @bind-Value="_formData.Password" class="layer2 layer2-input" type="password" required />
 
         <button class="layer2" type="submit"><L Key="ui.login.submit"/></button>
-    </form>
+    </EditForm>
 </Modal>
 
 @code {
     [Parameter]
     public EventCallback OnClose { get; set; }
+    [Parameter]
+    public EventCallback OnLoggedIn { get; set; }
+
+    private readonly LoginModel _formData = new LoginModel
+    {
+        Email = string.Empty,
+        Password = string.Empty,
+    };
+
+    private async Task HandleSubmit()
+    {
+        var success = await AuthService.Login(_formData.Email, _formData.Password);
+        if (!success)
+            return;
+
+        await OnLoggedIn.InvokeAsync();
+        await Close();
+    }
 
     private async Task Close() => await OnClose.InvokeAsync();
 }

@@ -1,8 +1,12 @@
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Options;
 using NetPCTest.Frontend;
 using NetPCTest.Frontend.Configuration;
+using NetPCTest.Frontend.Handlers;
+using NetPCTest.Frontend.Providers;
 using NetPCTest.Frontend.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -15,15 +19,25 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 builder.Services.Configure<ApiOptions>(builder.Configuration.GetSection("api"));
 builder.Services.Configure<LocaleOptions>(builder.Configuration.GetSection("locale"));
 
-builder.Services.AddSingleton<ContactsService>();
-builder.Services.AddSingleton<CategoryService>();
-builder.Services.AddSingleton<LocalisationService>();
-builder.Services.AddSingleton(sp =>
+builder.Services.AddAuthorizationCore();
+builder.Services.AddTransient<AuthTokenHandler>();
+builder.Services.AddScoped<AuthenticationStateProvider, AppAuthStateProvider>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ContactsService>();
+builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<LocalisationService>();
+builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddHttpClient("AuthorizedClient", (sp, client) =>
     {
         var options = sp.GetRequiredService<IOptions<ApiOptions>>().Value;
-        return new HttpClient
-            { BaseAddress = new Uri(options.BaseUrl) };
-    }
-);
+        client.BaseAddress = new Uri(options.BaseUrl);
+    }).AddHttpMessageHandler<AuthTokenHandler>();
+
+builder.Services.AddScoped(sp =>
+    {
+        var factory = sp.GetRequiredService<IHttpClientFactory>();
+        return factory.CreateClient("AuthorizedClient");
+    });
 
 await builder.Build().RunAsync();

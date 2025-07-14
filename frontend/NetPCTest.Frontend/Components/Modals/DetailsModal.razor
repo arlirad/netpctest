@@ -2,6 +2,7 @@
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Models
 @using NetPCTest.Frontend.Services
+@inject IAuthService AuthService
 @inject ContactsService ContactsService
 @inject CategoryService CategoryService
 
@@ -32,8 +33,15 @@
         <p class="data">@ContactDto.CustomSubCategory</p>
     }
     
-    <button class="layer2" @onclick="ShowDeletion"><L Key="ui.contact.details.delete"/></button>
-    <button class="layer2" @onclick="ShowEdit"><L Key="ui.contact.details.edit"/></button>
+    @if (IsAuthenticated)
+    {
+        <button class="layer2" @onclick="ShowDeletion"><L Key="ui.contact.details.delete"/></button>
+        <button class="layer2" @onclick="ShowEdit"><L Key="ui.contact.details.edit"/></button>
+    }
+    else
+    {
+        <p><L Key="ui.contact.details.edit_login_required"/></p>
+    }
 </Modal>
 
 @if (_showEdit)
@@ -50,7 +58,11 @@
     [Parameter]
     public EventCallback OnClose { get; set; }
     [Parameter]
+    public EventCallback OnDelete { get; set; }
+    [Parameter]
     public ContactDto ContactDto { get; set; }
+    
+    private bool IsAuthenticated { get; set; }
     
     private bool _showEdit = false;
     private bool _showDeletion = false;
@@ -69,7 +81,8 @@
         
         _showEdit = false;
         _showDeletion = false;
-        
+
+        await OnDelete.InvokeAsync();
         await OnClose.InvokeAsync();
     }
     
@@ -79,5 +92,11 @@
         _showDeletion = false;
         
         await OnClose.InvokeAsync();
+    }
+    
+    // We can't access logging in when we have this open anyway, so this should be fine.
+    protected override async Task OnInitializedAsync()
+    {
+        IsAuthenticated = await AuthService.IsLoggedIn();
     }
 }

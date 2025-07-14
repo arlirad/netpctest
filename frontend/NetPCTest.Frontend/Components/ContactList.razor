@@ -36,7 +36,7 @@ else
 
 @if (_showDetails)
 {
-    <DetailsModal ContactDto="SelectedContactDto" OnClose="CloseDetails"></DetailsModal>
+    <DetailsModal ContactDto="SelectedContactDto" OnDelete="Deleted" OnClose="CloseDetails"></DetailsModal>
 }
 
 @code {
@@ -82,6 +82,11 @@ else
         await CategoryService.RefreshCategories();
         
         _showDetails = true;
+    }
+
+    private async Task Deleted()
+    {
+        await Refresh();
         StateHasChanged();
     }
 

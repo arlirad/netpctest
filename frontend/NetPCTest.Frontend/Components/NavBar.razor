@@ -1,10 +1,63 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using NetPCTest.Frontend.Services
+@using NetPCTest.Frontend.Components.Modals
+@inject IAuthService AuthService
+
 <div class="layer2 navbar">
-    <div class="layer3 navbar-button" @onclick="ClickLogin"><L Key="ui.login"/></div>
+    @if (!IsAuthenticated)
+    {
+        <div class="layer3 navbar-button" @onclick="ClickLogin"><L Key="ui.login"/></div>
+    }
+    else
+    {
+        <p>@AuthenticatedEmail</p>
+        <div class="layer3 navbar-button" @onclick="ClickLogout"><L Key="ui.logout"/></div>
+    }
 </div>
 
+@if (ShowLogin)
+{
+    <LoginModal OnLoggedIn="LoggedIn" OnClose="CloseLogin"></LoginModal>
+}
+
+
 @code {
+    // Sure, having an event inside AuthService would be better than manually prodding AuthService, but async events
+    // aren't a great thing either, so...
+    
     [Parameter]
     public EventCallback OnClickLogin { get; set; }
+    [Parameter]
+    public EventCallback OnClickLogout { get; set; }
+    
+    private string? AuthenticatedEmail { get; set; }
+    private bool IsAuthenticated { get; set; }
+    private bool ShowLogin { get; set; }
 
-    private async Task ClickLogin() => await OnClickLogin.InvokeAsync();
+    private void ClickLogin() => ShowLogin = true;
+    private void CloseLogin() => ShowLogin = false;
+
+    private async Task LoggedIn()
+    {
+        AuthenticatedEmail = await AuthService.GetEmail();
+        IsAuthenticated = await AuthService.IsLoggedIn();
+
+        StateHasChanged();
+    }
+
+    private async Task ClickLogout()
+    {
+        await AuthService.Logout();
+        
+        AuthenticatedEmail = null;
+        IsAuthenticated = false;
+
+        StateHasChanged();
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticatedEmail = await AuthService.GetEmail();
+        IsAuthenticated = await AuthService.IsLoggedIn();
+    }
 }

@@ -2,19 +2,11 @@
 @using NetPCTest.Frontend.Components
 @using NetPCTest.Frontend.Components.Modals
 
-@if (_showLogin)
-{
-    <LoginModal OnClose="CloseLogin"></LoginModal>
-}
-
-<NavBar OnClickLogin="ShowLogin"/>
+<NavBar/>
 <main>
     <ContactList/>
 </main>
 
 @code {
-    private bool _showLogin = false;
-
-    private void ShowLogin() => _showLogin = true;
-    private void CloseLogin() => _showLogin = false;
+    
 }
