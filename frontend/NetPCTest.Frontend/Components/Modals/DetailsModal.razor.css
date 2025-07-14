@@ -20,6 +20,10 @@ button {
     margin-left: auto;
 }
 
+button:hover {
+    background-color: #555555;
+}
+
 .data {
     color: #cccccc;
 }

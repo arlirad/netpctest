@@ -165,7 +165,13 @@ values (1, 'ui.login', 'Logowanie'),
        (1, 'ui.list.contact.name', 'Imię'),
        (2, 'ui.list.contact.name', 'Firstname'),
        (1, 'ui.list.contact.surname', 'Nazwisko'),
-       (2, 'ui.list.contact.surname', 'Surname');
+       (2, 'ui.list.contact.surname', 'Surname'),
+       (1, 'ui.list.contact.create', 'Utwórz nowy kontakt'),
+       (2, 'ui.list.contact.create', 'Create new contact'),
+       (1, 'ui.contact.create', 'Utwórz kontakt'),
+       (2, 'ui.contact.create', 'Create contact'),
+       (1, 'ui.contact.create.submit', 'Utwórz'),
+       (2, 'ui.contact.create.submit', 'Create');
 
 -- Sample contact data
 insert into Contacts(Name, Surname, Email, PasswordHash, Phone, BirthDate, CategoryId, CustomSubCategory)

@@ -5,7 +5,7 @@
 @inject ContactsService ContactsService
 @inject CategoryService CategoryService
 
-<Modal Header="ui.contact.edit" OnClose="Close" MinimumWidth="500px">
+<Modal Header="ui.contact.create" OnClose="Close" MinimumWidth="500px">
     <EditForm Model="@FormData" OnValidSubmit="HandleSubmit">
         <label><L Key="ui.contact.details.name"/></label>
         <InputText @bind-Value="FormData.Name" class="layer2 layer2-input" required/>
@@ -61,18 +61,12 @@
         }
         <hr noshade/>
         
-        <label><L Key="ui.contact.edit.password.change"/></label>
-        <InputCheckbox @bind-Value="FormData.PasswordChange" type="checkbox"/>
+        <label><L Key="ui.contact.edit.password"/></label>
+        <InputText @bind-Value="FormData.Password" class="layer2 layer2-input" type="password"/>
+        <label><L Key="ui.contact.edit.password.confirm"/></label>
+        <InputText @bind-Value="FormData.ConfirmPassword" class="layer2 layer2-input" type="password"/>
 
-        @if (FormData.PasswordChange)
-        {
-            <label><L Key="ui.contact.edit.password"/></label>
-            <InputText @bind-Value="FormData.Password" class="layer2 layer2-input" type="password"/>
-            <label><L Key="ui.contact.edit.password.confirm"/></label>
-            <InputText @bind-Value="FormData.ConfirmPassword" class="layer2 layer2-input" type="password"/>
-        }
-
-        <button class="layer2" type="submit"><L Key="ui.contact.edit.submit"/></button>
+        <button class="layer2" type="submit"><L Key="ui.contact.create.submit"/></button>
     </EditForm>
 </Modal>
 
@@ -80,11 +74,14 @@
     [Parameter]
     public EventCallback OnClose { get; set; }
     [Parameter]
-    public EventCallback OnEdited { get; set; }
-    [Parameter]
-    public ContactDto ContactDto { get; set; }
+    public EventCallback OnCreated { get; set; }
 
     private ContactEditFormModel FormData { get; set; } = new();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        FormData.CategoryId = CategoryService.GetCategories().First().Id;
+    }
 
     private async Task HandleSubmit()
     {
@@ -93,7 +90,7 @@
         int? subCategoryId = category?.SubCategories.Count > 0 ? FormData.SubCategoryId : null;
         var customSubCategory = category?.SubCategories.Count == 0 ? FormData.CustomSubCategory : null;
         
-        var newData = new ContactUpdateDto()
+        var newData = new ContactCreationDto
         {
             Name = FormData.Name,
             Surname = FormData.Surname,
@@ -103,48 +100,16 @@
             CategoryId = FormData.CategoryId,
             SubCategoryId = subCategoryId,
             CustomSubCategory = customSubCategory,
-        };
-        
-        var result = await ContactsService.UpdateContact(ContactDto.Id, newData);
-        if (!result)
-            return;
-        
-        if (FormData.PasswordChange)
-            if (!await ChangePassword())
-                return;
-
-        await OnEdited.InvokeAsync();
-        await Close();
-    }
-
-    private async Task<bool> ChangePassword()
-    {
-        var newPassword = new ContactPasswordChangeDto()
-        {
             Password = FormData.Password,
             ConfirmPassword = FormData.ConfirmPassword,
         };
         
-        var result = await ContactsService.UpdateContactPassword(ContactDto.Id, newPassword);
+        var result = await ContactsService.CreateContact(newData);
         if (!result)
-            return false;
+            return;
 
-        return true;
-    }
-
-    protected override void OnParametersSet()
-    {
-        if (ContactDto is null)
-            throw new ArgumentNullException(nameof(ContactDto));
-
-        FormData.Name = ContactDto.Name;
-        FormData.Surname = ContactDto.Surname;
-        FormData.Email = ContactDto.Email;
-        FormData.Phone = ContactDto.Phone;
-        FormData.BirthDate = ContactDto.BirthDate;
-        FormData.CategoryId = ContactDto.CategoryId;
-        FormData.SubCategoryId = ContactDto.SubCategoryId ?? 0;
-        FormData.CustomSubCategory = ContactDto.CustomSubCategory;
+        await OnCreated.InvokeAsync();
+        await Close();
     }
 
     private async Task Close() => await OnClose.InvokeAsync();

@@ -22,9 +22,6 @@
 
 
 @code {
-    // Sure, having an event inside AuthService would be better than manually prodding AuthService, but async events
-    // aren't a great thing either, so...
-    
     [Parameter]
     public EventCallback OnClickLogin { get; set; }
     [Parameter]
@@ -56,6 +53,19 @@
     }
     
     protected override async Task OnInitializedAsync()
+    {
+        AuthService.AuthStateChangedAsync += AuthServiceOnAuthStateChangedAsync;
+        
+        AuthenticatedEmail = await AuthService.GetEmail();
+        IsAuthenticated = await AuthService.IsLoggedIn();
+    }
+
+    public void Dispose()
+    {
+        AuthService.AuthStateChangedAsync -= AuthServiceOnAuthStateChangedAsync;
+    }
+
+    private async Task AuthServiceOnAuthStateChangedAsync()
     {
         AuthenticatedEmail = await AuthService.GetEmail();
         IsAuthenticated = await AuthService.IsLoggedIn();

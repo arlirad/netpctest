@@ -42,10 +42,26 @@ public class ContactsService(HttpClient httpClient, IOptions<ApiOptions> apiOpti
         return result.IsSuccessStatusCode;
     }
 
+    public async Task<bool> UpdateContactPassword(int id, ContactPasswordChangeDto newPassword)
+    {
+        var result = 
+            await httpClient.PutAsJsonAsync($"contacts/{id}/password", newPassword);
+
+        return result.IsSuccessStatusCode;
+    }
+
     public async Task<bool> DeleteContact(int id)
     {
         var response = 
             await httpClient.DeleteAsync($"contacts/{id}");
+
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> CreateContact(ContactCreationDto newData)
+    {
+        var response = 
+            await httpClient.PostAsJsonAsync($"contacts", newData);
 
         return response.IsSuccessStatusCode;
     }

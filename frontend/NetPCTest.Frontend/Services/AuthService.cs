@@ -13,6 +13,8 @@ public class AuthService(
     ILocalStorageService localStorage,
     AuthenticationStateProvider authStateProvider) : IAuthService
 {
+    public event Func<Task>? AuthStateChangedAsync;
+    
     public async Task<bool> Login(string email, string password)
     {
         var response = await httpClient.PostAsJsonAsync("auth", new LoginDto()
@@ -33,6 +35,8 @@ public class AuthService(
         if (authStateProvider is AppAuthStateProvider customProvider)
             customProvider.NotifyUserAuthentication(result.Token);
 
+        AuthStateChangedAsync?.Invoke();
+
         return true;
     }
 
@@ -42,6 +46,8 @@ public class AuthService(
 
         if (authStateProvider is AppAuthStateProvider customProvider)
             customProvider.NotifyUserLogout();
+
+        AuthStateChangedAsync?.Invoke();
     }
 
     public async Task<string?> GetBearer() => await localStorage.GetItemAsync<string>("authToken");

@@ -19,3 +19,7 @@ button {
     margin-top: 1.00em;
     margin-left: auto;
 }
+
+button:hover {
+    background-color: #555555;
+}

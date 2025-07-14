@@ -1,6 +1,7 @@
 @using NetPCTest.Frontend.Dtos
 @using NetPCTest.Frontend.Services
 @using NetPCTest.Frontend.Components.Modals
+@inject IAuthService AuthService
 @inject ContactsService ContactsService
 @inject CategoryService CategoryService
 
@@ -11,6 +12,14 @@
 else
 {
     <p>@(RangeStart + 1) - @(RangeStart + RangeEnd) (@TotalContactCount)</p>
+
+    if (IsAuthenticated)
+    {
+        <button class="layer2" type="submit" @onclick="ShowCreation">
+            <L Key="ui.list.contact.create"/>
+        </button>
+    }
+
     <table class="layer2">
         <tr>
             <th>
@@ -39,6 +48,11 @@ else
     <DetailsModal ContactId="SelectedContactId" OnDeleted="Deleted" OnEdited="Edited" OnClose="CloseDetails"></DetailsModal>
 }
 
+@if (_showCreation)
+{
+    <CreationModal OnCreated="Created" OnClose="CloseCreation"></CreationModal>
+}
+
 @code {
     [Parameter] 
     public List<ContactBriefDto>? ContactsBrief { get; set; }
@@ -47,7 +61,9 @@ else
     private int RangeStart { get; set; }
     private int RangeEnd { get; set; }
     private int SelectedContactId { get; set; }
+    private bool IsAuthenticated { get; set; }
     
+    private bool _showCreation = false;
     private bool _showDetails = false;
 
     public async Task Get(int start, int end)
@@ -72,15 +88,23 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        AuthService.AuthStateChangedAsync += AuthServiceOnAuthStateChangedAsync;
+        
+        IsAuthenticated = await AuthService.IsLoggedIn();
+        
+        await CategoryService.RefreshCategories();
         await Get(0, 50);
     }
 
     private async Task ShowDetails(ContactBriefDto contactBrief)
     {
-        await CategoryService.RefreshCategories();
-        
         SelectedContactId = contactBrief.Id;
         _showDetails = true;
+    }
+
+    private async Task ShowCreation()
+    {
+        _showCreation = true;
     }
 
     private async Task Edited()
@@ -94,5 +118,22 @@ else
         await Refresh();
     }
 
+    private async Task Created()
+    {
+        await Refresh();
+    }
+
     private async Task CloseDetails() => _showDetails = false;
+    private async Task CloseCreation() => _showCreation = false;
+
+    public void Dispose()
+    {
+        AuthService.AuthStateChangedAsync -= AuthServiceOnAuthStateChangedAsync;
+    }
+
+    private async Task AuthServiceOnAuthStateChangedAsync()
+    {
+        IsAuthenticated = await AuthService.IsLoggedIn();
+        StateHasChanged();
+    }
 }
