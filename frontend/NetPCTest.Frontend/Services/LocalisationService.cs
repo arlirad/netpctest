@@ -11,7 +11,7 @@ public class LocalisationService(HttpClient httpClient) : ILocalisationService
 
     private Locale _currentLocale = new Locale("_", new Dictionary<string, string>());
     
-    public async Task RefreshLocalesAsync()
+    public async Task RefreshAvailableLocalesAsync()
     {
         var locales = 
             await httpClient.GetFromJsonAsync<List<string>>("localisation");

@@ -429,3 +429,156 @@ Used NuGet packages:
  - Provides a navbar with login/logout functionality.
 
 ## Important classes
+
+### NetPCTest.Frontend.Services.IAuthService
+Defines an abstraction of authentication.
+
+ - #### AuthStateChangedAsync
+   - An event raised on every authentication state change.
+
+ - #### Login(**string** *email*, **string** *password*)
+   - Retrieves a Bearer token using the specified contact credentials asynchronously.
+   - ##### Parameters
+     - *email* - Contact email.
+     - *password* - Contact password.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Boolean**.
+
+ - #### Logout
+   - Discards the current Bearer token asynchronously.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation.
+
+ - #### GetBearer
+   - Retrieves the current Bearer token asynchronously.
+   - ##### Returns
+     - The Bearer token, or null if none is present.
+
+ - #### IsLoggedIn
+   - Checks whether a Bearer token is stored asynchronously.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Boolean**.
+
+ - #### GetEmail
+   - Retrieves the email stored in the currently held Bearer token asynchronously.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.String**.
+
+ - #### GetUser
+   - Retrieves the email stored in the currently held Bearer token asynchronously.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Security.Claims.ClaimsPrincipal**.
+
+
+### NetPCTest.Frontend.Services.ICategoriesService
+Defines an abstraction for accessing category data.
+
+ - #### RefreshCategoriesAsync
+   - Refreshes the list of categories from the data source.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation.
+
+ - #### GetCategory(**int** *id*)
+   - Retrieves a category with the specified ID from the local in-memory cache.
+   - ##### Parameters
+     - *id* - The ID of the category to retrieve.
+   - ##### Returns
+     - The matching **NetPCTest.Frontend.Dtos.CategoryDto**, or null if not found.
+
+ - #### GetSubCategory(**int** *id*)
+   - Retrieves a subcategory with the specified ID from the local in-memory cache.
+   - ##### Parameters
+     - *id* - The ID of the subcategory to retrieve.
+   - ##### Returns
+     - The matching **NetPCTest.Frontend.Dtos.SubCategoryDto**, or null if not found.
+
+ - #### GetCategories
+   - Retrieves a list of categories from the local in-memory cache.
+   - ##### Returns
+     - A read only list containing **NetPCTest.Frontend.Dtos.CategoryDto**.
+
+
+### NetPCTest.Frontend.Services.IContactsService
+Defines an abstraction of accessing contact data.
+
+ - #### GetContactCountAsync
+   - Retrieves the count of contacts asynchronously.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation. The result of the task is the count of contacts.
+
+ - #### GetContactAsync(**int** *id*)
+   - Retrieves contact details asynchronously.
+   - ##### Parameters
+     - *id* - The ID of the contact to retrieve the data of.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation. The result of the task is the count of contacts.
+
+ - #### GetContactsAsync(**int** *start*, **int** *count*)
+   - Retrieves a range of contacts asynchronously.
+   - ##### Parameters
+     - *start* - The zero-based index of the first contact to retrieve.
+     - *count* - The number of contacts to retrieve.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a list of
+            **NetPCTest.Frontend.Dtos.ContactBriefDto**
+
+ - #### CreateContactAsync(**NetPCTest.Frontend.Dtos.ContactCreationDto** *newData*)
+   - Creates a contact asynchronously.
+   - ##### Parameters
+     - *newData* - A **NetPCTest.Frontend.Dtos.ContactCreationDto** representing new contact data.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Boolean**.
+
+ - #### UpdateContactAsync(**int** *id*, **NetPCTest.Frontend.Dtos.ContactUpdateDto** *newData*)
+   - Updates a contact asynchronously.
+   - ##### Parameters
+     - *id* - The ID of the contact to modify.
+     - *newData* - **NetPCTest.Frontend.Dtos.ContactUpdateDto** containing new contact data.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Boolean**.
+
+ - #### UpdateContactPasswordAsync(**int** *id*, **NetPCTest.Frontend.Dtos.ContactPasswordChangeDto** *newPassword*)
+   - Sets the password of a contact asynchronously.
+   - ##### Parameters
+     - *id* - The ID of the contact to modify.
+     - *newPassword* - **NetPCTest.Frontend.Dtos.ContactPasswordChangeDto** containing the new password.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Boolean**.
+
+ - #### DeleteContactAsync(**int** *id*)
+   - Deletes a contact asynchronously.
+   - ##### Parameters
+     - *id* - The ID of the contact to delete.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Boolean**.
+
+
+### NetPCTest.Frontend.Services.ILocalisationService
+Provides a way to retrieve localised strings.
+
+ - #### RefreshAvailableLocalesAsync
+   - Refreshes available locales asynchronously.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation.
+
+ - #### SetLocaleAsync(**string** *localeName*)
+   - Changes the current locale and requests it's localisation dictionary.
+   - ##### Parameters
+     - *localeName* - The name of the locale to change to
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation.
+
+ - #### Translate(**string** *key*)
+   - Localises a string.
+   - ##### Parameters
+     - *key* - Key name to retrieve the localisation of.
+   - ##### Returns
+     - Localised string, or key on failure.

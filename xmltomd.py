@@ -25,19 +25,20 @@ def convert(path, important):
     prev_class = None
 
     for member in root[1]:
-        name = member.attrib["name"].removeprefix("T:").removeprefix("M:")
+        name = member.attrib["name"].removeprefix("T:") \
+            .removeprefix("M:").removeprefix("E:")
         parent_name = None
         member_of_important = False
         parameters_printed = False
 
-        if member.attrib["name"].startswith("M:"):
+        if member.attrib["name"].startswith("M:") or member.attrib["name"].startswith("E:"):
             for important_class_name in important:
                 if name.startswith(important_class_name):
                     parent_name = important_class_name
                     member_of_important = True
                     break
 
-        if not member_of_important and not name in backend_important:
+        if not member_of_important and not name in important:
             continue
 
         if not member_of_important and name != prev_class:
@@ -103,10 +104,13 @@ backend_important = [
 ]
 
 frontend_important = [
-
+    "NetPCTest.Frontend.Services.IAuthService",
+    "NetPCTest.Frontend.Services.ICategoriesService",
+    "NetPCTest.Frontend.Services.IContactsService",
+    "NetPCTest.Frontend.Services.ILocalisationService",
 ]
 
 convert("./backend/NetPCTest.Backend/bin/Debug/net9.0/NetPCTest.Backend.xml",
         backend_important)
-convert("./backend/NetPCTest.Frontend/bin/Debug/net9.0/NetPCTest.Frontend.xml",
+convert("./frontend/NetPCTest.Frontend/bin/Debug/net9.0/NetPCTest.Frontend.xml",
         frontend_important)

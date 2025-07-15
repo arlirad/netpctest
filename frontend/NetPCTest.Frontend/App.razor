@@ -21,7 +21,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LocalisationService.RefreshLocalesAsync();
+        await LocalisationService.RefreshAvailableLocalesAsync();
 
         var locales = LocalisationService.AvailableLocales;
 
