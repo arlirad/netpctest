@@ -3,8 +3,8 @@
 @using NetPCTest.Frontend.Models
 @using NetPCTest.Frontend.Services
 @using NetPCTest.Frontend.Validators
-@inject ContactsService ContactsService
-@inject CategoryService CategoryService
+@inject IContactsService ContactsService
+@inject ICategoriesService CategoriesService
 @inject ContactFormValidator ContactFormValidator
 @inject IMapper Mapper
 
@@ -32,14 +32,14 @@
 
         <label><L Key="ui.contact.details.category"/></label>
         <InputSelect @bind-Value="FormData.CategoryId" class="layer2 layer2-input">
-            @foreach (var category in CategoryService.GetCategories())
+            @foreach (var category in CategoriesService.GetCategories())
             {
                 <option value="@category.Id"><L Key="@category.Name"/></option>
             }
         </InputSelect>
 
         @{
-            var category = CategoryService.GetCategory(FormData.CategoryId);
+            var category = CategoriesService.GetCategory(FormData.CategoryId);
             // Hey, at this point if we get a null category we have bigger problems anyway.
             if (category is null)
                 throw new NullReferenceException();
@@ -93,7 +93,7 @@
     
     protected override void OnInitialized()
     {
-        FormData.CategoryId = CategoryService.GetCategories().First().Id;
+        FormData.CategoryId = CategoriesService.GetCategories().First().Id;
         base.OnInitialized();
     }
 
@@ -109,14 +109,14 @@
 
         _validationErrors?.Clear();
         
-        var category = CategoryService.GetCategory(FormData.CategoryId);
+        var category = CategoriesService.GetCategory(FormData.CategoryId);
         // C# forced my hand to use an explicit type here.
         int? subCategoryId = category?.SubCategories.Count > 0 ? FormData.SubCategoryId : null;
         var customSubCategory = category?.SubCategories.Count == 0 ? FormData.CustomSubCategory : null;
 
         var newData = Mapper.Map<ContactCreationDto>(FormData);
         
-        var result = await ContactsService.CreateContact(newData);
+        var result = await ContactsService.CreateContactAsync(newData);
         if (!result)
             return;
 

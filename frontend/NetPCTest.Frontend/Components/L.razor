@@ -1,5 +1,9 @@
 @using NetPCTest.Frontend.Services
-@inject LocalisationService LocalisationService
+@inject ILocalisationService LocalisationService
+
+@*
+ * Provides a way of dynamically translating strings using ILocalisationService.
+ *@
 
 @LocalisationService.Translate(Key)
 

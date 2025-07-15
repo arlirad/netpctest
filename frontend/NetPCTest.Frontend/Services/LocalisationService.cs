@@ -4,7 +4,7 @@ using NetPCTest.Frontend.Configuration;
 
 namespace NetPCTest.Frontend.Services;
 
-public class LocalisationService(HttpClient httpClient)
+public class LocalisationService(HttpClient httpClient) : ILocalisationService
 {
     public List<string> AvailableLocales { get; private set; } = [];
     public Action? OnLocaleChanged { get; set; }

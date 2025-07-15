@@ -3,9 +3,9 @@ using NetPCTest.Frontend.Dtos;
 
 namespace NetPCTest.Frontend.Services;
 
-public class ContactsService(HttpClient httpClient)
+public class ContactsService(HttpClient httpClient) : IContactsService
 {
-    public async Task<int> GetContactCount()
+    public async Task<int> GetContactCountAsync()
     {
         var response = 
             await httpClient.GetFromJsonAsync<ContactCountDto>($"contacts/count");
@@ -16,7 +16,7 @@ public class ContactsService(HttpClient httpClient)
         return response.Count;
     }
 
-    public async Task<ContactDto?> GetContact(int id)
+    public async Task<ContactDto?> GetContactAsync(int id)
     {
         var contact = 
             await httpClient.GetFromJsonAsync<ContactDto>($"contacts/{id}");
@@ -24,7 +24,7 @@ public class ContactsService(HttpClient httpClient)
         return contact;
     }
     
-    public async Task<List<ContactBriefDto>?> GetContacts(int start, int count)
+    public async Task<List<ContactBriefDto>?> GetContactsAsync(int start, int count)
     {
         var contacts = 
             await httpClient.GetFromJsonAsync<List<ContactBriefDto>>($"contacts?startIndex={start}&count={count}");
@@ -32,7 +32,7 @@ public class ContactsService(HttpClient httpClient)
         return contacts;
     }
 
-    public async Task<bool> UpdateContact(int id, ContactUpdateDto newData)
+    public async Task<bool> UpdateContactAsync(int id, ContactUpdateDto newData)
     {
         var result = 
             await httpClient.PutAsJsonAsync($"contacts/{id}", newData);
@@ -40,7 +40,7 @@ public class ContactsService(HttpClient httpClient)
         return result.IsSuccessStatusCode;
     }
 
-    public async Task<bool> UpdateContactPassword(int id, ContactPasswordChangeDto newPassword)
+    public async Task<bool> UpdateContactPasswordAsync(int id, ContactPasswordChangeDto newPassword)
     {
         var result = 
             await httpClient.PutAsJsonAsync($"contacts/{id}/password", newPassword);
@@ -48,7 +48,7 @@ public class ContactsService(HttpClient httpClient)
         return result.IsSuccessStatusCode;
     }
 
-    public async Task<bool> DeleteContact(int id)
+    public async Task<bool> DeleteContactAsync(int id)
     {
         var response = 
             await httpClient.DeleteAsync($"contacts/{id}");
@@ -56,7 +56,7 @@ public class ContactsService(HttpClient httpClient)
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> CreateContact(ContactCreationDto newData)
+    public async Task<bool> CreateContactAsync(ContactCreationDto newData)
     {
         var response = 
             await httpClient.PostAsJsonAsync($"contacts", newData);

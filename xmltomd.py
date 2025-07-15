@@ -102,5 +102,11 @@ backend_important = [
     "NetPCTest.Backend.Services.IPasswordService",
 ]
 
+frontend_important = [
+
+]
+
 convert("./backend/NetPCTest.Backend/bin/Debug/net9.0/NetPCTest.Backend.xml",
         backend_important)
+convert("./backend/NetPCTest.Frontend/bin/Debug/net9.0/NetPCTest.Frontend.xml",
+        frontend_important)

@@ -2,8 +2,13 @@
 @using NetPCTest.Frontend.Services
 @using NetPCTest.Frontend.Components.Modals
 @inject IAuthService AuthService
-@inject ContactsService ContactsService
-@inject CategoryService CategoryService
+@inject IContactsService ContactsService
+@inject ICategoriesService CategoriesService
+
+@*
+ * Displays the list of contacts and allows for viewing of their details.
+ * Allows for modification of data when the user is logged in.
+ *@
 
 @if (ContactsBrief is null)
 {
@@ -47,7 +52,7 @@ else
         
         @foreach (var contact in ContactsBrief)
         {
-            @* XSS need not apply, Blazor treats this as "InnerText" and not "InnerHtml". *@
+            @* XSS need not apply, Blazor treats this as InnerText and not InnerHtml. *@
             <tr @onclick="() => ShowDetails(contact)">
                 <td>@contact.Id</td><td>@contact.Name</td><td>@contact.Surname</td>
             </tr>
@@ -82,9 +87,9 @@ else
     public async Task Get(int start)
     {
         RangeStart = start;
-        TotalContactCount = await ContactsService.GetContactCount();
+        TotalContactCount = await ContactsService.GetContactCountAsync();
         
-        var contacts = await ContactsService.GetContacts(RangeStart, PageSize);
+        var contacts = await ContactsService.GetContactsAsync(RangeStart, PageSize);
 
         if (contacts is null)
             return;
@@ -109,7 +114,7 @@ else
         
         IsAuthenticated = await AuthService.IsLoggedIn();
         
-        await CategoryService.RefreshCategories();
+        await CategoriesService.RefreshCategoriesAsync();
         await Get(0);
     }
 

@@ -1,5 +1,8 @@
 namespace NetPCTest.Frontend.Dtos;
 
+/// <summary>
+/// Represents a contact for use on the frontend.
+/// </summary>
 public class ContactDto
 {
     public int Id { get; set; }

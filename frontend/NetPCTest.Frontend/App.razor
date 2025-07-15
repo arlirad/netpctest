@@ -1,7 +1,7 @@
 ﻿@using Microsoft.Extensions.Options
 @using NetPCTest.Frontend.Configuration
 @using NetPCTest.Frontend.Services
-@inject LocalisationService LocalisationService
+@inject ILocalisationService LocalisationService
 @inject IOptions<LocaleOptions> LocaleOptions
 
 <Router AppAssembly="@typeof(App).Assembly">

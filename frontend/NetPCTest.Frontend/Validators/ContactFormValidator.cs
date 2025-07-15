@@ -4,7 +4,7 @@ using NetPCTest.Frontend.Services;
 
 namespace NetPCTest.Frontend.Validators;
 
-public class ContactFormValidator(CategoryService categoryService)
+public class ContactFormValidator(ICategoriesService categoriesService)
 {
     public List<ValidationError> Validate(ContactEditFormModel form, bool checkPassword)
     {
@@ -28,7 +28,7 @@ public class ContactFormValidator(CategoryService categoryService)
         if (string.IsNullOrEmpty(form.Phone))
             errors.Add(new ValidationError("ui.form.contact.phone_empty"));
 
-        var category = categoryService.GetCategory(form.CategoryId);
+        var category = categoriesService.GetCategory(form.CategoryId);
 
         if (category is null)
         {
@@ -36,7 +36,7 @@ public class ContactFormValidator(CategoryService categoryService)
         }
         else
         {
-            var subCategory = categoryService.GetSubCategory(form.SubCategoryId);
+            var subCategory = categoriesService.GetSubCategory(form.SubCategoryId);
 
             switch (category.CustomSubcategoryRequired)
             {

@@ -1,5 +1,8 @@
 namespace NetPCTest.Frontend.Dtos;
 
+/// <summary>
+/// Represents a subcategory for use on the frontend.
+/// </summary>
 public class SubCategoryDto
 {
     public int Id { get; set; }

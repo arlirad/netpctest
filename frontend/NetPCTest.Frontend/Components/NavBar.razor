@@ -2,6 +2,10 @@
 @using NetPCTest.Frontend.Services
 @inject IAuthService AuthService
 
+@*
+ * Provides a navigation bar with login/logout functionality.
+ *@
+
 <div class="layer2 navbar">
     @if (!IsAuthenticated)
     {

@@ -3,12 +3,12 @@ using NetPCTest.Frontend.Dtos;
 
 namespace NetPCTest.Frontend.Services;
 
-public class CategoryService(HttpClient httpClient)
+public class CategoriesService(HttpClient httpClient) : ICategoriesService
 {
     private List<CategoryDto> _categories = [];
     private List<SubCategoryDto> _subCategories = [];
     
-    public async Task RefreshCategories()
+    public async Task RefreshCategoriesAsync()
     {
         var categories = 
             await httpClient.GetFromJsonAsync<List<CategoryDto>>("categories");

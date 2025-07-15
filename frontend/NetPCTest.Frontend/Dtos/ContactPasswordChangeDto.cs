@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetPCTest.Frontend.Dtos;
 
+/// <summary>
+/// Separates password setting from other contact edition.
+/// </summary>
 public class ContactPasswordChangeDto
 {
     [Required]

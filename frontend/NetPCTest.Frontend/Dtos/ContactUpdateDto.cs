@@ -2,8 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetPCTest.Frontend.Dtos;
 
-// We omit the ID, since that's already specified by the PUT request itself.
-// Passwords are kinda their own thing.
+/// <summary>
+/// Represents contact updates from the frontend.
+/// We omit the ID, since that's already specified by the PUT request itself.
+/// This class has no properties for setting a password.
+/// </summary>
 public class ContactUpdateDto
 {
     [Required]

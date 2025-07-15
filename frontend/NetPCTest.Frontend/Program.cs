@@ -26,9 +26,9 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddTransient<AuthTokenHandler>();
 builder.Services.AddScoped<AuthenticationStateProvider, AppAuthStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ContactsService>();
-builder.Services.AddScoped<CategoryService>();
-builder.Services.AddScoped<LocalisationService>();
+builder.Services.AddScoped<IContactsService, ContactsService>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<ILocalisationService, LocalisationService>();
 builder.Services.AddSingleton<IMapper>(provider =>
 {
     var config = new MapperConfiguration(cfg =>

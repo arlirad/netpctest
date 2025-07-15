@@ -3,8 +3,8 @@
 @using NetPCTest.Frontend.Models
 @using NetPCTest.Frontend.Services
 @inject IAuthService AuthService
-@inject ContactsService ContactsService
-@inject CategoryService CategoryService
+@inject IContactsService ContactsService
+@inject ICategoriesService CategoriesService
 
 <Modal Header="ui.contact.details" OnClose="Close" MinimumWidth="500px">
     @if (_viewedContactDto is not null)
@@ -21,7 +21,7 @@
         <p class="data">@_viewedContactDto.BirthDate</p>
         <hr noshade/>
 
-        var category = CategoryService.GetCategory(_viewedContactDto.CategoryId);
+        var category = CategoriesService.GetCategory(_viewedContactDto.CategoryId);
         
         <label><L Key="ui.contact.details.category"/></label>
         <p class="data"><L Key="@category?.Name"/></p>
@@ -29,7 +29,7 @@
         @if (_viewedContactDto.SubCategoryId != null)
         {
             <label><L Key="ui.contact.details.subcategory"/></label>
-            <p class="data"><L Key="@CategoryService.GetSubCategory(_viewedContactDto.SubCategoryId.Value)?.Name"/></p>
+            <p class="data"><L Key="@CategoriesService.GetSubCategory(_viewedContactDto.SubCategoryId.Value)?.Name"/></p>
         }
         else if (category is not null && category.CustomSubcategoryRequired)
         {
@@ -88,7 +88,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var contact = await ContactsService.GetContact(ContactId);
+        var contact = await ContactsService.GetContactAsync(ContactId);
         if (contact == null)
         {
             await base.OnParametersSetAsync();
@@ -102,7 +102,7 @@
     
     private async Task Delete()
     {
-        var success = await ContactsService.DeleteContact(ContactId);
+        var success = await ContactsService.DeleteContactAsync(ContactId);
         if (!success)
             return;
         
