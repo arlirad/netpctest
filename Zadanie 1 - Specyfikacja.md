@@ -1,6 +1,6 @@
 # netpctest
 
-This app is split across two solutions, one for the backend and one for the frontend. The code is commented with `/// <summary>` pretty much everywhere, so this specification will only go the most important classes and methods.
+This app is split across two solutions, one for the backend and one for the frontend. The code is commented with `/// <summary>` pretty much everywhere, so this specification will only go the most important classes and methods in order to keep this short.
 
 The app was developed with:
  - Arch Linux
@@ -10,7 +10,7 @@ The app was developed with:
 
 # Backend
 
-The backend is in the `backend/` directory.
+The backend is in the `./backend/` directory.
 
  - Build: `dotnet build`
  - Run: `dotnet run --project NetPCTest.Backend`
@@ -78,7 +78,7 @@ Provides an abstraction for creating, reading, updating and deleting contacts.
      - *cancellationToken* - A **System.Threading.CancellationToken** that can be used to cancel the operation.
    - ##### Returns
      - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a list of
-            **NetPCTest.Backend.Dtos.ContactBriefDto**
+            **NetPCTest.Backend.Dtos.ContactBriefDto**.
 
  - #### CreateContactAsync(**NetPCTest.Backend.Dtos.ContactCreationDto** *contactCreationDto*)
    - Creates a contact asynchronously.
@@ -164,7 +164,7 @@ Defines methods for securely hashing and verifying passwords.
 
 # Frontend
 
-The frontend is in the `frontend/` directory.
+The frontend is in the `./frontend/` directory.
 
  - Build: `dotnet build`
  - Run: `dotnet run --project NetPCTest.Frontend`
