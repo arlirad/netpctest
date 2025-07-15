@@ -15,6 +15,8 @@ The backend is in the `./backend/` directory.
  - Build: `dotnet build`
  - Run: `dotnet run --project NetPCTest.Backend`
 
+The backend expects a SQLite database at `./backend/NetPCTest.Backend/SQLLiteDatabase.db`. There is an SQL script to create tables and insert sample data under `./backend/NetPCTest.Backend/initDB.sql`. 
+
 NUnit tests are under the *NetPCTest.Backend.Tests* project.
 
 Used NuGet packages:
@@ -38,6 +40,236 @@ Used NuGet packages:
  - System.IdentityModel.TokensJwt
  
 *\*AutoMapper is explicitly downgraded to 12.0.1 in order to avoid licensing quirkyness.*
+
+## API Rundown
+Authorization is done using Bearer tokens.
+
+### GET /api/auth
+
+Returns the ID and email of the currently logged in user. Requires authorization.
+
+#### Returns
+```
+{
+  "id": ID,
+  "email": Email
+}
+```
+
+
+### POST /api/auth
+
+Attempts to retrieve a Bearer token using the specified credentials.
+
+#### Parameters
+ - Body
+    ```
+    {
+      "email": Contact email,
+      "password": Contact password
+    }
+    ```
+
+#### Returns
+```
+{
+  "token": Bearer token
+}
+```
+
+
+### GET /api/categories/count
+
+Retrieves the count of categories.
+
+#### Returns
+```
+{
+  "count": Number of categories
+}
+```
+
+
+### GET /api/categories
+
+Retrieves all categories.
+
+#### Returns
+```
+{
+  {
+    "id": Category ID,
+    "name": Category Name,
+    "customSubcategoryRequired": Whether the category requires a custom subcategory,
+    "subCategories": [
+      {
+        "id": Subcategory ID,
+        "name": Subcategory Name,
+        "categoryId": Parent category ID
+      },
+      [...]
+    ]
+  },
+  [...]
+}
+```
+
+
+### GET /api/contacts/count
+
+Retrieves the count of contacts.
+
+#### Returns
+```
+{
+  "count": Count of contacts
+}
+```
+
+
+### GET /api/contacts?startIndex=*number*&count=*number*
+
+Retrieves the specified range of contacts.
+
+#### Parameters
+ - startIndex
+   - The zero-based index of the first contact to retrieve.
+ - count
+   - The number of contacts to retrieve.
+
+#### Returns
+```
+[
+  {
+    "id": Contact ID,
+    "name": Contact Name,
+    "surname": Contact Surname
+  },
+  [...]
+]
+```
+
+### POST /api/contacts
+
+Creates a new contact. Requires authorization.
+
+#### Parameters
+```
+{
+  "name": Name,
+  "surname": Surname,
+  "email": Email,
+  "password": Password,
+  "confirmPassword": Confirmed password,
+  "phone": Phone number,
+  "birthDate": Birth date,
+  "categoryId": ID of the category the new contact belongs to,
+  "subCategoryId": Nullable, ID of the subcategory the new contact belongs to,
+  "customSubCategory": Nullable, the custom subcategory the new contact belongs to
+}
+```
+#### Returns
+Found, with the target URL being the newly created contact.
+
+
+### GET /api/contacts/*id*
+
+Retrieves the details of a contact.
+
+#### Parameters
+ - id
+   - ID of the contact to retrieve the details of.
+#### Returns
+```
+{
+  "id": Contact ID,
+  "name": Contact name,
+  "surname": Contact surname,
+  "email": Contact email,
+  "phone": Contact phone number,
+  "birthDate": Contact birth date,
+  "categoryId": Contact category ID,
+  "subCategoryId": Nullable, contact subcategory ID,
+  "customSubCategory": Nullable, custom subcategory name
+}
+```
+
+
+### PUT /api/contacts/*id*
+
+Modifies the details of a contact. This endpoint does not change the password of a contact. Requires authorization.
+
+#### Parameters
+ - id
+   - ID of the contact to modify.
+ - body
+   ```
+   {
+     "name": New contact name,
+     "surname": New contact surname,
+     "email": New contact email,
+     "phone": New contact phone,
+     "birthDate": New contact birth date,
+     "categoryId": New contact category ID,
+     "subCategoryId": Nullable, new contact subcategory ID,
+     "customSubCategory": Nullable, new custom subcategory name
+   }
+   ```
+
+
+### DELETE /api/contacts/*id*
+
+Deletes a contact. Requires authorization.
+
+#### Parameters
+ - id
+   - ID of the contact to delete.
+
+
+### PUT /api/contacts/*id*/password
+
+Changes the password of a contact. Requires authorization.
+
+#### Parameters
+ - id
+   - ID of the contact change the password of.
+ - body
+   ```
+   {
+     "password": New password,
+     "confirmPassword": Confirmed password
+   }
+   ```
+
+
+### GET /api/localisation
+
+Retrieves all available locales.
+
+#### Returns
+```
+[
+  Locale string,
+  [...]
+]
+```
+
+
+### GET /api/localisation/*locale*
+
+Retrieves the dictionary of translations belonging the specified locale.
+
+#### Parameters
+ - locale
+   - Name of the locale to retrieve the translations of.
+
+#### Returns
+```
+{
+  key: Value,
+  [...]
+}
+```
 
 ## Important classes
 
@@ -161,7 +393,6 @@ Defines methods for securely hashing and verifying passwords.
      - A **Microsoft.AspNetCore.Identity.PasswordVerificationResult** of the comparison.
 
 
-
 # Frontend
 
 The frontend is in the `./frontend/` directory.
@@ -182,5 +413,19 @@ Used NuGet packages:
  - System.IdentityModel.TokensJwt
  
 *\*AutoMapper is explicitly downgraded to 12.0.1 in order to avoid licensing quirkyness.*
+
+## Important components
+
+### NetPCTest.Frontend.Components.ContactList
+ - Displays the list of contacts and allows for viewing of their details. Allows for modification of data when the user is logged in.
+
+### NetPCTest.Frontend.Components.L
+ - Provides a way of dynamically translating strings using ILocalisationService.
+
+### NetPCTest.Frontend.Components.Modal
+ - Provides a basic extendable modal.
+
+### NetPCTest.Frontend.Components.NavBar
+ - Provides a navbar with login/logout functionality.
 
 ## Important classes
