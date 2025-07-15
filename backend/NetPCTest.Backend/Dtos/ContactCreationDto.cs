@@ -3,7 +3,10 @@ using NetPCTest.Backend.Validators;
 
 namespace NetPCTest.Backend.Dtos;
 
-// Here we omit the ID, since that is AUTOINCREMENT in SQL. We also omit things specific to relations in EF.
+/// <summary>
+/// Represents contact creation data from the frontend.
+/// Here we omit the ID, since that is AUTOINCREMENT in SQL. We also omit things specific to relations in EF.
+/// </summary>
 public partial class ContactCreationDto
 {
     [Required]

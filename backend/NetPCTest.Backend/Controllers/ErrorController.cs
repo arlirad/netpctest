@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NetPCTest.Backend.Controllers;
 
+/// <summary>
+/// Provides an error handler.
+/// </summary>
 [ApiController]
 public class ErrorController : Controller
 {

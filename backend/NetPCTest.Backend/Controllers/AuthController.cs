@@ -13,10 +13,13 @@ using NetPCTest.Backend.Services;
 
 namespace NetPCTest.Backend.Controllers;
 
-/*
- * Controller responsible for authenticating users (using the Contacts database).
- * Has rate limiting on everything in order to avoid brute-force attacks.
- */
+/// <summary>
+/// Implements logic for authenticating users.
+/// Contains rate limiting in order to avoid brute-force attacks.
+/// </summary>
+/// <param name="repository">The repository used to access contact data.</param>
+/// <param name="passwordService">The password service used for comparison of credentials.</param>
+/// <param name="config">The configuration containing JWT configuration.</param>
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController(IRepository repository, IPasswordService passwordService, IConfiguration config) : Controller
@@ -43,7 +46,7 @@ public class AuthController(IRepository repository, IPasswordService passwordSer
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto, CancellationToken cancellationToken)
     {
-        var contact = await repository.GetContactByEmail(loginDto.Email, cancellationToken);
+        var contact = await repository.GetContactByEmailAsync(loginDto.Email, cancellationToken);
         if (contact == null)
             return Unauthorized("invalid.credentials");
         
@@ -55,7 +58,7 @@ public class AuthController(IRepository repository, IPasswordService passwordSer
                 return Unauthorized("invalid.credentials");
             case PasswordVerificationResult.SuccessRehashNeeded:
                 contact.PasswordHash = passwordService.HashPassword(contact, loginDto.Password);
-                await repository.UpdateContact(contact.Id, contact);
+                await repository.UpdateContactAsync(contact.Id, contact);
                 break;
             case PasswordVerificationResult.Success:
                 break;

@@ -8,10 +8,11 @@ using NetPCTest.Backend.Services;
 
 namespace NetPCTest.Backend.Controllers;
 
-/*
- * Controller responsible for the CRUD part of the application.
- * Has a rate limiter GetContacts to avoid (D)DOS attacks.
- */
+/// <summary>
+/// Implements logic used for the main CRUD part of the application.
+/// Applies a rate limiter on GetContacts, in order to mitigate possible (D)DOS attacks.
+/// </summary>
+/// <param name="contactsService"><see cref="IContactsService"/> for contact data access.</param>
 [ApiController]
 [Route("api/[controller]")]
 public class ContactsController(IContactsService contactsService) : ControllerBase
@@ -19,7 +20,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     [HttpGet("count")]
     public async Task<IActionResult> GetContactCount(CancellationToken cancellationToken)
     {
-        var count = await contactsService.GetContactCount(cancellationToken);
+        var count = await contactsService.GetContactCountAsync(cancellationToken);
         
         return Ok(new { Count = count });
     }
@@ -28,7 +29,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     [HttpGet]
     public async Task<IActionResult> GetContacts(CancellationToken cancellationToken, int startIndex = 0, int count = 50)
     {
-        var contacts = await contactsService.GetContacts(startIndex, count, cancellationToken);
+        var contacts = await contactsService.GetContactsAsync(startIndex, count, cancellationToken);
         
         return Ok(contacts);
     }
@@ -36,7 +37,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetContactDetails([Required] int id, CancellationToken cancellationToken)
     {
-        var contact = await contactsService.GetContact(id, cancellationToken);
+        var contact = await contactsService.GetContactAsync(id, cancellationToken);
         if (contact == null)
             return NotFound();
         
@@ -47,7 +48,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateContactDetails([Required] int id, [FromBody] ContactUpdateDto contactUpdateDto)
     {
-        var result = await contactsService.UpdateContact(id, contactUpdateDto);
+        var result = await contactsService.UpdateContactAsync(id, contactUpdateDto);
 
         return result switch
         {
@@ -63,7 +64,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     public async Task<IActionResult> UpdateContactPassword([Required] int id, 
         [FromBody] ContactPasswordChangeDto contactPasswordChangeDto)
     {
-        var result = await contactsService.SetContactPassword(id, contactPasswordChangeDto);
+        var result = await contactsService.SetContactPasswordAsync(id, contactPasswordChangeDto);
 
         return result ? Ok() : BadRequest();
     }
@@ -72,7 +73,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteContact([Required] int id)
     {
-        var result = await contactsService.DeleteContact(id);
+        var result = await contactsService.DeleteContactAsync(id);
 
         return result ?  Ok() : BadRequest();
     }
@@ -81,7 +82,7 @@ public class ContactsController(IContactsService contactsService) : ControllerBa
     [HttpPost]
     public async Task<IActionResult> AddContact([FromBody] ContactCreationDto contactCreationDto)
     {
-        var result = await contactsService.CreateContact(contactCreationDto);
+        var result = await contactsService.CreateContactAsync(contactCreationDto);
         
         if (!result.Success)
             return BadRequest(result);

@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetPCTest.Backend.Models;
 
+/// <summary>
+/// Represents a LocaleKeyString entity for use in localisation.
+/// </summary>
 public class LocaleKeyString
 {
     [MaxLength(64)]

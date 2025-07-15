@@ -4,6 +4,10 @@ using NetPCTest.Backend.Dtos;
 
 namespace NetPCTest.Backend.Services;
 
+/// <summary>
+/// A concrete implementation of <see cref="ILocalisationService"/> utilizing <see cref="AppDbContext"/>.
+/// </summary>
+/// <param name="context">The <see cref="AppDbContext"/> used for querying localisation data.</param>
 public class LocalisationService(AppDbContext context) : ILocalisationService
 {
     public async Task<List<string>> GetAllLocales()

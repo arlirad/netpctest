@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetPCTest.Backend.Models;
 
+/// <summary>
+/// Represents a subcategory entity.
+/// </summary>
 public class SubCategory
 {
     public int Id { get; set; }

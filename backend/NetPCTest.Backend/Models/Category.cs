@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetPCTest.Backend.Models;
 
+/// <summary>
+/// Represents a category entity.
+/// </summary>
 public class Category
 {
     public int Id { get; set; }

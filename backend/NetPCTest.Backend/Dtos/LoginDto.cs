@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetPCTest.Backend.Dtos;
 
+/// <summary>
+/// Represents login credentials from the frontend.
+/// </summary>
 public class LoginDto
 {
     [Required]

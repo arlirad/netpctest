@@ -4,12 +4,15 @@ using NetPCTest.Backend.Models;
 
 namespace NetPCTest.Backend.Repositories;
 
+/// <summary>
+/// Entity Framework Core-based implementation of <see cref="IRepository"/>.
+/// </summary>
 public class DbRepository(AppDbContext context) : IRepository
 {
-    public async Task<int> GetContactCount(CancellationToken cancellationToken) =>
+    public async Task<int> GetContactCountAsync(CancellationToken cancellationToken) =>
         await context.Contacts.CountAsync(cancellationToken);
     
-    public async Task<List<ContactBrief>> GetContacts(int startIndex, int count, CancellationToken cancellationToken)
+    public async Task<List<ContactBrief>> GetContactsAsync(int startIndex, int count, CancellationToken cancellationToken)
     {
         // Here we first .Select to make sure EF doesn't create a SQL query with columns that we are not going to use
         // anyway. Then, we .Select to create the DTOs.
@@ -29,17 +32,17 @@ public class DbRepository(AppDbContext context) : IRepository
         return contacts;
     }
 
-    public async Task<Contact?> GetContactByEmail(string email, CancellationToken cancellationToken) => 
+    public async Task<Contact?> GetContactByEmailAsync(string email, CancellationToken cancellationToken) => 
         await context.Contacts
             .Where(c => c.Email == email)
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<Contact?> GetContact(int id, CancellationToken cancellationToken) => 
+    public async Task<Contact?> GetContactAsync(int id, CancellationToken cancellationToken) => 
         await context.Contacts
             .Where(c => c.Id == id)
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<int?> CreateContact(Contact contact)
+    public async Task<int?> CreateContactAsync(Contact contact)
     {
         try
         {
@@ -54,24 +57,24 @@ public class DbRepository(AppDbContext context) : IRepository
         }
     }
 
-    public async Task<Category?> GetCategory(int id, CancellationToken cancellationToken) => 
+    public async Task<Category?> GetCategoryAsync(int id, CancellationToken cancellationToken) => 
         await context.Categories
             .Include(c => c.SubCategories)
             .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     
-    public async Task<SubCategory?> GetSubCategory(int id, CancellationToken cancellationToken) => 
+    public async Task<SubCategory?> GetSubCategoryAsync(int id, CancellationToken cancellationToken) => 
         await context.SubCategories
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
-    public async Task<int> GetCategoryCount(CancellationToken cancellationToken) =>
+    public async Task<int> GetCategoryCountAsync(CancellationToken cancellationToken) =>
         await context.Categories.CountAsync(cancellationToken);
     
-    public async Task<List<Category>> GetCategories(CancellationToken cancellationToken) =>
+    public async Task<List<Category>> GetCategoriesAsync(CancellationToken cancellationToken) =>
         await context.Categories
             .Include(c => c.SubCategories)
             .ToListAsync(cancellationToken);
 
-    public async Task<bool> UpdateContact(int id, Contact contact)
+    public async Task<bool> UpdateContactAsync(int id, Contact contact)
     {
         try
         {
@@ -99,7 +102,7 @@ public class DbRepository(AppDbContext context) : IRepository
         return true;
     }
 
-    public async Task<bool> DeleteContact(int id)
+    public async Task<bool> DeleteContactAsync(int id)
     {
         try
         {

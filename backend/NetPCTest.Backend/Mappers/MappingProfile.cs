@@ -4,6 +4,9 @@ using NetPCTest.Backend.Models;
 
 namespace NetPCTest.Backend.Mappers;
 
+/// <summary>
+/// Global mapping profile for AutoMapper.
+/// </summary>
 public class MappingProfile : Profile
 {
     public MappingProfile()

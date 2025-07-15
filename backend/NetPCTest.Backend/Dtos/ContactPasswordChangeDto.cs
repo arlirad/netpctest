@@ -3,6 +3,9 @@ using NetPCTest.Backend.Validators;
 
 namespace NetPCTest.Backend.Dtos;
 
+/// <summary>
+/// Separates password setting from other contact edition.
+/// </summary>
 public class ContactPasswordChangeDto
 {
     [Required]

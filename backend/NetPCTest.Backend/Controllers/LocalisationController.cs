@@ -4,10 +4,11 @@ using NetPCTest.Backend.Services;
 
 namespace NetPCTest.Backend.Controllers;
 
-/*
- * Controller responsible for providing localisation dictionaries to the frontend.
- * Has rate limiting on GetLocaleKeyStrings to avoid (D)DOS attacks. 
- */
+/// <summary>
+/// API controller responsible for providing localisation dictionaries.
+/// Applies rate limiting on GetLocaleKeyStrings in order to mitigate (D)DOS attacks. 
+/// </summary>
+/// <param name="localisationService">The service used to access localisation data.</param>
 [ApiController]
 [Route("api/[controller]")]
 public class LocalisationController(ILocalisationService localisationService) : ControllerBase

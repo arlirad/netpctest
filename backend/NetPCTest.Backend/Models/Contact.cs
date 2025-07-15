@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetPCTest.Backend.Models;
 
+/// <summary>
+/// Represents a contact entity.
+/// </summary>
 public class Contact
 {
     public int Id { get; set; }

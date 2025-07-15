@@ -3,6 +3,10 @@ using NetPCTest.Backend.Models;
 
 namespace NetPCTest.Backend.Data;
 
+/// <summary>
+/// Global DbContext for usage with Entity Framework Core.
+/// </summary>
+/// <param name="options">Context options passed to <see cref="DbContext"/>.</param>
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Contact> Contacts { get; set; }

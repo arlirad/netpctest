@@ -182,25 +182,25 @@ public class CategoryValidatorTests
         
         // Here we set up our mock.
         _repositoryMock
-            .Setup(r => r.GetCategory(1, CancellationToken.None))
+            .Setup(r => r.GetCategoryAsync(1, CancellationToken.None))
             .ReturnsAsync(category1);
         _repositoryMock
-            .Setup(r => r.GetCategory(2, CancellationToken.None))
+            .Setup(r => r.GetCategoryAsync(2, CancellationToken.None))
             .ReturnsAsync(category2);
         _repositoryMock
-            .Setup(r => r.GetCategory(3, CancellationToken.None))
+            .Setup(r => r.GetCategoryAsync(3, CancellationToken.None))
             .ReturnsAsync(category3);
         _repositoryMock
-            .Setup(r => r.GetCategory(4, CancellationToken.None))
+            .Setup(r => r.GetCategoryAsync(4, CancellationToken.None))
             .ReturnsAsync(category4);
         _repositoryMock
-            .Setup(r => r.GetSubCategory(1, CancellationToken.None))
+            .Setup(r => r.GetSubCategoryAsync(1, CancellationToken.None))
             .ReturnsAsync(subCategory1);
         _repositoryMock
-            .Setup(r => r.GetSubCategory(2, CancellationToken.None))
+            .Setup(r => r.GetSubCategoryAsync(2, CancellationToken.None))
             .ReturnsAsync(subCategory2);
         _repositoryMock
-            .Setup(r => r.GetSubCategory(3, CancellationToken.None))
+            .Setup(r => r.GetSubCategoryAsync(3, CancellationToken.None))
             .ReturnsAsync(subCategory3);
         
         // Test time!
