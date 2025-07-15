@@ -12,7 +12,7 @@ public interface IPasswordService
     /// Hashes a password.
     /// </summary>
     /// <param name="contact"><see cref="Contact"/> for which the password is intended.</param>
-    /// <param name="password">Plaintext password</param>
+    /// <param name="password">Plaintext password.</param>
     /// <returns>A <see cref="string"/> containing the hashed password.</returns>
     string HashPassword(Contact contact, string password);
     

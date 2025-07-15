@@ -41,6 +41,126 @@ Used NuGet packages:
 
 ## Important classes
 
+### NetPCTest.Backend.Services.ICategoriesService
+Provides an abstraction for accessing **NetPCTest.Backend.Models.Category** entities.
+
+ - #### GetCategoryCountAsync(**System.Threading.CancellationToken** *cancellationToken*)
+   - Returns the count of categories asynchronously.
+   - ##### Parameters
+     - *cancellationToken* - A **System.Threading.CancellationToken** that can be used to cancel the operation.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation. The result of the task is the count of categories.
+
+ - #### GetCategoriesAsync(**System.Threading.CancellationToken** *cancellationToken*)
+   - Returns all categories asynchronously.
+   - ##### Parameters
+     - *cancellationToken* - A **System.Threading.CancellationToken** that can be used to cancel the operation.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation. The result of the task is a list of categories.
+
+
+### NetPCTest.Backend.Services.IContactsService
+Provides an abstraction for creating, reading, updating and deleting contacts.
+
+ - #### GetContactCountAsync(**System.Threading.CancellationToken** *cancellationToken*)
+   - Retrieves the count of contacts asynchronously.
+   - ##### Parameters
+     - *cancellationToken* - A **System.Threading.CancellationToken** that can be used to cancel the operation.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing the count of
+            contacts.
+
+ - #### GetContactsAsync(**int** *startIndex*, **int** *count*, **System.Threading.CancellationToken** *cancellationToken*)
+   - Retrieves a range of contacts asynchronously.
+   - ##### Parameters
+     - *startIndex* - The zero-based index of the first contact to retrieve.
+     - *count* - The number of contacts to retrieve.
+     - *cancellationToken* - A **System.Threading.CancellationToken** that can be used to cancel the operation.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a list of
+            **NetPCTest.Backend.Dtos.ContactBriefDto**
+
+ - #### CreateContactAsync(**NetPCTest.Backend.Dtos.ContactCreationDto** *contactCreationDto*)
+   - Creates a contact asynchronously.
+   - ##### Parameters
+     - *contactCreationDto* - A **NetPCTest.Backend.Dtos.ContactCreationDto** representing new contact data.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **NetPCTest.Backend.Results.CreateContactResult**.
+
+ - #### GetContactAsync(**int** *id*, **System.Threading.CancellationToken** *cancellationToken*)
+   - Retrieves contact details asynchronously.
+   - ##### Parameters
+     - *id* - The ID of the contact to retrieve the data of.
+     - *cancellationToken* - A **System.Threading.CancellationToken** that can be used to cancel the operation.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **NetPCTest.Backend.Results.CreateContactResult**.
+
+ - #### UpdateContactAsync(**int** *id*, **NetPCTest.Backend.Dtos.ContactUpdateDto** *newData*)
+   - Updates a contact asynchronously.
+   - ##### Parameters
+     - *id* - The ID of the contact to modify.
+     - *newData* - **NetPCTest.Backend.Dtos.ContactUpdateDto** containing new contact data.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **NetPCTest.Backend.Results.UpdateContactResult**.
+
+ - #### SetContactPasswordAsync(**int** *id*, **NetPCTest.Backend.Dtos.ContactPasswordChangeDto** *newPassword*)
+   - Sets the password of a contact asynchronously.
+   - ##### Parameters
+     - *id* - The ID of the contact to modify.
+     - *newPassword* - **NetPCTest.Backend.Dtos.ContactPasswordChangeDto** containing the new password.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Boolean**.
+
+ - #### DeleteContactAsync(**int** *id*)
+   - Deletes a contact asynchronously.
+   - ##### Parameters
+     - *id* - The ID of the contact to delete.
+   - ##### Returns
+     - **System.Threading.Tasks.Task** representing the asynchronous operation, with a result containing a
+            **System.Boolean**.
+
+
+### NetPCTest.Backend.Services.ILocalisationService
+Provides an abstraction of locale-related methods.
+
+ - #### GetAllLocales
+   - Returns all available locales.
+   - ##### Returns
+     - A list of available locales.
+
+ - #### GetLocaleKeyStrings(**string** *locale*)
+   - Returns all KeyStrings present in a locale.
+   - ##### Parameters
+     - *locale* - Locale name.
+   - ##### Returns
+     - Dictionary of translations specific to the specified locale.
+
+
+### NetPCTest.Backend.Services.IPasswordService
+Defines methods for securely hashing and verifying passwords.
+
+ - #### HashPassword(**NetPCTest.Backend.Models.Contact** *contact*, **string** *password*)
+   - Hashes a password.
+   - ##### Parameters
+     - *contact* - **NetPCTest.Backend.Models.Contact** for which the password is intended.
+     - *password* - Plaintext password
+   - ##### Returns
+     - A **System.String** containing the hashed password.
+
+ - #### ComparePassword(**NetPCTest.Backend.Models.Contact** *contact*, **string** *hashedPassword*, **string** *providedPlainPassword*)
+   - Verifies a password.
+   - ##### Parameters
+     - *contact* - **NetPCTest.Backend.Models.Contact** for which the comparison is being done.
+     - *hashedPassword* - Hashed password.
+     - *providedPlainPassword* - Plaintext password.
+   - ##### Returns
+     - A **Microsoft.AspNetCore.Identity.PasswordVerificationResult** of the comparison.
+
+
 
 # Frontend
 

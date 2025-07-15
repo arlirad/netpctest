@@ -2,7 +2,6 @@ namespace NetPCTest.Backend.Dtos;
 
 /// <summary>
 /// Represents a contact for use on the frontend.
-/// Here we omit the password hash and things specific to relations in EF.
 /// </summary>
 public class ContactDto
 {

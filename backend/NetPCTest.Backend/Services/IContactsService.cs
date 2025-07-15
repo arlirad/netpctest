@@ -17,7 +17,7 @@ public interface IContactsService
     public Task<int> GetContactCountAsync(CancellationToken cancellationToken);
     
     /// <summary>
-    /// Retrieves range of contacts asynchronously.
+    /// Retrieves a range of contacts asynchronously.
     /// </summary>
     /// <param name="startIndex">The zero-based index of the first contact to retrieve.</param>
     /// <param name="count">The number of contacts to retrieve.</param>
