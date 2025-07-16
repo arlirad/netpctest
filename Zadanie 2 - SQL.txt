@@ -12,6 +12,7 @@ limit 1;
 
 -- B.
 select
+    CompanyId,
     IsEmploymentContract,
     avg(Workers) as AverageWorkersPerCompany,
     avg(AverageSalary) as AverageSalaryPerCompany
@@ -24,7 +25,7 @@ from (
     group by CompanyId, IsEmploymentContract
 )
 as CompanyStats
-GROUP BY IsEmploymentContract;
+GROUP BY CompanyId, IsEmploymentContract;
 
 -- C.
 -- Niestety za trzymanie Salary osobno trzeba zapłacić swoje.
